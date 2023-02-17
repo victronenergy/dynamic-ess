@@ -1,0 +1,74 @@
+[
+    {
+        "id": "dd22f17e4e9edc97",
+        "type": "victron-scheduled-charging",
+        "z": "15ba11490fe13755",
+        "name": "Scheduled charging",
+        "vrmtoken": "",
+        "vrmid": "",
+        "b_max": 10,
+        "fb_max": 1.1,
+        "tb_max": 1.2,
+        "longitude": "53.405",
+        "latitude": "6.105",
+        "verbose": true,
+        "x": 360,
+        "y": 140,
+        "wires": [
+            [
+                "b2f0bdda4879796f"
+            ]
+        ]
+    },
+    {
+        "id": "b2f0bdda4879796f",
+        "type": "debug",
+        "z": "15ba11490fe13755",
+        "name": "Ideal setpoint",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "f25b8f1c0aa48ccf",
+        "type": "inject",
+        "z": "15ba11490fe13755",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "country",
+                "v": "nl",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1200",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "dd22f17e4e9edc97"
+            ]
+        ]
+    }
+]

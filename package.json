@@ -1,0 +1,36 @@
+{
+  "name": "victron-scheduled-charging",
+  "version": "0.0.1",
+  "description": "Fetch the ideal ESS setpoint from VRM",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard --fix"
+  },
+  "keywords": [
+    "node-red",
+    "victron",
+    "scheduled charging",
+    "ess"
+  ],
+  "author": "Dirk-Jan Faber <dfaber@victronenergy.com>",
+  "license": "MIT",
+  "node-red": {
+    "nodes": {
+      "victron-scheduled-charging": "./src/nodes/victron-scheduled-charging.js"
+    },
+    "version": ">=3.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dirkjanfaber/victron-scheduled-charging"
+  },
+  "dependencies": {
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "standard": "^17.0.0"
+  },
+  "engines": {
+    "node": ">=14.17.4"
+  }
+}
