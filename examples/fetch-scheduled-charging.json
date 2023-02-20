@@ -1,30 +1,189 @@
 [
     {
-        "id": "dd22f17e4e9edc97",
+        "id": "5999fb9f53a5c90c",
+        "type": "victron-output-settings",
+        "z": "36d395bb3832caaf",
+        "service": "com.victronenergy.settings",
+        "path": "/Settings/CGwacs/AcPowerSetPoint",
+        "serviceObj": {
+            "service": "com.victronenergy.settings",
+            "name": "com.victronenergy.settings",
+            "paths": [
+                {
+                    "path": "/Settings/CGwacs/AcPowerSetPoint",
+                    "type": "float",
+                    "name": "ESS control loop setpoint (W)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/BatteryLife/MinimumSocLimit",
+                    "type": "float",
+                    "name": "ESS Minimum SoC (unless grid fails) (%)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/BatteryLife/State",
+                    "type": "enum",
+                    "name": "ESS BatteryLife state",
+                    "enum": {
+                        "0": "Unused, BL disabled",
+                        "1": "Restarting",
+                        "2": "Self-consumption",
+                        "3": "Self-consumption",
+                        "4": "Self-consumption",
+                        "5": "Discharge disabled",
+                        "6": "Force charge",
+                        "7": "Sustain",
+                        "8": "Low Soc Recharge",
+                        "9": "Keep batteries charged",
+                        "10": "BL Disabled",
+                        "11": "BL Disabled (Low SoC)",
+                        "12": "BL Disabled (Low SOC recharge)"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/SystemSetup/MaxChargeCurrent",
+                    "type": "float",
+                    "name": "DVCC system max charge current (A DC)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/Hub4Mode",
+                    "type": "enum",
+                    "name": "ESS Mode",
+                    "enum": {
+                        "1": "ESS with Phase Compensation",
+                        "2": "ESS without phase compensation",
+                        "3": "Disabled/External Control"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/MaxChargePercentage",
+                    "type": "float",
+                    "name": "ESS max charge current (fractional) (%)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/MaxDischargePercentage",
+                    "type": "float",
+                    "name": "ESS max discharge current (fractional) (%)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/MaxDischargePower",
+                    "type": "float",
+                    "name": "ESS max discharge current (W)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/MaxFeedInPower",
+                    "type": "float",
+                    "name": "Maximum System Grid Feed In (W)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/OvervoltageFeedIn",
+                    "type": "enum",
+                    "name": "Feed excess DC-coupled PV into grid",
+                    "enum": {
+                        "0": "Don’t feed excess DC-tied PV into grid",
+                        "1": "Feed excess DC-tied PV into the grid"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/PreventFeedback",
+                    "type": "enum",
+                    "name": "Don’t feed excess AC-coupled PV into grid",
+                    "enum": {
+                        "0": "Feed excess AC-tied PV into grid",
+                        "1": "Don’t feed excess AC-tied PV into the grid"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/SystemSetup/MaxChargeVoltage",
+                    "type": "float",
+                    "name": "Limit managed battery voltage (V DC)",
+                    "writable": true
+                }
+            ]
+        },
+        "pathObj": {
+            "path": "/Settings/CGwacs/AcPowerSetPoint",
+            "type": "float",
+            "name": "ESS control loop setpoint (W)",
+            "writable": true
+        },
+        "name": "",
+        "x": 950,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "ec317b50f856de92",
         "type": "victron-scheduled-charging",
-        "z": "15ba11490fe13755",
-        "name": "Scheduled charging",
+        "z": "36d395bb3832caaf",
+        "name": "",
         "vrmtoken": "",
         "vrmid": "",
+        "country": "nl",
         "b_max": 10,
         "fb_max": 1.1,
         "tb_max": 1.2,
-        "longitude": "53.405",
-        "latitude": "6.105",
+        "longitude": "53.2",
+        "latitude": "6.6",
         "verbose": true,
-        "x": 360,
-        "y": 140,
+        "x": 580,
+        "y": 100,
         "wires": [
             [
-                "b2f0bdda4879796f"
+                "14b5095e69d0c786",
+                "5999fb9f53a5c90c"
+            ],
+            [
+                "fd3adec04c526669",
+                "61132c211cf85c46"
             ]
         ]
     },
     {
-        "id": "b2f0bdda4879796f",
+        "id": "9bab60c0b2168a4d",
+        "type": "inject",
+        "z": "36d395bb3832caaf",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "http://vrm-smart-scheduling-api.k.elnino-production.com/",
+                "vt": "str"
+            }
+        ],
+        "repeat": "900",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 370,
+        "y": 100,
+        "wires": [
+            [
+                "ec317b50f856de92"
+            ]
+        ]
+    },
+    {
+        "id": "14b5095e69d0c786",
         "type": "debug",
-        "z": "15ba11490fe13755",
-        "name": "Ideal setpoint",
+        "z": "36d395bb3832caaf",
+        "name": "Setpoint",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -33,42 +192,107 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 580,
-        "y": 140,
+        "x": 800,
+        "y": 60,
         "wires": []
     },
     {
-        "id": "f25b8f1c0aa48ccf",
-        "type": "inject",
-        "z": "15ba11490fe13755",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            },
-            {
-                "p": "country",
-                "v": "nl",
-                "vt": "str"
-            }
-        ],
-        "repeat": "1200",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 150,
-        "y": 140,
+        "id": "fd3adec04c526669",
+        "type": "debug",
+        "z": "36d395bb3832caaf",
+        "name": "Scheduled charging",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "61132c211cf85c46",
+        "type": "function",
+        "z": "36d395bb3832caaf",
+        "name": "Chart the output",
+        "func": "const chart = [{\n    \"series\": [\"Schedule\", \"PV yield\"],\n    \"data\": [\n        Object.values(msg.payload.schedule),\n        Object.values(msg.payload.output.P)\n        ],\n    \"labels\": Object.keys(msg.payload.schedule)\n}]\n\nmsg.payload = chart;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 200,
         "wires": [
             [
-                "dd22f17e4e9edc97"
+                "fa5a1b5541d667c0"
             ]
         ]
+    },
+    {
+        "id": "fa5a1b5541d667c0",
+        "type": "ui_chart",
+        "z": "36d395bb3832caaf",
+        "name": "",
+        "group": "97ee7bd8b2d59e3a",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Setpoint Schedule (kWh)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": true,
+        "colors": [
+            "#1f77b4",
+            "#eb7100",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1050,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "97ee7bd8b2d59e3a",
+        "type": "ui_group",
+        "name": "Scheduled charging",
+        "tab": "7f69b1dfcd36ba41",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "7f69b1dfcd36ba41",
+        "type": "ui_tab",
+        "name": "Scheduled charging",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
     }
 ]
