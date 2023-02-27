@@ -42,6 +42,8 @@ module.exports = function (RED) {
         b_max: (msg.b_max || config.b_max || 1),
         tb_max: (msg.tb_max || config.tb_max || 1),
         fb_max: (msg.fb_max || config.fb_max || 1),
+        tg_max: (msg.tg_max || config.tg_max || 1),
+        fg_max: (msg.fg_max || config.fg_max || 1),
         long: (msg.longitude || config.longitude),
         lat: (msg.latitude || config.latitude),
         country: (msg.country || 'nl').toUpperCase(),

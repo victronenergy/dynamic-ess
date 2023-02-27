@@ -10,6 +10,8 @@
             b_max: {value: 10},
             fb_max: {value: 1.1},
             tb_max: {value: 1.2},
+            fg_max: {value: 1.0},
+            tg_max: {value: 1.0},
             longitude: {value: ""},
             latitude: {valude: ""},
             verbose: {value: false},
@@ -102,6 +104,14 @@
         <input type="text" id="node-input-fb_max" placeholder="Amount the battery discharges in one hour (kW)">
     </div>
     <div class="form-row">
+        <label for="node-input-tg_max"><i class="fa fa-battery-full"></i> TG max</label>
+        <input type="text" id="node-input-tg_max" placeholder="Amount the grid can receive (to grid) in one hour (kW)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-fg_max"><i class="fa fa-battery-full"></i> FG max</label>
+        <input type="text" id="node-input-fg_max" placeholder="Amount the grid can provide (from grid) in one hour (kW)">
+    </div>
+    <div class="form-row">
         <label style="min-width:190px" for="node-input-verbose"><i class="fa fa-volume-up"></i> Verbose</label>
         <input type="checkbox" checked id="node-input-verbose" style="max-width:30px">
     </div>
@@ -153,6 +163,8 @@ to use.
   <li><tt>msg.fb_max</tt> -  This is the
   speed in kW that the battery can be drained at in an hour (from battery). Defaults
   to <em>1</em>1 kW.</li>
+  <li><tt>msg.tg_max</tt> - The aount the grid can receive (to grid). Defaults to <em>1</em> kW.</em></li>
+  <li><tt>msg.fg_max</tt> - The aount the grid can provide (from grid). Defaults to <em>1</em> kW.</em></li>
   <li><tt>msg.url</tt> - <em>For debugging only.</em> This can be set to overrule the default VRM API url (<code>https://vrmapi.victronenergy.com/v2</code></li>).
   </ul>
 
