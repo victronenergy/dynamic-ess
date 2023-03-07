@@ -49,7 +49,7 @@ module.exports = function (RED) {
         long: (msg.longitude || config.longitude).toString(),
         lat: (msg.latitude || config.latitude).toString(),
         country: (msg.country || 'nl').toUpperCase(),
-        B0: 0
+        B0: "0"
       }
       const headers = {
         'X-Authorization': 'Token ' + config.vrmtoken,
@@ -72,11 +72,11 @@ module.exports = function (RED) {
 
       if (config.verbose === true) {
         axios.interceptors.request.use(request => {
-          console.log('Starting Request', JSON.stringify(request, null, 2))
+          node.warn(request)
           return request
         })
         axios.interceptors.response.use(response => {
-          console.log('Response:', JSON.stringify(response, null, 2))
+          node.warn(response)
           return response
         })
         node.warn({
