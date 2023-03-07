@@ -71,14 +71,6 @@ module.exports = function (RED) {
       }
 
       if (config.verbose === true) {
-        axios.interceptors.request.use(request => {
-          node.warn(request)
-          return request
-        })
-        axios.interceptors.response.use(response => {
-          node.warn(response)
-          return response
-        })
         node.warn({
           url,
           options,
