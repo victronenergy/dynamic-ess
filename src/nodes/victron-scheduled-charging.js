@@ -39,13 +39,15 @@ module.exports = function (RED) {
       }
 
       const options = {
-        b_max: (msg.b_max || config.b_max || 1),
-        tb_max: (msg.tb_max || config.tb_max || 1),
-        fb_max: (msg.fb_max || config.fb_max || 1),
-        tg_max: (msg.tg_max || config.tg_max || 1),
-        fg_max: (msg.fg_max || config.fg_max || 1),
-        long: (msg.longitude || config.longitude),
-        lat: (msg.latitude || config.latitude),
+        b_max: (msg.b_max || config.b_max || 1).toString(),
+        tb_max: (msg.tb_max || config.tb_max || 1).toString(),
+        fb_max: (msg.fb_max || config.fb_max || 1).toString(),
+        tg_max: (msg.tg_max || config.tg_max || 1).toString(),
+        fg_max: (msg.fg_max || config.fg_max || 1).toString(),
+        p_offset: (msg.p_offset || config.p_offset || 0).toFixed(3).toString(),
+        b_cost: (msg.b_cost || config.b_cost || 0).toFixed(3).toString(),
+        long: (msg.longitude || config.longitude).toString(),
+        lat: (msg.latitude || config.latitude).toString(),
         country: (msg.country || 'nl').toUpperCase(),
         B0: 0
       }
@@ -56,19 +58,27 @@ module.exports = function (RED) {
 
       if (msg.vrmid) {
         if (msg.vrmid.match(/^[0-9]+$/)) {
-          options.site_id = +msg.vrmid
+          options.site_id = msg.vrmid.toString()
         } else {
-          options.portal_id = msg.vrmid
+          options.portal_id = msg.vrmid.toString()
         }
       } else {
         if (config.vrmid.match(/^[0-9]+$/)) {
-          options.site_id = +config.vrmid
+          options.site_id = config.vrmid.toString()
         } else {
-          options.portal_id = config.vrmid
+          options.portal_id = config.vrmid.toString()
         }
       }
 
       if (config.verbose === true) {
+        axios.interceptors.request.use(request => {
+          console.log('Starting Request', JSON.stringify(request, null, 2))
+          return request
+        })
+        axios.interceptors.response.use(response => {
+          console.log('Response:', JSON.stringify(response, null, 2))
+          return response
+        })
         node.warn({
           url,
           options,
