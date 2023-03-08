@@ -2,6 +2,7 @@ module.exports = function (RED) {
   'use strict'
 
   const axios = require('axios')
+  const curlirize = require('axios-curlirize')
 
   function VictronScheduledCharging (config) {
     RED.nodes.createNode(this, config)
@@ -81,7 +82,7 @@ module.exports = function (RED) {
       }
 
       node.status({ fill: 'yellow', shape: 'ring', text: 'Retrieving setpoint' })
-      axios.get(url, { options, headers }).then(function (response) {
+      axios.get(url, { params: options, headers }).then(function (response) {
         if (response.status === 200) {
           msg.payload = response.data
           node.status({ fill: 'green', shape: 'dot', text: 'Ok' })
@@ -101,6 +102,10 @@ module.exports = function (RED) {
 
     node.on('close', function () {
     })
+
+    if (config.verbose) {
+      curlirize(axios)
+    }
   }
 
   RED.nodes.registerType('victron-scheduled-charging', VictronScheduledCharging)
