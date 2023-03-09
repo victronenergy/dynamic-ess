@@ -218,7 +218,7 @@
         "type": "function",
         "z": "36d395bb3832caaf",
         "name": "Chart the output",
-        "func": "const chart = [{\n    \"series\": [\"Schedule\", \"PV yield\"],\n    \"data\": [\n        Object.values(msg.payload.schedule),\n        Object.values(msg.payload.output.P)\n        ],\n    \"labels\": Object.keys(msg.payload.schedule)\n}]\n\nmsg.payload = chart;\n\nreturn msg;",
+        "func": "const chart = [{\n    \"series\": [\"Schedule\", \"PV yield\"],\n    \"data\": [\n        Object.values(msg.payload.schedule),\n        Object.values(msg.payload.output.PV)\n        ],\n    \"labels\": Object.keys(msg.payload.schedule)\n}]\n\nmsg.payload = chart;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
