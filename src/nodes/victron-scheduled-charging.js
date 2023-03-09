@@ -49,7 +49,7 @@ module.exports = function (RED) {
         b_cost: (msg.b_cost || config.b_cost || 0).toFixed(3).toString(),
         long: (msg.longitude || config.longitude).toString(),
         lat: (msg.latitude || config.latitude).toString(),
-        country: (msg.country || 'nl').toUpperCase(),
+        country: (msg.country || config.country || 'nl').toUpperCase(),
         B0: "0"
       }
       const headers = {
