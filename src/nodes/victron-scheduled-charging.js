@@ -46,7 +46,7 @@ module.exports = function (RED) {
         tg_max: (msg.tg_max || config.tg_max || 1).toString(),
         fg_max: (msg.fg_max || config.fg_max || 1).toString(),
         p_offset: (msg.p_offset || config.p_offset || 0).toFixed(3).toString(),
-        b_cost: (msg.b_cost || config.b_cost || 0).toFixed(3).toString(),
+        b_cost: (msg.b_cost || config.b_cost || 0).toString(),
         long: (msg.longitude || config.longitude).toString(),
         lat: (msg.latitude || config.latitude).toString(),
         country: (msg.country || config.country || 'nl').toUpperCase(),
