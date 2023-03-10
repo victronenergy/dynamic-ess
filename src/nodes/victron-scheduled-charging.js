@@ -50,7 +50,7 @@ module.exports = function (RED) {
         long: (msg.longitude || config.longitude).toString(),
         lat: (msg.latitude || config.latitude).toString(),
         country: (msg.country || config.country || 'nl').toUpperCase(),
-        B0: "0"
+        B0: '0'
       }
       const headers = {
         'X-Authorization': 'Token ' + config.vrmtoken,
@@ -86,8 +86,11 @@ module.exports = function (RED) {
         if (response.status === 200) {
           msg.payload = response.data
           node.status({ fill: 'green', shape: 'dot', text: 'Ok' })
+          const d = new Date()
+          const hour = d.getHours()
           if (msg.payload.schedule) {
-            msgsp.payload = msg.payload.schedule[0] * 1000
+            msgsp.payload = msg.payload.schedule[hour] * 1000
+            msgsp.payload = Number(msgsp.payload.toFixed(0))
           }
         } else {
           node.status({ fill: 'yellow', shape: 'dot', text: response.status })
