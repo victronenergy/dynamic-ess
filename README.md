@@ -36,7 +36,7 @@ then be used instead of your VRM credentials. See [create an access token](#crea
 below on how to do that.
 
 Furthermore you will need to fill out the longitude and latitude of your PV
-system. This information is used by
+system.
 
 While it is probably possible to deduct the country based on the longitude and
 latitude, it is a lot easier if you fill it out yourself. So you will need to
