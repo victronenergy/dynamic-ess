@@ -1,3 +1,7 @@
+Note:
+- By default VRM sites are not able to use this node. Victron Energy needs to activate solar data retrieval for your VRM site first.
+- This is a POC/beta node. In the future this node will become obsolete as the functionality will move directly into VRM.
+
 ![Scheduled charging](doc/img/scheduled-charging-flow.png)
 
 The scheduled charging node is for users that have an energy storage system (ESS)
