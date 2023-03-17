@@ -1,6 +1,11 @@
+# Dynamic ESS
+A node-red flow that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero.
+
 Note:
-- By default VRM sites are not able to use this node. Victron Energy needs to activate solar data retrieval for your VRM site first.
+- To use this code, your installtion on VRM needs to be enabled for a beta group. Until that is done an Error 500 will be shown.
 - This is a POC/beta node. In the future this node will become obsolete as the functionality will move directly into VRM.
+
+## Flow screenshot
 
 ![Dynamic ESS](doc/img/dynamic-ess-flow.png)
 
