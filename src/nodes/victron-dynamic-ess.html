@@ -1,7 +1,7 @@
 <script type="text/javascript">
-    RED.nodes.registerType('victron-scheduled-charging',{
+    RED.nodes.registerType('victron-dynamic-ess',{
         category: 'Victron Energy',
-        paletteLabel: 'VRM scheduled charging',
+        paletteLabel: 'VRM dynamic ess',
         color: '#f7ab3e',
         defaults: {
             name: {value: ""},
@@ -23,12 +23,12 @@
         outputs: 2,
         icon: "victronenergy.svg",
         label: function() {
-            return this.name||"Scheduled Charging";
+            return this.name||"Dynamic ess";
         }
     });
 </script>
 
-<script type="text/html" data-template-name="victron-scheduled-charging">
+<script type="text/html" data-template-name="victron-dynamic-ess">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
@@ -128,7 +128,7 @@
     </div>
 </script>
 
-<script type="text/html" data-help-name="victron-scheduled-charging">
+<script type="text/html" data-help-name="victron-dynamic-ess">
   <p>A node that retrieves the ideal ESS setpoint from VRM.</p>
 
   <h3>Configuration</h3>

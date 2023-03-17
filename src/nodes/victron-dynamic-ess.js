@@ -4,7 +4,7 @@ module.exports = function (RED) {
   const axios = require('axios')
   const curlirize = require('axios-curlirize')
 
-  function VictronScheduledCharging (config) {
+  function VictronDynamicEss (config) {
     RED.nodes.createNode(this, config)
 
     const node = this
@@ -31,7 +31,7 @@ module.exports = function (RED) {
         node.status({ fill: 'red', shape: 'dot', text: 'No latitude token set' })
         return
       }
-      msg.topic = 'VRM scheduled charging'
+      msg.topic = 'VRM dynamic ess'
       msg.payload = null
 
       const msgsp = {
@@ -111,5 +111,5 @@ module.exports = function (RED) {
     }
   }
 
-  RED.nodes.registerType('victron-scheduled-charging', VictronScheduledCharging)
+  RED.nodes.registerType('victron-dynamic-ess', VictronDynamicEss)
 }

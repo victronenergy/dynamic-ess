@@ -1,5 +1,5 @@
 {
-  "name": "victron-scheduled-charging",
+  "name": "victron-dynamic-ess",
   "version": "0.0.15",
   "description": "Fetch the ideal ESS setpoint from VRM",
   "main": "index.js",
@@ -9,6 +9,7 @@
   "keywords": [
     "node-red",
     "victron",
+    "dynamic ess",
     "scheduled charging",
     "ess"
   ],
@@ -16,13 +17,13 @@
   "license": "MIT",
   "node-red": {
     "nodes": {
-      "victron-scheduled-charging": "./src/nodes/victron-scheduled-charging.js"
+      "victron-dynamic-ess": "./src/nodes/victron-dynamic-ess.js"
     },
     "version": ">=3.0.2"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dirkjanfaber/victron-scheduled-charging"
+    "url": "https://github.com/victronenergy/victron-dynamic-ess"
   },
   "dependencies": {
     "axios": "^1.3.3",

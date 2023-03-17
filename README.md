@@ -2,9 +2,9 @@ Note:
 - By default VRM sites are not able to use this node. Victron Energy needs to activate solar data retrieval for your VRM site first.
 - This is a POC/beta node. In the future this node will become obsolete as the functionality will move directly into VRM.
 
-![Scheduled charging](doc/img/scheduled-charging-flow.png)
+![Dynamic ESS](doc/img/dynamic-ess-flow.png)
 
-The scheduled charging node is for users that have an energy storage system (ESS)
+The _dynamic ess_ node is for users that have an energy storage system (ESS)
 in combination with a solar system and want to set it automatically to the
 optimal value. Where optimal means that it is set so you will pay the least
 amount for your energy usage.  There are several factors determining the
@@ -19,7 +19,7 @@ optimal value, all being taken into account. These factors are:
 - your predicted consumption
 
 If all of these values are known, VRM can make a calculated optimum setpoint available
-via its application programming interface (API). The scheduled charging node
+via its application programming interface (API). The _dynamic ess_ node
 utilizes that API to fetch it in a userfriendly way.  Where optimum means the
 setting that should result in the lowest energy costs.
 
@@ -49,7 +49,7 @@ use this as source for determining their next day dynamic energy prices.
 
 # Create an access token
 
-In order to use the scheduled charging node, you will need an VRM API access token.
+In order to use the _dynamic ess_ node, you will need an VRM API access token.
 Creating such a token requires a two-step action, taken on the VRM API. The process
 is described below.
 
@@ -92,7 +92,7 @@ fill out the parameters. Give the access token a name in the body and hit the
 ![Access token](doc/img/api-access-token.png)
 
 Store the access token in your password vault as you won't be able to retrieve it again. You
-will also need to fill out this token in the _scheduled charging node_.
+will also need to fill out this token in the _dynamic ess_ node.
 
 When you are done you can point your browser to
 https://vrm-api-docs.victronenergy.com/#/operations/auth/logout and `Send API
