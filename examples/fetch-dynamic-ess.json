@@ -124,7 +124,7 @@
     },
     {
         "id": "ec317b50f856de92",
-        "type": "victron-scheduled-charging",
+        "type": "victron-dynamic-ess",
         "z": "54d9d7570b69ec63",
         "name": "Dynamic ESS VRM site",
         "vrmtoken": "",
