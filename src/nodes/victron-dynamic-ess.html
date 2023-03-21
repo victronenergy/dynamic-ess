@@ -6,7 +6,7 @@
         defaults: {
             name: {value: ""},
             vrmtoken: {value: ""},
-            vrmid: {value: ""},
+            site_id: {value: ""},
             country: {value: ""},
             b_max: {value: 10},
             fb_max: {value: 1.1},
@@ -15,8 +15,8 @@
             tg_max: {value: 1.0},
             b_cost: {value: 0.0},
             p_offset: {value: 0.0},
-            longitude: {value: ""},
-            latitude: {valude: ""},
+            long: {value: ""},
+            lat: {valude: ""},
             verbose: {value: false},
         },
         inputs: 1,
@@ -38,16 +38,16 @@
         <input type="password" id="node-input-vrmtoken" placeholder="VRM token" required>
     </div>
     <div class="form-row">
-        <label for="node-input-vrmid"><i class="fa fa-id-card"></i> VRM id</label>
-        <input type="text" id="node-input-vrmid" placeholder="VRM id" required>
+        <label for="node-input-site_id"><i class="fa fa-id-card"></i> VRM site id</label>
+        <input type="text" id="node-input-site_id" placeholder="VRM site id" required>
     </div>
     <div class="form-row">
         <label for="node-input-longitude"><i class="fa fa-location-arrow"></i> Longitude</label>
         <input type="text" id="node-input-longitude" placeholder="Longitude" required>
     </div>
     <div class="form-row">
-        <label for="node-input-latitude"><i class="fa fa-location-arrow"></i> Latitude</label>
-        <input type="text" id="node-input-latitude" placeholder="Latitude" required>
+        <label for="node-input-lat"><i class="fa fa-location-arrow"></i> Latitude</label>
+        <input type="text" id="node-input-lat" placeholder="Latitude" required>
     </div>
     <div class="form-row">
         <label for="node-input-country"><i class="fa fa-location-arrow"></i> Country</label>
@@ -133,9 +133,9 @@
 
   <h3>Configuration</h3>
 
-  <p>In order to function, the <em>VRM id</em> of the system needs to be
+  <p>In order to function, the <em>VRM site id</em> of the system needs to be
   given. The node can only access the information if also a <em>VRM token</em>
-  has been set.</p>
+  has been set. This is the number that is found in the url of the VRM dashboard.</p>
 
   <h3>Input</h3>
 
@@ -159,10 +159,9 @@ longitude and latitude are shown when you drop a pointer on the map.</p>
   </p>
 
   <ul>
-  <li><tt>msg.vrmid</tt> - The vrm id to fetch the data for. This can be
-either the serial or the unique number of the site.</li>
-  <li><tt>msg.longitude</tt> - The longitude of the site.</li>
-  <li><tt>msg.latitude</tt> - The latitude of the site.</li>
+  <li><tt>msg.site_id</tt> - The vrm id to fetch the data for. This is the unique number of the site and can be found in the url of the VRM dashboard.</li>
+  <li><tt>msg.long</tt> - The longitude of the site.</li>
+  <li><tt>msg.lat</tt> - The latitude of the site.</li>
   <li><tt>msg.country</tt> - The country code that is used for determining the hourly
 tarrif of the energy.</li>. See the dropdown in the select for the two-letter value
 to use.

@@ -19,17 +19,17 @@ module.exports = function (RED) {
         return
       }
 
-      if (!config.vrmid && !msg.vrmid) {
+      if (!config.site_id && !msg.site_id) {
         node.status({ fill: 'red', shape: 'dot', text: 'No VRM ID token set' })
         return
       }
 
-      if (!config.longitude && !msg.longitude) {
+      if (!config.long && !msg.long) {
         node.status({ fill: 'red', shape: 'dot', text: 'No longitude set' })
         return
       }
 
-      if (!config.latitude && !msg.latitude) {
+      if (!config.lat && !msg.lat) {
         node.status({ fill: 'red', shape: 'dot', text: 'No latitude token set' })
         return
       }
@@ -42,6 +42,7 @@ module.exports = function (RED) {
       }
 
       const options = {
+        site_id: (msg.site_id || config.site_id).toString(),
         b_max: (msg.b_max || config.b_max || 1).toString(),
         tb_max: (msg.tb_max || config.tb_max || 1).toString(),
         fb_max: (msg.fb_max || config.fb_max || 1).toString(),
@@ -49,28 +50,14 @@ module.exports = function (RED) {
         fg_max: (msg.fg_max || config.fg_max || 1).toString(),
         p_offset: (msg.p_offset || config.p_offset || 0).toString(),
         b_cost: (msg.b_cost || config.b_cost || 0).toString(),
-        long: (msg.longitude || config.longitude).toString(),
-        lat: (msg.latitude || config.latitude).toString(),
+        long: (msg.long || config.long).toString(),
+        lat: (msg.lat || config.lat).toString(),
         country: (msg.country || config.country || 'nl').toUpperCase()
       }
       const headers = {
         'X-Authorization': 'Token ' + config.vrmtoken,
         accept: 'application/json',
         'User-Agent': 'dynamic-ess/' + packageJson.version
-      }
-
-      if (msg.vrmid) {
-        if (msg.vrmid.match(/^[0-9]+$/)) {
-          options.site_id = msg.vrmid.toString()
-        } else {
-          options.portal_id = msg.vrmid.toString()
-        }
-      } else {
-        if (config.vrmid.match(/^[0-9]+$/)) {
-          options.site_id = config.vrmid.toString()
-        } else {
-          options.portal_id = config.vrmid.toString()
-        }
       }
 
       if (config.verbose === true) {
