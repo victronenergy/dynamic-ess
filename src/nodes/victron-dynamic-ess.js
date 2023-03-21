@@ -3,6 +3,8 @@ module.exports = function (RED) {
 
   const axios = require('axios')
   const curlirize = require('axios-curlirize')
+  const path = require('path')
+  const packageJson = require(path.join(__dirname, '../../', 'package.json'))
 
   function VictronDynamicEss (config) {
     RED.nodes.createNode(this, config)
@@ -53,7 +55,8 @@ module.exports = function (RED) {
       }
       const headers = {
         'X-Authorization': 'Token ' + config.vrmtoken,
-        accept: 'application/json'
+        accept: 'application/json',
+        'User-Agent': 'dynamic-ess/' + packageJson.version
       }
 
       if (msg.vrmid) {
