@@ -2,7 +2,7 @@
     {
         "id": "5999fb9f53a5c90c",
         "type": "victron-output-settings",
-        "z": "36d395bb3832caaf",
+        "z": "54d9d7570b69ec63",
         "service": "com.victronenergy.settings",
         "path": "/Settings/CGwacs/AcPowerSetPoint",
         "serviceObj": {
@@ -96,7 +96,7 @@
                 {
                     "path": "/Settings/CGwacs/PreventFeedback",
                     "type": "enum",
-                    "name": "Don’t feed excess AC-coupled PV into grid",
+                    "name": "AC-coupled PV - grid feed in excess",
                     "enum": {
                         "0": "Feed excess AC-tied PV into grid",
                         "1": "Don’t feed excess AC-tied PV into the grid"
@@ -118,26 +118,30 @@
             "writable": true
         },
         "name": "",
-        "x": 950,
-        "y": 100,
+        "x": 970,
+        "y": 240,
         "wires": []
     },
     {
         "id": "ec317b50f856de92",
-        "type": "victron-dynamic-ess",
-        "z": "36d395bb3832caaf",
-        "name": "",
+        "type": "victron-scheduled-charging",
+        "z": "54d9d7570b69ec63",
+        "name": "Dynamic ESS VRM site",
         "vrmtoken": "",
         "vrmid": "",
         "country": "nl",
-        "b_max": 10,
-        "fb_max": 1.1,
-        "tb_max": 1.2,
-        "longitude": "53.2",
-        "latitude": "6.6",
+        "b_max": "56",
+        "fb_max": "5.5",
+        "tb_max": "5.5",
+        "fg_max": "15",
+        "tg_max": "15",
+        "b_cost": "0.0415",
+        "p_offset": "0.0",
+        "longitude": "4.7",
+        "latitude": "52.5",
         "verbose": true,
-        "x": 580,
-        "y": 100,
+        "x": 480,
+        "y": 320,
         "wires": [
             [
                 "14b5095e69d0c786",
@@ -145,14 +149,17 @@
             ],
             [
                 "fd3adec04c526669",
-                "61132c211cf85c46"
+                "61132c211cf85c46",
+                "9a8d969721bce682",
+                "aaad38fd523a39f0",
+                "4c98aba1240eb91a"
             ]
         ]
     },
     {
         "id": "9bab60c0b2168a4d",
         "type": "inject",
-        "z": "36d395bb3832caaf",
+        "z": "54d9d7570b69ec63",
         "name": "",
         "props": [
             {
@@ -160,19 +167,19 @@
             },
             {
                 "p": "url",
-                "v": "http://vrm-smart-scheduling-api.k.elnino-production.com/",
+                "v": "https://vrm-smart-scheduling-api.k.elnino-production.com/",
                 "vt": "str"
             }
         ],
-        "repeat": "900",
+        "repeat": "2400",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 370,
-        "y": 100,
+        "x": 230,
+        "y": 320,
         "wires": [
             [
                 "ec317b50f856de92"
@@ -182,7 +189,7 @@
     {
         "id": "14b5095e69d0c786",
         "type": "debug",
-        "z": "36d395bb3832caaf",
+        "z": "54d9d7570b69ec63",
         "name": "Setpoint",
         "active": true,
         "tosidebar": true,
@@ -192,14 +199,14 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 800,
-        "y": 60,
+        "x": 820,
+        "y": 200,
         "wires": []
     },
     {
         "id": "fd3adec04c526669",
         "type": "debug",
-        "z": "36d395bb3832caaf",
+        "z": "54d9d7570b69ec63",
         "name": "Scheduled charging",
         "active": true,
         "tosidebar": true,
@@ -209,23 +216,47 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 840,
-        "y": 160,
+        "x": 860,
+        "y": 320,
         "wires": []
+    },
+    {
+        "id": "c0ec7e6fcc75d1ba",
+        "type": "group",
+        "z": "54d9d7570b69ec63",
+        "name": "Visualisation",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "61132c211cf85c46",
+            "fa5a1b5541d667c0",
+            "e3081a4f2ca7e3a4",
+            "9a8d969721bce682",
+            "aaad38fd523a39f0",
+            "8718e34290f2dcf8",
+            "4c98aba1240eb91a",
+            "65329dc5faddf9ac"
+        ],
+        "x": 734,
+        "y": 399,
+        "w": 492,
+        "h": 202
     },
     {
         "id": "61132c211cf85c46",
         "type": "function",
-        "z": "36d395bb3832caaf",
+        "z": "54d9d7570b69ec63",
+        "g": "c0ec7e6fcc75d1ba",
         "name": "Chart the output",
-        "func": "const chart = [{\n    \"series\": [\"Schedule\", \"PV yield\"],\n    \"data\": [\n        Object.values(msg.payload.schedule),\n        Object.values(msg.payload.output.PV)\n        ],\n    \"labels\": Object.keys(msg.payload.schedule)\n}]\n\nmsg.payload = chart;\n\nreturn msg;",
+        "func": "const chart = [{\n    \"series\": [\"PV yield\", \"Consumption\", \"Battery\"],\n    \"data\": [\n        Object.values(msg.payload.output.PV),\n        Object.values(msg.payload.output.C),\n        Object.values(msg.payload.output.B),\n        ],\n    \"labels\": Object.keys(msg.payload.schedule)\n}]\n\nmsg.payload = chart;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 820,
-        "y": 200,
+        "x": 840,
+        "y": 440,
         "wires": [
             [
                 "fa5a1b5541d667c0"
@@ -235,15 +266,61 @@
     {
         "id": "fa5a1b5541d667c0",
         "type": "ui_chart",
-        "z": "36d395bb3832caaf",
+        "z": "54d9d7570b69ec63",
+        "g": "c0ec7e6fcc75d1ba",
         "name": "",
-        "group": "97ee7bd8b2d59e3a",
+        "group": "e63d8cc1b3ac4f7a",
         "order": 0,
-        "width": 0,
-        "height": 0,
-        "label": "Setpoint Schedule (kWh)",
+        "width": "12",
+        "height": "6",
+        "label": "Estimations (in kWh)",
         "chartType": "line",
-        "legend": "false",
+        "legend": "true",
+        "xformat": "HH:mm",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": true,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": true,
+        "colors": [
+            "#f7ab3e",
+            "#f9716e",
+            "#4890d0",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1060,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e3081a4f2ca7e3a4",
+        "type": "ui_chart",
+        "z": "54d9d7570b69ec63",
+        "g": "c0ec7e6fcc75d1ba",
+        "name": "",
+        "group": "e63d8cc1b3ac4f7a",
+        "order": 0,
+        "width": "12",
+        "height": "6",
+        "label": "Energy Usage (in kWh)",
+        "chartType": "bar",
+        "legend": "true",
         "xformat": "HH:mm",
         "interpolate": "linear",
         "nodata": "",
@@ -257,7 +334,92 @@
         "useOneColor": false,
         "useUTC": true,
         "colors": [
-            "#1f77b4",
+            "#f9716e",
+            "#4890d0",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1060,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9a8d969721bce682",
+        "type": "function",
+        "z": "54d9d7570b69ec63",
+        "g": "c0ec7e6fcc75d1ba",
+        "name": "Chart the output",
+        "func": "const chart = [{\n    \"series\": [\"Grid usage\", \"Battery usage\"],\n    \"data\": [\n        Object.values(msg.payload.output.g),\n        Object.values(msg.payload.output.b),\n        ],\n    \"labels\": Object.keys(msg.payload.schedule)\n}]\n\nmsg.payload = chart;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 480,
+        "wires": [
+            [
+                "e3081a4f2ca7e3a4"
+            ]
+        ]
+    },
+    {
+        "id": "aaad38fd523a39f0",
+        "type": "function",
+        "z": "54d9d7570b69ec63",
+        "g": "c0ec7e6fcc75d1ba",
+        "name": "Chart the output",
+        "func": "const chart = [{\n    \"series\": [\"Price\"],\n    \"data\": [\n        Object.values(msg.payload.output.p),\n        ],\n    \"labels\": Object.keys(msg.payload.schedule)\n}]\n\nmsg.payload = chart;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 520,
+        "wires": [
+            [
+                "8718e34290f2dcf8"
+            ]
+        ]
+    },
+    {
+        "id": "8718e34290f2dcf8",
+        "type": "ui_chart",
+        "z": "54d9d7570b69ec63",
+        "g": "c0ec7e6fcc75d1ba",
+        "name": "",
+        "group": "e63d8cc1b3ac4f7a",
+        "order": 0,
+        "width": "12",
+        "height": "6",
+        "label": "Day-ahead Prices (in €/kWh)",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": true,
+        "useUTC": true,
+        "colors": [
+            "#c9c9c9",
             "#eb7100",
             "#ff7f0e",
             "#2ca02c",
@@ -270,20 +432,85 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 1050,
-        "y": 200,
+        "x": 1080,
+        "y": 520,
         "wires": [
             []
         ]
     },
     {
-        "id": "97ee7bd8b2d59e3a",
-        "type": "ui_group",
-        "name": "Scheduled charging",
-        "tab": "7f69b1dfcd36ba41",
-        "order": 1,
-        "disp": true,
+        "id": "4c98aba1240eb91a",
+        "type": "function",
+        "z": "54d9d7570b69ec63",
+        "g": "c0ec7e6fcc75d1ba",
+        "name": "Chart the output",
+        "func": "const chart = [{\n    \"series\": [\"Grid costs\", \"Battery costs\"],\n    \"data\": [\n        Object.values(msg.payload.output.g_cost),\n        Object.values(msg.payload.output.b_cost),\n        ],\n    \"labels\": Object.keys(msg.payload.schedule)\n}]\n\nmsg.payload = chart;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 560,
+        "wires": [
+            [
+                "65329dc5faddf9ac"
+            ]
+        ]
+    },
+    {
+        "id": "65329dc5faddf9ac",
+        "type": "ui_chart",
+        "z": "54d9d7570b69ec63",
+        "g": "c0ec7e6fcc75d1ba",
+        "name": "",
+        "group": "e63d8cc1b3ac4f7a",
+        "order": 0,
         "width": "12",
+        "height": "6",
+        "label": "Usage costs (in €)",
+        "chartType": "bar",
+        "legend": "true",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": true,
+        "useUTC": true,
+        "colors": [
+            "#f9716e",
+            "#4890d0",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1050,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e63d8cc1b3ac4f7a",
+        "type": "ui_group",
+        "name": "Dynamic ESS",
+        "tab": "7f69b1dfcd36ba41",
+        "order": 2,
+        "disp": true,
+        "width": "24",
         "collapse": false,
         "className": ""
     },
