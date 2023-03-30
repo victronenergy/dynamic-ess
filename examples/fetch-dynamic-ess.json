@@ -171,7 +171,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "2400",
+        "repeat": "300",
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
