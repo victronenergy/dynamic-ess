@@ -2,8 +2,8 @@
 A node-red flow that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero. For use in systems that have hourly day ahead prices, such as is now available for consumers in the Netherlands by ANWB, Tibber and the likes.
 
 Note:
-- To use this code, your installtion on VRM needs to be enabled for a beta group. Until that is done an Error 500 will be shown.
-- This is a proof of concept project. In the futurem this implementation in Node-RED will become obsolete as the functionality will move into VRM/Venus OS native.
+- To use this code, your installation on VRM needs to be enabled for a beta group. Until that is done an Error 500 will be shown.
+- This is a proof of concept project. In the future this implementation in Node-RED will become obsolete as the functionality will move into VRM/Venus OS native.
 
 ## Flow screenshot
 
