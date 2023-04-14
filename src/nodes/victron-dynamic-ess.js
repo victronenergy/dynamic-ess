@@ -11,12 +11,18 @@ module.exports = function (RED) {
 
     const node = this
 
+    let allow_disable_feedin = config.allow_disable_feedin
+
     node.on('input', function (msg) {
       const url = msg.url || 'https://vrmapi.victronenergy.com/v2'
 
       if (!config.vrmtoken && !msg.vrmtoken) {
         node.status({ fill: 'red', shape: 'dot', text: 'No VRM token set' })
         return
+      }
+
+      if (msg.allow_disable_feedin) {
+        allow_disable_feedin = msg.allow_disable_feedin
       }
 
       if (!config.site_id && !msg.site_id) {
@@ -66,17 +72,15 @@ module.exports = function (RED) {
           options,
           headers
         })
-      } else {
-        node.warn('not verbose')
       }
 
       node.status({ fill: 'yellow', shape: 'ring', text: 'Retrieving setpoint' })
+      const d = new Date()
+      const hour = d.getHours()
       axios.get(url, { params: options, headers }).then(function (response) {
         if (response.status === 200) {
           msg.payload = response.data
           node.status({ fill: 'green', shape: 'dot', text: 'Ok' })
-          const d = new Date()
-          const hour = d.getHours()
           if (msg.payload.schedule) {
             msgsp.payload = msg.payload.schedule[hour] * 1000
             msgsp.payload = Number(msgsp.payload.toFixed(0))
@@ -85,7 +89,12 @@ module.exports = function (RED) {
           node.status({ fill: 'yellow', shape: 'dot', text: response.status })
         }
 
-        node.send([msgsp, msg])
+        let cheap = 0
+        if (allow_disable_feedin && msg.payload.output.p[hour] < 0) {
+          cheap = 1
+        }
+
+        node.send([msgsp, msg, { payload: cheap, price: msg.payload.output.p[hour] }])
       }).catch(function (error) {
         node.status({ fill: 'red', shape: 'dot', text: 'Error fetching VRM data' })
         node.warn(error)

@@ -18,9 +18,10 @@
             long: {value: "", validate:RED.validators.number()},
             lat: {valude: "", validate:RED.validators.number()},
             verbose: {value: false},
+            allow_disable_feedin: { value: true}
         },
         inputs: 1,
-        outputs: 2,
+        outputs: 3,
         icon: "victronenergy.svg",
         label: function() {
             return this.name||"Dynamic ess";
@@ -126,6 +127,10 @@
         <label style="min-width:190px" for="node-input-verbose"><i class="fa fa-volume-up"></i> Verbose</label>
         <input type="checkbox" checked id="node-input-verbose" style="max-width:30px">
     </div>
+    <div class="form-row">
+        <label style="min-width:190px" for="node-input-allow_disable_feedin"><i class="fa fa-power"></i> Allow disable feed-in</label>
+        <input type="checkbox" checked id="node-input-allow_disable_feedin" style="max-width:30px">
+    </div>
 </script>
 
 <script type="text/html" data-help-name="victron-dynamic-ess">
@@ -178,6 +183,8 @@ to use.
   <li><tt>msg.p_offset</tt> - The offset of buy/sell prices for the grid.</li>
   <li><tt>msg.b_cost</tt> - Battery costs (per kWh for discharging or charging).</li>
   <li><tt>msg.url</tt> - <em>For debugging only.</em> This can be set to overrule the default VRM API url (<code>https://vrmapi.victronenergy.com/v2</code></li>).
+  <li><tt>msg.allow_disable_feedin</tt> - For overruling the configured value. Should be a boolean value.</li>
+
   </ul>
 
   <h3>Outputs</h3>
@@ -188,9 +195,20 @@ first output. The second output gives more information for the coming 24 hours.<
   <p>If the <em>verbose</em> checkbox has been set, the node becomes a bit
 more verbose and sends out some extra debugging information.</p>
 
+  <p>The second output is for generating graphics.</p>
+
+  <p>The third output can be used to disable _grid feed-in_ when the actual energy prices are
+    below zero. When the prices are below zero, the output will be <tt>1</tt>, but only if the 
+    configuration has been set to <i>Allow disable feed-in</i>. The output can be directly connected to an 
+    <i>ESS control</i> node, set to "Disable feed-in".
+    Alternatively you can use this output to steer your power hungry equipment.
+  </p>
+
   <h3>Status</h3>
 
   <p>When everything works correctly, the node shows a green dot with the current ideal ESS setpoint.
     Else it shows a yellow dot containing the http statuscode. 
   </p>
+
+
 </script>
