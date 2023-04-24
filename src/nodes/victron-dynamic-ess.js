@@ -97,7 +97,9 @@ module.exports = function (RED) {
         node.send([msgsp, msg, { payload: cheap, price: msg.payload.output.p[hour] }])
       }).catch(function (error) {
         node.status({ fill: 'red', shape: 'dot', text: 'Error fetching VRM data' })
-        node.warn(error)
+        if (error.response) {
+          node.send([null,null,null,{ payload: error.response}])
+        }
       })
     })
 

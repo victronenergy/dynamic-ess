@@ -21,7 +21,7 @@
             allow_disable_feedin: { value: true}
         },
         inputs: 1,
-        outputs: 3,
+        outputs: 4,
         icon: "victronenergy.svg",
         label: function() {
             return this.name||"Dynamic ess";
@@ -204,11 +204,15 @@ more verbose and sends out some extra debugging information.</p>
     Alternatively you can use this output to steer your power hungry equipment.
   </p>
 
+  <p>The fourth output gives some extra information when the API calls fails. It contains
+    the error response of the API, usually consisting of <tt>status</tt>, <tt>statusText</tt>,
+    <tt>headers</tt>, <tt>config</tt>, <tt>request</tt> and <tt>data</tt>.
+  </p>
+
   <h3>Status</h3>
 
   <p>When everything works correctly, the node shows a green dot with the current ideal ESS setpoint.
     Else it shows a yellow dot containing the http statuscode. 
   </p>
-
 
 </script>
