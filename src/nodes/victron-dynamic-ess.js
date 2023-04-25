@@ -11,7 +11,7 @@ module.exports = function (RED) {
 
     const node = this
 
-    let allow_disable_feedin = config.allow_disable_feedin
+    let AllowDisableFeedin = config.allow_disable_feedin
 
     node.on('input', function (msg) {
       const url = msg.url || 'https://vrmapi.victronenergy.com/v2'
@@ -22,7 +22,7 @@ module.exports = function (RED) {
       }
 
       if (msg.allow_disable_feedin) {
-        allow_disable_feedin = msg.allow_disable_feedin
+        AllowDisableFeedin = msg.allow_disable_feedin
       }
 
       if (!config.site_id && !msg.site_id) {
@@ -90,7 +90,7 @@ module.exports = function (RED) {
         }
 
         let cheap = 0
-        if (allow_disable_feedin && msg.payload.output.p[hour] < 0) {
+        if (AllowDisableFeedin && msg.payload.output.p[hour] < 0) {
           cheap = 1
         }
 
@@ -98,7 +98,7 @@ module.exports = function (RED) {
       }).catch(function (error) {
         node.status({ fill: 'red', shape: 'dot', text: 'Error fetching VRM data' })
         if (error.response) {
-          node.send([null,null,null,{ payload: error.response}])
+          node.send([null, null, null, { payload: error.response }])
         }
       })
     })
