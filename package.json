@@ -17,7 +17,8 @@
   "license": "MIT",
   "node-red": {
     "nodes": {
-      "victron-dynamic-ess": "./src/nodes/victron-dynamic-ess.js"
+      "victron-dynamic-ess": "./src/nodes/victron-dynamic-ess.js",
+      "victron-idle-battery": "./src/nodes/victron-idle-battery.js"
     },
     "version": ">=3.0.2"
   },
