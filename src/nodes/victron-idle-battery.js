@@ -4,7 +4,13 @@ module.exports = function (RED) {
     const node = this
 
     this.configNode = RED.nodes.getNode('victron-client-id')
-    this.client = this.configNode.client
+
+    if (!this.configNode) {
+        node.status({ fill: 'red', shape: 'dot', text: 'Need a victron config client'})
+        return;
+    } else {
+        this.client = this.configNode.client
+    }
     let ready = false
 
     // Subscribe to retrieve the active SOC
@@ -23,6 +29,7 @@ module.exports = function (RED) {
           break
         }
       }
+      node.status({ fill: 'red', shape: 'dot', text: 'Unable to determine SOC (no battery?)'})
     }
 
     setTimeout(activeSOC, 1000, this)
