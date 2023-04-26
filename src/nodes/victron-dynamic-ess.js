@@ -12,6 +12,7 @@ module.exports = function (RED) {
     const node = this
 
     let AllowDisableFeedin = config.allow_disable_feedin
+    let UseGridSetpointMinMax = true
 
     node.on('input', function (msg) {
       const url = msg.url || 'https://vrmapi.victronenergy.com/v2'
@@ -23,6 +24,10 @@ module.exports = function (RED) {
 
       if (msg.allow_disable_feedin) {
         AllowDisableFeedin = msg.allow_disable_feedin
+      }
+
+      if (msg.use_gsmm) {
+        UseGridSetpointMinMax = msg.use_gsmm
       }
 
       if (!config.site_id && !msg.site_id) {
@@ -80,11 +85,25 @@ module.exports = function (RED) {
       axios.get(url, { params: options, headers }).then(function (response) {
         if (response.status === 200) {
           msg.payload = response.data
-          node.status({ fill: 'green', shape: 'dot', text: 'Ok' })
           if (msg.payload.schedule) {
             msgsp.payload = msg.payload.schedule[hour] * 1000
             msgsp.payload = Number(msgsp.payload.toFixed(0))
           }
+
+          if (UseGridSetpointMinMax && msg.payload.output) {
+            switch (msg.payload.output.gsmm[hour]) {
+              case 0:
+                msgsp.payload = 0
+                break
+              case 1:
+                msgsp.payload = -config.tg_max * 1000
+                break
+              case 2:
+                msgsp.payload = config.fg_max * 1000
+            }
+          }
+
+          node.status({ fill: 'green', shape: 'dot', text: 'Ok' })
         } else {
           node.status({ fill: 'yellow', shape: 'dot', text: response.status })
         }
