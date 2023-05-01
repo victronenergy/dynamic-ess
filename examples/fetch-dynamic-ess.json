@@ -1,307 +1,158 @@
 [
     {
-        "id": "ab6334e04a4db525",
+        "id": "7a3625d6405d62b7",
+        "type": "tab",
+        "label": "Dynamic ESS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ec059468817c10cc",
         "type": "group",
-        "z": "ff6dd285a92b3902",
+        "z": "7a3625d6405d62b7",
         "name": "Setpoint",
         "style": {
             "label": true
         },
         "nodes": [
-            "5999fb9f53a5c90c",
-            "14b5095e69d0c786",
-            "2f29d1e3cae4aa4e"
+            "d19c937db0a313d7",
+            "3490e10bec7ebc56"
         ],
-        "x": 74,
-        "y": 519,
-        "w": 532,
-        "h": 122
-    },
-    {
-        "id": "5999fb9f53a5c90c",
-        "type": "victron-output-settings",
-        "z": "ff6dd285a92b3902",
-        "g": "ab6334e04a4db525",
-        "service": "com.victronenergy.settings",
-        "path": "/Settings/CGwacs/AcPowerSetPoint",
-        "serviceObj": {
-            "service": "com.victronenergy.settings",
-            "name": "com.victronenergy.settings",
-            "paths": [
-                {
-                    "path": "/Settings/CGwacs/AcPowerSetPoint",
-                    "type": "float",
-                    "name": "ESS control loop setpoint (W)",
-                    "writable": true
-                },
-                {
-                    "path": "/Settings/CGwacs/BatteryLife/MinimumSocLimit",
-                    "type": "float",
-                    "name": "ESS Minimum SoC (unless grid fails) (%)",
-                    "writable": true
-                },
-                {
-                    "path": "/Settings/CGwacs/BatteryLife/State",
-                    "type": "enum",
-                    "name": "ESS BatteryLife state",
-                    "enum": {
-                        "0": "Unused, BL disabled",
-                        "1": "Restarting",
-                        "2": "Self-consumption",
-                        "3": "Self-consumption",
-                        "4": "Self-consumption",
-                        "5": "Discharge disabled",
-                        "6": "Force charge",
-                        "7": "Sustain",
-                        "8": "Low Soc Recharge",
-                        "9": "Keep batteries charged",
-                        "10": "BL Disabled",
-                        "11": "BL Disabled (Low SoC)",
-                        "12": "BL Disabled (Low SOC recharge)"
-                    },
-                    "writable": true
-                },
-                {
-                    "path": "/Settings/SystemSetup/MaxChargeCurrent",
-                    "type": "float",
-                    "name": "DVCC system max charge current (A DC)",
-                    "writable": true
-                },
-                {
-                    "path": "/Settings/CGwacs/Hub4Mode",
-                    "type": "enum",
-                    "name": "ESS Mode",
-                    "enum": {
-                        "1": "ESS with Phase Compensation",
-                        "2": "ESS without phase compensation",
-                        "3": "Disabled/External Control"
-                    },
-                    "writable": true
-                },
-                {
-                    "path": "/Settings/CGwacs/MaxChargePercentage",
-                    "type": "float",
-                    "name": "ESS max charge current (fractional) (%)",
-                    "writable": true
-                },
-                {
-                    "path": "/Settings/CGwacs/MaxDischargePercentage",
-                    "type": "float",
-                    "name": "ESS max discharge current (fractional) (%)",
-                    "writable": true
-                },
-                {
-                    "path": "/Settings/CGwacs/MaxDischargePower",
-                    "type": "float",
-                    "name": "ESS max discharge current (W)",
-                    "writable": true
-                },
-                {
-                    "path": "/Settings/CGwacs/MaxFeedInPower",
-                    "type": "float",
-                    "name": "Maximum System Grid Feed In (W)",
-                    "writable": true
-                },
-                {
-                    "path": "/Settings/CGwacs/OvervoltageFeedIn",
-                    "type": "enum",
-                    "name": "Feed excess DC-coupled PV into grid",
-                    "enum": {
-                        "0": "Don’t feed excess DC-tied PV into grid",
-                        "1": "Feed excess DC-tied PV into the grid"
-                    },
-                    "writable": true
-                },
-                {
-                    "path": "/Settings/CGwacs/PreventFeedback",
-                    "type": "enum",
-                    "name": "AC-coupled PV - grid feed in excess",
-                    "enum": {
-                        "0": "Feed excess AC-tied PV into grid",
-                        "1": "Don’t feed excess AC-tied PV into the grid"
-                    },
-                    "writable": true
-                },
-                {
-                    "path": "/Settings/SystemSetup/MaxChargeVoltage",
-                    "type": "float",
-                    "name": "Limit managed battery voltage (V DC)",
-                    "writable": true
-                }
-            ]
-        },
-        "pathObj": {
-            "path": "/Settings/CGwacs/AcPowerSetPoint",
-            "type": "float",
-            "name": "ESS control loop setpoint (W)",
-            "writable": true
-        },
-        "name": "",
-        "x": 370,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "14b5095e69d0c786",
-        "type": "debug",
-        "z": "ff6dd285a92b3902",
-        "g": "ab6334e04a4db525",
-        "name": "Setpoint",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 340,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "2f29d1e3cae4aa4e",
-        "type": "link in",
-        "z": "ff6dd285a92b3902",
-        "g": "ab6334e04a4db525",
-        "name": "setpoint",
-        "links": [
-            "5cdcfba71683c7d3"
-        ],
-        "x": 115,
-        "y": 580,
-        "wires": [
-            [
-                "14b5095e69d0c786",
-                "5999fb9f53a5c90c"
-            ]
-        ]
-    },
-    {
-        "id": "06dab2b806cc46f2",
-        "type": "group",
-        "z": "ff6dd285a92b3902",
-        "name": "Grid feed-in",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "47b65d886980105c",
-            "9e031ae6c697b814"
-        ],
-        "x": 54,
+        "x": 24,
         "y": 199,
-        "w": 532,
+        "w": 592,
         "h": 82
     },
     {
-        "id": "47b65d886980105c",
-        "type": "victron-output-ess",
-        "z": "ff6dd285a92b3902",
-        "g": "06dab2b806cc46f2",
-        "service": "com.victronenergy.vebus/276",
-        "path": "/Hub4/DisableFeedIn",
-        "serviceObj": {
-            "service": "com.victronenergy.vebus/276",
-            "name": "MultiPlus-II 48/5000/70-50"
-        },
-        "pathObj": {
-            "path": "/Hub4/DisableFeedIn",
-            "type": "enum",
-            "name": "Disable feed-in",
-            "enum": {
-                "0": "No",
-                "1": "Yes"
-            },
-            "writable": true
-        },
-        "initial": "",
-        "name": "",
-        "onlyChanges": true,
-        "x": 390,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "9e031ae6c697b814",
-        "type": "link in",
-        "z": "ff6dd285a92b3902",
-        "g": "06dab2b806cc46f2",
-        "name": "grid feed-in",
-        "links": [
-            "1ce1057aad06f84d"
-        ],
-        "x": 95,
-        "y": 240,
-        "wires": [
-            [
-                "47b65d886980105c"
-            ]
-        ]
-    },
-    {
-        "id": "e63b1a7a6d1efb50",
+        "id": "aa6ee4f31dbcb2e7",
         "type": "group",
-        "z": "ff6dd285a92b3902",
+        "z": "7a3625d6405d62b7",
         "name": "Dynamic ESS",
         "style": {
             "label": true
         },
         "nodes": [
-            "ec317b50f856de92",
-            "9bab60c0b2168a4d",
-            "5cdcfba71683c7d3",
-            "57f9436919481c01",
-            "1ce1057aad06f84d",
-            "358692fe2a04658a"
+            "9b259e177e4ff742",
+            "9f752e2428038b41",
+            "f715f77e84276ea2",
+            "3b360c01a405a2c7",
+            "75a70536a27d4415",
+            "7bc3124cbb459a5c"
         ],
-        "x": 54,
+        "x": 24,
         "y": 19,
-        "w": 542,
+        "w": 592,
         "h": 162
     },
     {
-        "id": "ec317b50f856de92",
-        "type": "victron-dynamic-ess",
-        "z": "ff6dd285a92b3902",
-        "g": "e63b1a7a6d1efb50",
-        "name": "Dynamic ESS VRM site",
-        "vrmtoken": "",
-        "site_id": "",
-        "country": "nl",
-        "b_max": "14",
-        "fb_max": "4.5",
-        "tb_max": "6.5",
-        "fg_max": "2.5",
-        "tg_max": "2.5",
-        "b_cost": "0.04",
-        "p_offset": "0.03",
-        "long": "5.6",
-        "lat": "53.0",
-        "verbose": true,
-        "allow_disable_feedin": true,
-        "x": 370,
-        "y": 100,
+        "id": "3f60d2e803c27a4f",
+        "type": "group",
+        "z": "7a3625d6405d62b7",
+        "name": "Graphing",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "dccfa78cda47e463",
+            "e6dd13cf04144a2a",
+            "2aa4632775d224bf",
+            "72b592fb71baea5b",
+            "092289e60708b2e4",
+            "d5b1d615e96f6766",
+            "230fe32cbb499a03",
+            "40df3b84d5cdb352",
+            "773f2582b9dac1d2",
+            "7d6ad77de89b7568",
+            "a64ceca6d0094a52",
+            "43a8c4e41c4224bf",
+            "3c45564e22e74842",
+            "855051baa774e99a",
+            "32c0fa1458112ab5",
+            "bafc34a32180e637",
+            "6082cf99017015ea",
+            "a9c87dd7fbd84cb3",
+            "c5f943c25240d8c4"
+        ],
+        "x": 644,
+        "y": 19,
+        "w": 592,
+        "h": 482
+    },
+    {
+        "id": "0a016f89692f973c",
+        "type": "group",
+        "z": "7a3625d6405d62b7",
+        "name": "Idle battery",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "9619d431a576ae37",
+            "61e121aad3a0823d",
+            "2117fac95f9c4a4b"
+        ],
+        "x": 24,
+        "y": 399,
+        "w": 592,
+        "h": 82
+    },
+    {
+        "id": "c98747ce505f78a1",
+        "type": "group",
+        "z": "7a3625d6405d62b7",
+        "name": "API info",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "552cb61bd54e7037",
+            "af10a12ee64c8bd8"
+        ],
+        "x": 24,
+        "y": 499,
+        "w": 592,
+        "h": 82
+    },
+    {
+        "id": "3aaea8e8a477e708",
+        "type": "group",
+        "z": "7a3625d6405d62b7",
+        "name": "Grid feed-in",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "78b07f7564af3bfc",
+            "f97bc52e4af2615b"
+        ],
+        "x": 24,
+        "y": 299,
+        "w": 592,
+        "h": 82
+    },
+    {
+        "id": "d19c937db0a313d7",
+        "type": "link in",
+        "z": "7a3625d6405d62b7",
+        "g": "ec059468817c10cc",
+        "name": "setpoint",
+        "links": [
+            "9f752e2428038b41"
+        ],
+        "x": 65,
+        "y": 240,
         "wires": [
             [
-                "5cdcfba71683c7d3"
-            ],
-            [
-                "57f9436919481c01"
-            ],
-            [
-                "1ce1057aad06f84d"
-            ],
-            [
-                "358692fe2a04658a"
+                "3490e10bec7ebc56"
             ]
         ]
     },
     {
-        "id": "9bab60c0b2168a4d",
+        "id": "9b259e177e4ff742",
         "type": "inject",
-        "z": "ff6dd285a92b3902",
-        "g": "e63b1a7a6d1efb50",
+        "z": "7a3625d6405d62b7",
+        "g": "aa6ee4f31dbcb2e7",
         "name": "",
         "props": [
             {
@@ -320,112 +171,78 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 170,
+        "x": 140,
         "y": 100,
         "wires": [
             [
-                "ec317b50f856de92"
+                "7bc3124cbb459a5c"
             ]
         ]
     },
     {
-        "id": "5cdcfba71683c7d3",
+        "id": "9f752e2428038b41",
         "type": "link out",
-        "z": "ff6dd285a92b3902",
-        "g": "e63b1a7a6d1efb50",
+        "z": "7a3625d6405d62b7",
+        "g": "aa6ee4f31dbcb2e7",
         "name": "setpoint",
         "mode": "link",
         "links": [
-            "2f29d1e3cae4aa4e"
+            "d19c937db0a313d7"
         ],
-        "x": 515,
+        "x": 525,
         "y": 60,
         "wires": []
     },
     {
-        "id": "57f9436919481c01",
+        "id": "f715f77e84276ea2",
         "type": "link out",
-        "z": "ff6dd285a92b3902",
-        "g": "e63b1a7a6d1efb50",
+        "z": "7a3625d6405d62b7",
+        "g": "aa6ee4f31dbcb2e7",
         "name": "graphing",
         "mode": "link",
         "links": [
             "b805402f793a2bb6",
-            "06ecd55224cafc07",
-            "be35cacbe52b0d55",
-            "3c865f9f97e921f9"
+            "a64ceca6d0094a52",
+            "32c0fa1458112ab5",
+            "9619d431a576ae37"
         ],
-        "x": 555,
+        "x": 575,
         "y": 80,
         "wires": []
     },
     {
-        "id": "1ce1057aad06f84d",
+        "id": "3b360c01a405a2c7",
         "type": "link out",
-        "z": "ff6dd285a92b3902",
-        "g": "e63b1a7a6d1efb50",
+        "z": "7a3625d6405d62b7",
+        "g": "aa6ee4f31dbcb2e7",
         "name": "grid feed-in",
         "mode": "link",
         "links": [
-            "9e031ae6c697b814"
+            "78b07f7564af3bfc"
         ],
-        "x": 555,
+        "x": 575,
         "y": 120,
         "wires": []
     },
     {
-        "id": "358692fe2a04658a",
+        "id": "75a70536a27d4415",
         "type": "link out",
-        "z": "ff6dd285a92b3902",
-        "g": "e63b1a7a6d1efb50",
+        "z": "7a3625d6405d62b7",
+        "g": "aa6ee4f31dbcb2e7",
         "name": "api info",
         "mode": "link",
         "links": [
-            "8e33391457bdb0e2"
+            "af10a12ee64c8bd8"
         ],
-        "x": 515,
+        "x": 525,
         "y": 140,
         "wires": []
     },
     {
-        "id": "930511ead4fb77df",
-        "type": "group",
-        "z": "ff6dd285a92b3902",
-        "name": "Graphing",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "e01ca4cc3e71f846",
-            "9ca76f40da013059",
-            "8573f16e3beb6d74",
-            "d04f449687f5b977",
-            "cc136f3a9e9d0789",
-            "c4ead37f6591ecc6",
-            "b47843af5145301d",
-            "4f83c479ec32549b",
-            "ee8a965cf8b09ada",
-            "4e22930296294ea4",
-            "06ecd55224cafc07",
-            "7e11995f3a698c9b",
-            "1683706aaaa4db2a",
-            "4f5e21c20e71c99b",
-            "be35cacbe52b0d55",
-            "b0bb418d87b97ec9",
-            "49b7a76ff105a1cf",
-            "d0792cdb3f0a32af",
-            "388867a036aa9df5"
-        ],
-        "x": 614,
-        "y": 19,
-        "w": 532,
-        "h": 482
-    },
-    {
-        "id": "e01ca4cc3e71f846",
+        "id": "dccfa78cda47e463",
         "type": "debug",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
         "name": "Scheduled charging",
         "active": true,
         "tosidebar": true,
@@ -435,15 +252,15 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 800,
+        "x": 830,
         "y": 60,
         "wires": []
     },
     {
-        "id": "9ca76f40da013059",
+        "id": "e6dd13cf04144a2a",
         "type": "function",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
         "name": "Overview",
         "func": "msg.payload = {\n    \"datasets\": [\n        { label: 'Consumption',\n          type: 'line',\n          data: Object.values(msg.payload.output.C),\n          borderColor: \"#fa716e\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },\n        { label: 'Battery',\n          type: 'line',\n          data: Object.values(msg.payload.output.B),\n          borderColor: \"#629acb\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },\n        { label: 'PV yield',\n          type: 'line',\n          data: Object.values(msg.payload.output.PV),\n          borderColor: \"#f8aa3d\",\n          backgroundColor: \"#f8aa3dAA\",\n          fill: true,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        }        \n        ],\n    \"labels\": Object.keys(msg.payload.schedule)\n}\n\nreturn msg;",
         "outputs": 1,
@@ -451,20 +268,20 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 760,
+        "x": 790,
         "y": 160,
         "wires": [
             [
-                "8573f16e3beb6d74"
+                "2aa4632775d224bf"
             ]
         ]
     },
     {
-        "id": "8573f16e3beb6d74",
+        "id": "2aa4632775d224bf",
         "type": "ui_template",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
-        "group": "d3eff596493454c1",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
+        "group": "dee9862e602bda45",
         "name": "Overview graph",
         "order": 3,
         "width": "12",
@@ -475,17 +292,17 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1000,
+        "x": 1030,
         "y": 160,
         "wires": [
             []
         ]
     },
     {
-        "id": "d04f449687f5b977",
+        "id": "72b592fb71baea5b",
         "type": "function",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
         "name": "Schedule",
         "func": "msg.payload = {\n    \"datasets\": [\n        { label: \"Grid Usage\",\n          data: Object.values(msg.payload.output.g),\n          borderColor: \"#fa716e\",\n          backgroundColor: \"#fa716e\",\n          fill: true\n        },\n        { label: \"Battery usage\",\n          data: Object.values(msg.payload.output.b),\n          borderColor: \"#629acb\",\n          backgroundColor: \"#629acb\",\n          fill: true\n        }],\n    \"labels\": Object.keys(msg.payload.schedule)\n}\n\nreturn msg;",
         "outputs": 1,
@@ -493,20 +310,20 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 760,
+        "x": 790,
         "y": 200,
         "wires": [
             [
-                "cc136f3a9e9d0789"
+                "092289e60708b2e4"
             ]
         ]
     },
     {
-        "id": "cc136f3a9e9d0789",
+        "id": "092289e60708b2e4",
         "type": "ui_template",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
-        "group": "d3eff596493454c1",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
+        "group": "dee9862e602bda45",
         "name": "Schedule graph",
         "order": 4,
         "width": "12",
@@ -517,17 +334,17 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1000,
+        "x": 1030,
         "y": 200,
         "wires": [
             []
         ]
     },
     {
-        "id": "c4ead37f6591ecc6",
+        "id": "d5b1d615e96f6766",
         "type": "function",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
         "name": "Price",
         "func": "msg.payload = {\n    \"datasets\": [\n        { label: \"Buy Price\",\n            type: 'line',\n          data: Object.values(msg.payload.output.p_b),\n          borderColor: \"#fa716e\",\n          backgroundColor: \"#fa716e\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },{ label: \"Sell Price\",\n            type: 'line',\n          data: Object.values(msg.payload.output.p_s),\n          borderColor: \"#57BC37\",\n          backgroundColor: \"#57BC37\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },],\n    \"labels\": Object.keys(msg.payload.schedule)\n}\n\nreturn msg;",
         "outputs": 1,
@@ -535,20 +352,20 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 750,
+        "x": 780,
         "y": 240,
         "wires": [
             [
-                "b47843af5145301d"
+                "230fe32cbb499a03"
             ]
         ]
     },
     {
-        "id": "b47843af5145301d",
+        "id": "230fe32cbb499a03",
         "type": "ui_template",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
-        "group": "d3eff596493454c1",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
+        "group": "dee9862e602bda45",
         "name": "Price graph",
         "order": 5,
         "width": "12",
@@ -559,17 +376,17 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 990,
+        "x": 1020,
         "y": 240,
         "wires": [
             []
         ]
     },
     {
-        "id": "4f83c479ec32549b",
+        "id": "40df3b84d5cdb352",
         "type": "function",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
         "name": "Costs",
         "func": "\nmsg.payload = {\n    \"datasets\": [\n        { label: \"Grid costs\",\n          data: Object.values(msg.payload.output.g_cost),\n          borderColor: \"#fa716e\",\n          backgroundColor: \"#fa716e\",\n          fill: true\n        },\n        { label: \"Battery costs\",\n          data: Object.values(msg.payload.output.b_cost),\n          borderColor: \"#629acb\",\n          backgroundColor: \"#629acb\",\n          fill: true\n        }],\n    \"labels\": Object.keys(msg.payload.schedule)\n}\n\nreturn msg;",
         "outputs": 1,
@@ -577,20 +394,20 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 750,
+        "x": 780,
         "y": 280,
         "wires": [
             [
-                "ee8a965cf8b09ada"
+                "773f2582b9dac1d2"
             ]
         ]
     },
     {
-        "id": "ee8a965cf8b09ada",
+        "id": "773f2582b9dac1d2",
         "type": "ui_template",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
-        "group": "d3eff596493454c1",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
+        "group": "dee9862e602bda45",
         "name": "Costs graph",
         "order": 6,
         "width": "12",
@@ -601,18 +418,18 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 990,
+        "x": 1020,
         "y": 280,
         "wires": [
             []
         ]
     },
     {
-        "id": "4e22930296294ea4",
+        "id": "7d6ad77de89b7568",
         "type": "ui_template",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
-        "group": "d3eff596493454c1",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
+        "group": "dee9862e602bda45",
         "name": "arbitraryLine plugin",
         "order": 2,
         "width": 0,
@@ -623,40 +440,40 @@
         "resendOnRefresh": true,
         "templateScope": "global",
         "className": "",
-        "x": 1030,
+        "x": 1060,
         "y": 60,
         "wires": [
             []
         ]
     },
     {
-        "id": "06ecd55224cafc07",
+        "id": "a64ceca6d0094a52",
         "type": "link in",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
         "name": "graphing",
         "links": [
             "6704cb4025128d5e",
-            "57f9436919481c01"
+            "f715f77e84276ea2"
         ],
-        "x": 655,
+        "x": 685,
         "y": 200,
         "wires": [
             [
-                "e01ca4cc3e71f846",
-                "9ca76f40da013059",
-                "d04f449687f5b977",
-                "c4ead37f6591ecc6",
-                "4f83c479ec32549b",
-                "7e11995f3a698c9b"
+                "dccfa78cda47e463",
+                "e6dd13cf04144a2a",
+                "72b592fb71baea5b",
+                "d5b1d615e96f6766",
+                "40df3b84d5cdb352",
+                "43a8c4e41c4224bf"
             ]
         ]
     },
     {
-        "id": "7e11995f3a698c9b",
+        "id": "43a8c4e41c4224bf",
         "type": "function",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
         "name": "Energy",
         "func": "b = Object.values(msg.payload.output.b);\ng = Object.values(msg.payload.output.g);\nC = Object.values(msg.payload.output.C);\nPV = Object.values(msg.payload.output.PV);\nn = C.map((c,i) => PV[i]-c);\n\nto_b = b.map(x => {if(x<0){return -x}else{return 0}});\nfrom_b = b.map(x => {if(x>0){return x}else{return 0}});\nto_g = g.map(x => {if(x<0){return -x}else{return 0}});\nfrom_g = g.map(x => {if(x>0){return x}else{return 0}});\n\nmet_need = C.map((c,i) => Math.min(c,PV[i]));\n\nfrom_g_to_b = []\nfrom_b_to_g = []\n\nfor (let i=0; i<24; i++) {\n    if (Math.sign(b[i]) * Math.sign(g[i]) >= 0){\n        from_b_to_g.push(0)\n        from_g_to_b.push(0)\n    } else if ( Math.sign(b[i]) == 1 & Math.sign(n[i]) == 1) {\n        from_b_to_g.push(b[i])\n        from_g_to_b.push(0)\n    } else if ( Math.sign(b[i]) == 1 & Math.sign(n[i]) == -1) {\n        from_b_to_g.push(-g[i])\n        from_g_to_b.push(0)\n    } else if ( Math.sign(g[i]) == 1 & Math.sign(n[i]) == 1) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(g[i])\n    } else if ( Math.sign(g[i]) == 1 & Math.sign(n[i]) == -1) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(-b[i])\n    }\n}\n\nfrom_g = from_g.map((x,i) => x-from_g_to_b[i])\nfrom_b = from_b.map((x,i) => x-from_b_to_g[i])\nto_b = to_b.map((x,i) => x-from_g_to_b[i])\nto_g = to_g.map((x,i) => x-from_b_to_g[i])\n\n\nmsg.payload = {\n    \"datasets\": [\n        { label: \"Consumption\",\n          type: 'line',\n          data: C,\n          borderColor: \"#fa716e\",\n          backgroundColor: \"#fa716e\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 0,\n          borderWidth: 1\n        },\n        { label: \"PV Yield\",\n          type: 'line',\n          data: PV,\n          borderColor: \"#f8aa3d\",\n          backgroundColor: \"#f8aa3d\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 0,\n          borderWidth: 1\n        },\n        { label: \"\",\n          type: 'bar',\n          data: met_need,\n          legend: false,\n          borderColor: \"#FFFFFF00\",\n          backgroundColor:\"#FFFFFF00\",\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Grid\",\n          type: 'bar',\n          data: from_g,\n          borderColor: \"#F35C58\",\n          backgroundColor:\"#F35C58\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"To Grid\",\n          type: 'bar',\n          data: to_g,\n          borderColor: \"#57BC37\",\n          backgroundColor:\"#57BC37\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Battery\",\n          type: 'bar',\n          data: from_b,\n          borderColor: \"#387DC5\",\n          backgroundColor:\"#387DC5\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"To Battery\",\n          type: 'bar',\n          data: to_b,\n          borderColor: \"#82CDD8\",\n          backgroundColor:\"#82CDD8\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Battery to Grid\",\n          type: 'bar',\n          data: from_b_to_g,\n          borderColor: \"#387DC5\",\n          backgroundColor:\"#57BC37\",\n          borderWidth: 2,\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Grid to Battery\",\n          type: 'bar',\n          data: from_g_to_b,\n          borderColor: \"#F35C58\",\n          borderWidth: 2,\n          backgroundColor:\"#82CDD8\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },],\n    \"labels\": Object.keys(msg.payload.schedule)\n}\n\nreturn msg;",
         "outputs": 1,
@@ -664,20 +481,20 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 750,
+        "x": 780,
         "y": 320,
         "wires": [
             [
-                "1683706aaaa4db2a"
+                "3c45564e22e74842"
             ]
         ]
     },
     {
-        "id": "1683706aaaa4db2a",
+        "id": "3c45564e22e74842",
         "type": "ui_template",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
-        "group": "d3eff596493454c1",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
+        "group": "dee9862e602bda45",
         "name": "Energy graph",
         "order": 7,
         "width": "24",
@@ -688,18 +505,18 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 990,
+        "x": 1020,
         "y": 320,
         "wires": [
             []
         ]
     },
     {
-        "id": "4f5e21c20e71c99b",
+        "id": "855051baa774e99a",
         "type": "ui_text",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
-        "group": "d3eff596493454c1",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
+        "group": "dee9862e602bda45",
         "order": 1,
         "width": "24",
         "height": "1",
@@ -708,175 +525,126 @@
         "format": "",
         "layout": "row-left",
         "className": "",
-        "x": 1020,
+        "x": 1050,
         "y": 100,
         "wires": []
     },
     {
-        "id": "be35cacbe52b0d55",
+        "id": "32c0fa1458112ab5",
         "type": "link in",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
         "name": "graphing",
         "links": [
             "6704cb4025128d5e",
-            "57f9436919481c01"
+            "f715f77e84276ea2"
         ],
-        "x": 665,
+        "x": 695,
         "y": 380,
         "wires": [
             [
-                "b0bb418d87b97ec9"
+                "bafc34a32180e637"
             ]
         ]
     },
     {
-        "id": "b0bb418d87b97ec9",
+        "id": "bafc34a32180e637",
         "type": "function",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
         "name": "Control Outputs",
-        "func": "const date = new Date()\n\nmsg.payload = {\n    'gs_min_max': Object.values(msg.payload.output.gsmm)[date.getHours()],\n    'feed_in_enabled':  Object.values(msg.payload.output.feed_in)[date.getHours()],\n    'battery_is_idle': Object.values(msg.payload.output.idle_b)[date.getHours()]\n}\n\nreturn msg",
+        "func": "const date = new Date()\n\nmsg.payload = {\n    'gs_min_max': Object.values(msg.payload.output.gsmm)[date.getHours()],\n    'feed_in_enabled': Object.values(msg.payload.output.feed_in)[date.getHours()],\n    'battery_is_idle': Object.values(msg.payload.output.idle_b)[date.getHours()]\n}\n\nswitch (msg.payload.gs_min_max) {\n    case 0: msg.payload.gs_min_max = 'Grid setpoint is 0'\n    break\n    case 1: msg.payload.gs_min_max = 'Grid setpoint is minimum (<i>-tg_max</i>)'\n    break\n    case 2: msg.payload.gs_min_max = 'Grid setpoint is maximum (<i>fg_max</i>)'\n}\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
+        "x": 830,
         "y": 380,
         "wires": [
             [
-                "49b7a76ff105a1cf",
-                "d0792cdb3f0a32af",
-                "388867a036aa9df5"
+                "6082cf99017015ea",
+                "a9c87dd7fbd84cb3",
+                "c5f943c25240d8c4"
             ]
         ]
     },
     {
-        "id": "49b7a76ff105a1cf",
+        "id": "6082cf99017015ea",
         "type": "ui_text",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
-        "group": "0822694a7bd0973f",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
+        "group": "07da7699d281bc03",
         "order": 2,
         "width": "8",
         "height": "2",
         "name": "",
-        "label": "battery_is_idle",
+        "label": "Set battery idle",
         "format": "{{msg.payload.battery_is_idle}}",
         "layout": "col-center",
         "className": "",
-        "x": 1020,
+        "x": 1050,
         "y": 380,
         "wires": []
     },
     {
-        "id": "d0792cdb3f0a32af",
+        "id": "a9c87dd7fbd84cb3",
         "type": "ui_text",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
-        "group": "0822694a7bd0973f",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
+        "group": "07da7699d281bc03",
         "order": 1,
         "width": "8",
         "height": "2",
         "name": "",
-        "label": "gs_min_max",
+        "label": "Grid setpoint (gs_min_max)",
         "format": "{{msg.payload.gs_min_max}}",
         "layout": "col-center",
         "className": "",
-        "x": 1010,
+        "x": 1090,
         "y": 420,
         "wires": []
     },
     {
-        "id": "388867a036aa9df5",
+        "id": "c5f943c25240d8c4",
         "type": "ui_text",
-        "z": "ff6dd285a92b3902",
-        "g": "930511ead4fb77df",
-        "group": "0822694a7bd0973f",
+        "z": "7a3625d6405d62b7",
+        "g": "3f60d2e803c27a4f",
+        "group": "07da7699d281bc03",
         "order": 3,
         "width": "8",
         "height": "2",
         "name": "",
-        "label": "feed_in_enabled",
+        "label": "Enable Grid feed-in",
         "format": "{{msg.payload.feed_in_enabled}}",
         "layout": "col-center",
         "className": "",
-        "x": 1020,
+        "x": 1050,
         "y": 460,
         "wires": []
     },
     {
-        "id": "d3eff596493454c1",
-        "type": "ui_group",
-        "name": "Visualisations",
-        "tab": "cc1a49b54f71c790",
-        "order": 2,
-        "disp": true,
-        "width": "24",
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "0822694a7bd0973f",
-        "type": "ui_group",
-        "name": "Control outputs",
-        "tab": "cc1a49b54f71c790",
-        "order": 3,
-        "disp": true,
-        "width": "24",
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "cc1a49b54f71c790",
-        "type": "ui_tab",
-        "name": "Dynamic ESS",
-        "icon": "dashboard",
-        "order": 1,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "b6688f43d029d46d",
-        "type": "group",
-        "z": "ff6dd285a92b3902",
-        "name": "Idle battery",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "3c865f9f97e921f9",
-            "eb1d5c7a876cca9d",
-            "f60d6287b8e33793"
-        ],
-        "x": 54,
-        "y": 299,
-        "w": 532,
-        "h": 82
-    },
-    {
-        "id": "3c865f9f97e921f9",
+        "id": "9619d431a576ae37",
         "type": "link in",
-        "z": "ff6dd285a92b3902",
-        "g": "b6688f43d029d46d",
+        "z": "7a3625d6405d62b7",
+        "g": "0a016f89692f973c",
         "name": "link in 1",
         "links": [
-            "57f9436919481c01"
+            "f715f77e84276ea2"
         ],
-        "x": 95,
-        "y": 340,
+        "x": 65,
+        "y": 440,
         "wires": [
             [
-                "eb1d5c7a876cca9d"
+                "61e121aad3a0823d"
             ]
         ]
     },
     {
-        "id": "eb1d5c7a876cca9d",
+        "id": "61e121aad3a0823d",
         "type": "function",
-        "z": "ff6dd285a92b3902",
-        "g": "b6688f43d029d46d",
+        "z": "7a3625d6405d62b7",
+        "g": "0a016f89692f973c",
         "name": "Battery control",
         "func": "const date = new Date()\n\nmsg.payload = Object.values(msg.payload.output.idle_b)[date.getHours()]\n\nreturn msg;",
         "outputs": 1,
@@ -884,46 +652,29 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 230,
-        "y": 340,
+        "x": 200,
+        "y": 440,
         "wires": [
             [
-                "f60d6287b8e33793"
+                "2117fac95f9c4a4b"
             ]
         ]
     },
     {
-        "id": "f60d6287b8e33793",
+        "id": "2117fac95f9c4a4b",
         "type": "victron-idle-battery",
-        "z": "ff6dd285a92b3902",
-        "g": "b6688f43d029d46d",
+        "z": "7a3625d6405d62b7",
+        "g": "0a016f89692f973c",
         "name": "Idle battery",
-        "x": 490,
-        "y": 340,
+        "x": 520,
+        "y": 440,
         "wires": []
     },
     {
-        "id": "3668f4458958f2fb",
-        "type": "group",
-        "z": "ff6dd285a92b3902",
-        "name": "API info",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "a91525d50371717f",
-            "8e33391457bdb0e2"
-        ],
-        "x": 64,
-        "y": 399,
-        "w": 522,
-        "h": 82
-    },
-    {
-        "id": "a91525d50371717f",
+        "id": "552cb61bd54e7037",
         "type": "debug",
-        "z": "ff6dd285a92b3902",
-        "g": "3668f4458958f2fb",
+        "z": "7a3625d6405d62b7",
+        "g": "c98747ce505f78a1",
         "name": "API info",
         "active": true,
         "tosidebar": true,
@@ -933,25 +684,328 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 480,
-        "y": 440,
+        "x": 510,
+        "y": 540,
         "wires": []
     },
     {
-        "id": "8e33391457bdb0e2",
+        "id": "af10a12ee64c8bd8",
         "type": "link in",
-        "z": "ff6dd285a92b3902",
-        "g": "3668f4458958f2fb",
+        "z": "7a3625d6405d62b7",
+        "g": "c98747ce505f78a1",
         "name": "link in 2",
         "links": [
-            "358692fe2a04658a"
+            "75a70536a27d4415"
         ],
-        "x": 105,
-        "y": 440,
+        "x": 65,
+        "y": 540,
         "wires": [
             [
-                "a91525d50371717f"
+                "552cb61bd54e7037"
             ]
         ]
+    },
+    {
+        "id": "7bc3124cbb459a5c",
+        "type": "victron-dynamic-ess",
+        "z": "7a3625d6405d62b7",
+        "g": "aa6ee4f31dbcb2e7",
+        "name": "Dynamic ESS VRM site",
+        "vrmtoken": "",
+        "site_id": "",
+        "country": "nl",
+        "b_max": "14",
+        "fb_max": "4.5",
+        "tb_max": "6.5",
+        "fg_max": "2.5",
+        "tg_max": "2.5",
+        "b_cost": "0.04",
+        "p_offset": "0.03",
+        "long": "5.6",
+        "lat": "53.1",
+        "verbose": true,
+        "allow_disable_feedin": true,
+        "x": 370,
+        "y": 100,
+        "wires": [
+            [
+                "9f752e2428038b41"
+            ],
+            [
+                "f715f77e84276ea2"
+            ],
+            [
+                "3b360c01a405a2c7"
+            ],
+            [
+                "75a70536a27d4415"
+            ]
+        ]
+    },
+    {
+        "id": "78b07f7564af3bfc",
+        "type": "link in",
+        "z": "7a3625d6405d62b7",
+        "g": "3aaea8e8a477e708",
+        "name": "grid feed-in",
+        "links": [
+            "3b360c01a405a2c7"
+        ],
+        "x": 65,
+        "y": 340,
+        "wires": [
+            [
+                "f97bc52e4af2615b"
+            ]
+        ]
+    },
+    {
+        "id": "f97bc52e4af2615b",
+        "type": "victron-output-ess",
+        "z": "7a3625d6405d62b7",
+        "g": "3aaea8e8a477e708",
+        "service": "com.victronenergy.settings",
+        "path": "/Settings/CGwacs/PreventFeedback",
+        "serviceObj": {
+            "service": "com.victronenergy.settings",
+            "name": "ESS System Settings",
+            "paths": [
+                {
+                    "path": "/Settings/CGwacs/AcPowerSetPoint",
+                    "type": "integer",
+                    "name": "Grid set-point (W)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/BatteryLife/MinimumSocLimit",
+                    "type": "integer",
+                    "name": "Minimum Discharge SOC (%)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/BatteryLife/State",
+                    "type": "enum",
+                    "name": "ESS state",
+                    "enum": {
+                        "1": "BatteryLife enabled (GUI controlled)",
+                        "2": "Optimized Mode /w BatteryLife: self consumption",
+                        "3": "Optimized Mode /w BatteryLife: self consumption, SoC exceeds 85%",
+                        "4": "Optimized Mode /w BatteryLife: self consumption, SoC at 100%",
+                        "5": "Optimized Mode /w BatteryLife: SoC below dynamic SoC limit",
+                        "6": "Optimized Mode /w BatteryLife: SoC has been below SoC limit for more than 24 hours. Charging the battery (5A)",
+                        "7": "Optimized Mode /w BatteryLife: Inverter/Charger is in sustain mode",
+                        "8": "Optimized Mode /w BatteryLife: recharging, SoC dropped by 5% or more below the minimum SoC",
+                        "9": "'Keep batteries charged' mode is enabled",
+                        "10": "Optimized mode w/o BatteryLife: self consumption, SoC at or above minimum SoC",
+                        "11": "Optimized mode w/o BatteryLife: self consumption, SoC is below minimum SoC",
+                        "12": "Optimized mode w/o BatteryLife: recharging, SoC dropped by 5% or more below minimum SoC"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/Hub4Mode",
+                    "type": "enum",
+                    "name": "ESS mode",
+                    "enum": {
+                        "1": "Optimized mode or 'keep batteries charged' and phase compensation enabled",
+                        "2": "Optimized mode or 'keep batteries charged' and phase compensation disabled",
+                        "3": "External control"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/MaxDischargePower",
+                    "type": "integer",
+                    "name": "Max inverter power (W)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/MaxFeedInPower",
+                    "type": "integer",
+                    "name": "Maximum System Grid Feed In (W)",
+                    "remarks": "<ul><li>-1: No limit</li><li> &gt;=0: limited system feed-in</li></ul><p>Applies to DC-coupled and AC-coupled feed-in.</p>",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/OvervoltageFeedIn",
+                    "type": "enum",
+                    "name": "Feed excess DC-coupled PV into grid",
+                    "enum": {
+                        "0": "Don’t feed excess DC-tied PV into grid",
+                        "1": "Feed excess DC-tied PV into the grid"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/PreventFeedback",
+                    "type": "enum",
+                    "name": "Don’t feed excess AC-coupled PV into grid",
+                    "enum": {
+                        "0": "Feed excess AC-tied PV into grid",
+                        "1": "Don’t feed excess AC-tied PV into the grid"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/SystemSetup/MaxChargeCurrent",
+                    "type": "float",
+                    "name": "Charge current limit (A)",
+                    "writable": true
+                }
+            ]
+        },
+        "pathObj": {
+            "path": "/Settings/CGwacs/PreventFeedback",
+            "type": "enum",
+            "name": "Don’t feed excess AC-coupled PV into grid",
+            "enum": {
+                "0": "Feed excess AC-tied PV into grid",
+                "1": "Don’t feed excess AC-tied PV into the grid"
+            },
+            "writable": true
+        },
+        "initial": "",
+        "name": "",
+        "x": 350,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "3490e10bec7ebc56",
+        "type": "victron-output-ess",
+        "z": "7a3625d6405d62b7",
+        "g": "ec059468817c10cc",
+        "service": "com.victronenergy.settings",
+        "path": "/Settings/CGwacs/AcPowerSetPoint",
+        "serviceObj": {
+            "service": "com.victronenergy.settings",
+            "name": "ESS System Settings",
+            "paths": [
+                {
+                    "path": "/Settings/CGwacs/AcPowerSetPoint",
+                    "type": "integer",
+                    "name": "Grid set-point (W)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/BatteryLife/MinimumSocLimit",
+                    "type": "integer",
+                    "name": "Minimum Discharge SOC (%)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/BatteryLife/State",
+                    "type": "enum",
+                    "name": "ESS state",
+                    "enum": {
+                        "1": "BatteryLife enabled (GUI controlled)",
+                        "2": "Optimized Mode /w BatteryLife: self consumption",
+                        "3": "Optimized Mode /w BatteryLife: self consumption, SoC exceeds 85%",
+                        "4": "Optimized Mode /w BatteryLife: self consumption, SoC at 100%",
+                        "5": "Optimized Mode /w BatteryLife: SoC below dynamic SoC limit",
+                        "6": "Optimized Mode /w BatteryLife: SoC has been below SoC limit for more than 24 hours. Charging the battery (5A)",
+                        "7": "Optimized Mode /w BatteryLife: Inverter/Charger is in sustain mode",
+                        "8": "Optimized Mode /w BatteryLife: recharging, SoC dropped by 5% or more below the minimum SoC",
+                        "9": "'Keep batteries charged' mode is enabled",
+                        "10": "Optimized mode w/o BatteryLife: self consumption, SoC at or above minimum SoC",
+                        "11": "Optimized mode w/o BatteryLife: self consumption, SoC is below minimum SoC",
+                        "12": "Optimized mode w/o BatteryLife: recharging, SoC dropped by 5% or more below minimum SoC"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/Hub4Mode",
+                    "type": "enum",
+                    "name": "ESS mode",
+                    "enum": {
+                        "1": "Optimized mode or 'keep batteries charged' and phase compensation enabled",
+                        "2": "Optimized mode or 'keep batteries charged' and phase compensation disabled",
+                        "3": "External control"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/MaxDischargePower",
+                    "type": "integer",
+                    "name": "Max inverter power (W)",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/MaxFeedInPower",
+                    "type": "integer",
+                    "name": "Maximum System Grid Feed In (W)",
+                    "remarks": "<ul><li>-1: No limit</li><li> &gt;=0: limited system feed-in</li></ul><p>Applies to DC-coupled and AC-coupled feed-in.</p>",
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/OvervoltageFeedIn",
+                    "type": "enum",
+                    "name": "Feed excess DC-coupled PV into grid",
+                    "enum": {
+                        "0": "Don’t feed excess DC-tied PV into grid",
+                        "1": "Feed excess DC-tied PV into the grid"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/CGwacs/PreventFeedback",
+                    "type": "enum",
+                    "name": "Don’t feed excess AC-coupled PV into grid",
+                    "enum": {
+                        "0": "Feed excess AC-tied PV into grid",
+                        "1": "Don’t feed excess AC-tied PV into the grid"
+                    },
+                    "writable": true
+                },
+                {
+                    "path": "/Settings/SystemSetup/MaxChargeCurrent",
+                    "type": "float",
+                    "name": "Charge current limit (A)",
+                    "writable": true
+                }
+            ]
+        },
+        "pathObj": {
+            "path": "/Settings/CGwacs/AcPowerSetPoint",
+            "type": "integer",
+            "name": "Grid set-point (W)",
+            "writable": true
+        },
+        "initial": "",
+        "name": "",
+        "x": 430,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "dee9862e602bda45",
+        "type": "ui_group",
+        "name": "Visualisations",
+        "tab": "e61c7daf0cdfa840",
+        "order": 2,
+        "disp": true,
+        "width": "24",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "07da7699d281bc03",
+        "type": "ui_group",
+        "name": "Control outputs",
+        "tab": "e61c7daf0cdfa840",
+        "order": 3,
+        "disp": true,
+        "width": "24",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e61c7daf0cdfa840",
+        "type": "ui_tab",
+        "name": "Dynamic ESS",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
     }
 ]
