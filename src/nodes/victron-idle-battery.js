@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require('axios')
 
 module.exports = function (RED) {
   function IdleBatteryNode (config) {
@@ -18,26 +18,25 @@ module.exports = function (RED) {
     // Check the installed version of node-red-contrib-victron
     let nrcvVersion = 'unknown'
     axios.defaults.baseURL = 'http://' + RED.settings.uiHost + ':' + RED.settings.uiPort
-    const selectRoot = (RED.settings.httpNodeRoot || RED.settings.httpAdminRoot).replace(/\/$/, "") + '/nodes';
-    const auth_tokens = RED.settings.get("auth-tokens");
+    const selectRoot = (RED.settings.httpNodeRoot || RED.settings.httpAdminRoot).replace(/\/$/, '') + '/nodes'
+    const AuthTokens = RED.settings.get('auth-tokens')
     const headers = {
       Accept: 'application/json'
     }
-    if (auth_tokens) {
-      headers["Authorization"] = 'Bearer ' + auth_tokens.access_token
+    if (AuthTokens) {
+      headers.Authorization = 'Bearer ' + AuthTokens.access_token
     }
     axios.get(selectRoot, {
       headers
     }).then(response => {
-        nrcvVersion = (response.data.find((obj) => obj.id === '@victronenergy/node-red-contrib-victron/victron-client')).version
-      })
+      nrcvVersion = (response.data.find((obj) => obj.id === '@victronenergy/node-red-contrib-victron/victron-client')).version
+    })
       .catch(error => {
         console.log(error)
       })
 
     // Subscribe to retrieve the active SOC
     const activeSOC = (x) => {
-      console.log(nrcvVersion)
       const services = x.client.client.services
       for (const key in services) {
         if (services[key].name.startsWith('com.victronenergy.battery')) {
@@ -48,7 +47,7 @@ module.exports = function (RED) {
           this.subscription = this.client.subscribe(sub, '/Soc', (msg) => {
             this.activeSOC = msg.value
             if (!ready) {
-              node.status({ fill: 'green', shape: 'dot', text: 'Ready' })
+              node.status({ fill: 'green', shape: 'dot', text: 'Ready ' + this.activeSOC + '%)' })
               ready = true
             }
           })
