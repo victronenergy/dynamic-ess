@@ -43,7 +43,7 @@ The following services and pahts are being written to:
 
 # Graphs
 
-On each input, the flow generated fresh graphs, which are displayed on the Node-RED dashboard. The light grey part shows the past situation, while the dark grey part shows state of the current hour. The white part is the scheduled and predicted future.
+On each input, the flow generated fresh graphs, which are displayed on the Node-RED dashboard. Light gray background on the charts display the recorded values, while the transparent background shows the estimated/planned values. The darker gray part designates the current hour.
 
 ![Overview graph](./doc/img/overview-graph.png)  
 ![Schedule graph](./doc/img/schedule-graph.png)  
