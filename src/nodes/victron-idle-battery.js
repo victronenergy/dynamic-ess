@@ -47,7 +47,7 @@ module.exports = function (RED) {
           this.subscription = this.client.subscribe(sub, '/Soc', (msg) => {
             this.activeSOC = msg.value
             if (!ready) {
-              node.status({ fill: 'green', shape: 'dot', text: 'Ready ' + this.activeSOC + '%)' })
+              node.status({ fill: 'green', shape: 'dot', text: 'Ready (' + this.activeSOC + '%)' })
               ready = true
             }
           })
