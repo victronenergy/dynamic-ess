@@ -91,16 +91,7 @@ module.exports = function (RED) {
           }
 
           if (UseGridSetpointMinMax && msg.payload.output) {
-            switch (msg.payload.output.gsmm[hour]) {
-              case 0:
-                msgsp.payload = 0
-                break
-              case 1:
-                msgsp.payload = -config.tg_max * 1000
-                break
-              case 2:
-                msgsp.payload = config.fg_max * 1000
-            }
+            msgsp.payload = msg.payload.output.gsmm[hour] * 1000
           }
 
           node.status({ fill: 'green', shape: 'dot', text: 'Ok' })
