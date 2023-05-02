@@ -33,6 +33,14 @@ the energy price (as retrieved from ENTSOE) and the longitude and latitude deter
 the solar forecast. It uses solcast and the Global Horizontal Irradiance (GHI) for
 getting the predicted solar yield.
 
+# Used dbus paths
+
+When correctly deployed, these nodes do write (and read) from the dbus (using [node-red-contrib-victron](https://github.com/victronenergy/node-red-contrib-victron) nodes).
+The following services and pahts are being written to:
+- `com.victronenergy.settings /Settings/CGwacs/AcPowerSetPoint` - the obvious one, for setting the grid setpoint.
+- `com.victronenergy.settings /Settings/CGwacs/OvervoltageFeedIn` - to enable or disable the "Grid feed-in".
+- `com.victronenergy.settings /Settings/CGwacs/BatteryLife/Schedule/Charge/0/*`  - to put the battery in "idle" mode.
+
 # Usage
 
 As the information is being retrieved via the [VRM API](https://vrm-api-docs.victronenergy.com/#/),
