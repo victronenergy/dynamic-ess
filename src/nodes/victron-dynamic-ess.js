@@ -94,6 +94,7 @@ module.exports = function (RED) {
             msgsp.payload = msg.payload.output.gsmm[hour] * 1000
           }
 
+          msg.payload.options = options
           node.status({ fill: 'green', shape: 'dot', text: 'Ok' })
         } else {
           node.status({ fill: 'yellow', shape: 'dot', text: response.status })
