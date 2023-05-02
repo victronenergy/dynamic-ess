@@ -89,7 +89,7 @@ module.exports = function (RED) {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/Start', diff)
 
-        node.status({ fill: 'yellow', shape: 'dot', text: 'Battery in idle state ('+this.activeSOC+'%) })
+        node.status({ fill: 'yellow', shape: 'dot', text: 'Battery in idle state (' + this.activeSOC + '%)' })
       } else {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/AllowDischarge', 1)
@@ -100,7 +100,7 @@ module.exports = function (RED) {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/Soc', 100)
 
-        node.status({ fill: 'green', shape: 'dot', text: 'Battery in active state ('+this.activeSOC+'%) })
+        node.status({ fill: 'green', shape: 'dot', text: 'Battery in active state (' + this.activeSOC + '%)' })
       }
 
       node.send(msg)
