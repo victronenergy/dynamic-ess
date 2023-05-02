@@ -41,6 +41,16 @@ The following services and pahts are being written to:
 - `com.victronenergy.settings /Settings/CGwacs/OvervoltageFeedIn` - to enable or disable the "Grid feed-in".
 - `com.victronenergy.settings /Settings/CGwacs/BatteryLife/Schedule/Charge/0/*`  - to put the battery in "idle" mode.
 
+# Graphs
+
+On each input, the flow generated fresh graphs, which are displayed on the Node-RED dashboard. The light grey part shows the past situation, while the dark grey part shows state of the current hour. The white part is the scheduled and predicted future.
+
+![Overview graph](./doc/img/overview-graph.png)  
+![Schedule graph](./doc/img/schedule-graph.png)  
+![Price graph](./doc/img/price-graph.png)  
+![Costs graph](./doc/img/costs-graph.png)  
+![Energy graph](./doc/img/energy-graph.png)
+
 # Usage
 
 As the information is being retrieved via the [VRM API](https://vrm-api-docs.victronenergy.com/#/),
