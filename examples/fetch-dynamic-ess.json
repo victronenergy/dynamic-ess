@@ -2,7 +2,7 @@
     {
         "id": "ec059468817c10cc",
         "type": "group",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "name": "Setpoint",
         "style": {
             "label": true
@@ -11,22 +11,22 @@
             "d19c937db0a313d7",
             "3490e10bec7ebc56"
         ],
-        "x": 24,
-        "y": 219,
+        "x": 14,
+        "y": 199,
         "w": 592,
         "h": 82
     },
     {
         "id": "d19c937db0a313d7",
         "type": "link in",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "ec059468817c10cc",
         "name": "setpoint",
         "links": [
             "9f752e2428038b41"
         ],
-        "x": 65,
-        "y": 260,
+        "x": 55,
+        "y": 240,
         "wires": [
             [
                 "3490e10bec7ebc56"
@@ -36,7 +36,7 @@
     {
         "id": "3490e10bec7ebc56",
         "type": "victron-output-ess",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "ec059468817c10cc",
         "service": "com.victronenergy.settings",
         "path": "/Settings/CGwacs/AcPowerSetPoint",
@@ -136,14 +136,14 @@
         },
         "initial": "",
         "name": "",
-        "x": 430,
-        "y": 260,
+        "x": 420,
+        "y": 240,
         "wires": []
     },
     {
         "id": "aa6ee4f31dbcb2e7",
         "type": "group",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "name": "Dynamic ESS",
         "style": {
             "label": true
@@ -154,17 +154,17 @@
             "f715f77e84276ea2",
             "3b360c01a405a2c7",
             "75a70536a27d4415",
-            "7bc3124cbb459a5c"
+            "ec317b50f856de92"
         ],
-        "x": 24,
-        "y": 39,
+        "x": 14,
+        "y": 19,
         "w": 592,
         "h": 162
     },
     {
         "id": "9b259e177e4ff742",
         "type": "inject",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "aa6ee4f31dbcb2e7",
         "name": "",
         "props": [
@@ -184,32 +184,32 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 140,
-        "y": 120,
+        "x": 130,
+        "y": 100,
         "wires": [
             [
-                "7bc3124cbb459a5c"
+                "ec317b50f856de92"
             ]
         ]
     },
     {
         "id": "9f752e2428038b41",
         "type": "link out",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "aa6ee4f31dbcb2e7",
         "name": "setpoint",
         "mode": "link",
         "links": [
             "d19c937db0a313d7"
         ],
-        "x": 525,
-        "y": 80,
+        "x": 515,
+        "y": 60,
         "wires": []
     },
     {
         "id": "f715f77e84276ea2",
         "type": "link out",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "aa6ee4f31dbcb2e7",
         "name": "graphing",
         "mode": "link",
@@ -217,44 +217,48 @@
             "b805402f793a2bb6",
             "a64ceca6d0094a52",
             "32c0fa1458112ab5",
-            "9619d431a576ae37"
+            "9619d431a576ae37",
+            "0d3598ae63cce673",
+            "83140894628e8954",
+            "20e10f730c2e839a",
+            "bfa38638d23fa9fa"
         ],
-        "x": 575,
-        "y": 100,
+        "x": 565,
+        "y": 80,
         "wires": []
     },
     {
         "id": "3b360c01a405a2c7",
         "type": "link out",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "aa6ee4f31dbcb2e7",
         "name": "grid feed-in",
         "mode": "link",
         "links": [
             "78b07f7564af3bfc"
         ],
-        "x": 575,
-        "y": 140,
+        "x": 565,
+        "y": 120,
         "wires": []
     },
     {
         "id": "75a70536a27d4415",
         "type": "link out",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "aa6ee4f31dbcb2e7",
         "name": "api info",
         "mode": "link",
         "links": [
             "af10a12ee64c8bd8"
         ],
-        "x": 525,
-        "y": 160,
+        "x": 515,
+        "y": 140,
         "wires": []
     },
     {
-        "id": "7bc3124cbb459a5c",
+        "id": "ec317b50f856de92",
         "type": "victron-dynamic-ess",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "aa6ee4f31dbcb2e7",
         "name": "Dynamic ESS VRM site",
         "vrmtoken": "",
@@ -271,8 +275,8 @@
         "lat": "53.1",
         "verbose": true,
         "allow_disable_feedin": true,
-        "x": 370,
-        "y": 120,
+        "x": 350,
+        "y": 100,
         "wires": [
             [
                 "9f752e2428038b41"
@@ -291,7 +295,7 @@
     {
         "id": "0a016f89692f973c",
         "type": "group",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "name": "Idle battery",
         "style": {
             "label": true
@@ -301,22 +305,22 @@
             "61e121aad3a0823d",
             "4fad9afe95cc2023"
         ],
-        "x": 24,
-        "y": 419,
+        "x": 14,
+        "y": 399,
         "w": 592,
         "h": 82
     },
     {
         "id": "9619d431a576ae37",
         "type": "link in",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "0a016f89692f973c",
         "name": "link in 1",
         "links": [
             "f715f77e84276ea2"
         ],
-        "x": 65,
-        "y": 460,
+        "x": 55,
+        "y": 440,
         "wires": [
             [
                 "61e121aad3a0823d"
@@ -326,7 +330,7 @@
     {
         "id": "61e121aad3a0823d",
         "type": "function",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "0a016f89692f973c",
         "name": "Battery control",
         "func": "const date = new Date()\n\nmsg.payload = Object.values(msg.payload.output.idle_b)[date.getHours()]\n\nreturn msg;",
@@ -335,8 +339,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 200,
-        "y": 460,
+        "x": 190,
+        "y": 440,
         "wires": [
             [
                 "4fad9afe95cc2023"
@@ -346,17 +350,17 @@
     {
         "id": "4fad9afe95cc2023",
         "type": "victron-idle-battery",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "0a016f89692f973c",
         "name": "",
-        "x": 500,
-        "y": 460,
+        "x": 490,
+        "y": 440,
         "wires": []
     },
     {
         "id": "c98747ce505f78a1",
         "type": "group",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "name": "API info",
         "style": {
             "label": true
@@ -365,15 +369,15 @@
             "552cb61bd54e7037",
             "af10a12ee64c8bd8"
         ],
-        "x": 24,
-        "y": 519,
+        "x": 14,
+        "y": 499,
         "w": 592,
         "h": 82
     },
     {
         "id": "552cb61bd54e7037",
         "type": "debug",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "c98747ce505f78a1",
         "name": "API info",
         "active": true,
@@ -384,21 +388,21 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 510,
-        "y": 560,
+        "x": 500,
+        "y": 540,
         "wires": []
     },
     {
         "id": "af10a12ee64c8bd8",
         "type": "link in",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "c98747ce505f78a1",
         "name": "link in 2",
         "links": [
             "75a70536a27d4415"
         ],
-        "x": 65,
-        "y": 560,
+        "x": 55,
+        "y": 540,
         "wires": [
             [
                 "552cb61bd54e7037"
@@ -408,7 +412,7 @@
     {
         "id": "3aaea8e8a477e708",
         "type": "group",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "name": "Grid feed-in",
         "style": {
             "label": true
@@ -417,22 +421,22 @@
             "78b07f7564af3bfc",
             "f97bc52e4af2615b"
         ],
-        "x": 24,
-        "y": 319,
+        "x": 14,
+        "y": 299,
         "w": 592,
         "h": 82
     },
     {
         "id": "78b07f7564af3bfc",
         "type": "link in",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "3aaea8e8a477e708",
         "name": "grid feed-in",
         "links": [
             "3b360c01a405a2c7"
         ],
-        "x": 65,
-        "y": 360,
+        "x": 55,
+        "y": 340,
         "wires": [
             [
                 "f97bc52e4af2615b"
@@ -442,7 +446,7 @@
     {
         "id": "f97bc52e4af2615b",
         "type": "victron-output-ess",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "g": "3aaea8e8a477e708",
         "service": "com.victronenergy.settings",
         "path": "/Settings/CGwacs/PreventFeedback",
@@ -546,67 +550,67 @@
         },
         "initial": "",
         "name": "",
-        "x": 350,
-        "y": 360,
+        "x": 340,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "3f60d2e803c27a4f",
+        "id": "343fced0041d6faa",
         "type": "group",
-        "z": "e34aea23abf68cc2",
+        "z": "ff6dd285a92b3902",
         "name": "Dashboard",
         "style": {
             "label": true
         },
         "nodes": [
-            "2aa4632775d224bf",
-            "092289e60708b2e4",
-            "230fe32cbb499a03",
-            "773f2582b9dac1d2",
-            "7d6ad77de89b7568",
-            "a64ceca6d0094a52",
-            "3c45564e22e74842",
-            "855051baa774e99a",
-            "32c0fa1458112ab5",
-            "bafc34a32180e637",
-            "6082cf99017015ea",
-            "a9c87dd7fbd84cb3",
-            "c5f943c25240d8c4",
-            "c2ed2b91dd3af122"
+            "3f45ef088e5fcddb",
+            "a08003bbf1d54b5e",
+            "70511c35b60e042e",
+            "edcf811ad2b88cf5",
+            "1c05e67bfea97e5a",
+            "20e10f730c2e839a",
+            "1e62895abe419a80",
+            "753167810ca47123",
+            "bfa38638d23fa9fa",
+            "bf63664939c7edc2",
+            "33a03e45e0cf6521",
+            "05e9121ea2d015df",
+            "5f2a8331697d43b1",
+            "1f01a60e8785c356"
         ],
         "x": 634,
-        "y": 39,
+        "y": 19,
         "w": 592,
         "h": 462
     },
     {
-        "id": "2aa4632775d224bf",
+        "id": "3f45ef088e5fcddb",
         "type": "ui_template",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
-        "group": "dee9862e602bda45",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
+        "group": "ae94fc0e9881e8c0",
         "name": "Overview graph",
         "order": 3,
         "width": "12",
         "height": "6",
-        "format": "<div>\n      <canvas id=\"estimations\" height=\"300px\"></canvas>\n</div>\n\n<script>\n  const estimationschart = new Chart(\n    document.getElementById('estimations'),\n    {\n      type: 'bar',\n      data: {\n        labels: [],\n        datasets: [\n          {\n            label: '',\n            data: []\n          }\n        ]\n      },\n      options: {\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },      \n        scales: {\n            y: {\n                beginAtZero: true,\n                title: {\n                    display: true,\n                    text: \"Energy in kWh\"\n                }\n            }\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD'\n            },\n            title: {\n                display: true,\n                text: \"Overview graph\"\n            },\n            subtitle: {\n                display: true,\n                text: \"\"\n            }\n        }\n      },\n      plugins: [arbitraryLine]\n    }\n  );\n  \n    (function(scope) {\n        scope.$watch('msg.payload', function(d) {\n            if (!d) { return }\n            estimationschart.config.options.title.text = d.title || ''\n            estimationschart.config.data.labels = d.labels\n            estimationschart.config.data.datasets = d.datasets\n            estimationschart.update();\n\n        });\n    })(scope);\n  \n</script>",
+        "format": "<div>\n      <canvas id=\"estimations\" height=\"300px\"></canvas>\n</div>\n\n<script>\n    const estimationschart = new Chart(\n    document.getElementById('estimations'),\n    {\n      type: 'bar',\n      data: {\n        labels: [],\n        datasets: [\n          {\n            label: '',\n            data: []\n          }\n        ]\n      },\n      options: {\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },      \n        scales: {\n            y: {\n                beginAtZero: true,\n                title: {\n                    display: true,\n                    text: \"Energy in kWh\"\n                }\n            }\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD'\n            },\n            title: {\n                display: true,\n                text: \"Overview graph\"\n            },\n            subtitle: {\n                display: true,\n                text: \"\"\n            },\n            tooltip: {\n                callbacks: {\n                    label: function(context) {\n                        let label = context.dataset.label || \"\";\n                        if (label === 'Battery') {\n                            label += ': ';\n                            label += context.parsed.y\n                            label += ' ('\n                            label += d.b_max.toFixed(1)\n                            label += '%)'\n                        }\n                        return label;\n                    }\n                }\n            }\n        }\n      },\n      plugins: [arbitraryLine]\n    }\n  );\n  \n    (function(scope) {\n        scope.$watch('msg.payload', function(d) {\n            if (!d) { return }\n            estimationschart.config.options.title.text = d.title || ''\n            estimationschart.config.data.labels = d.labels\n            estimationschart.config.data.datasets = d.datasets\n            estimationschart.config.options.plugins.tooltip.callbacks.label = function(ctx) {\n                let label = ctx.dataset.label || \"\";\n                if (label === 'Battery') {\n                    label += ': ';\n                    label += ctx.parsed.y.toFixed(2)\n                    label += ' ('\n                    label += ((ctx.parsed.y / d.b_max) * 100).toFixed(1)\n                    label += '%)'\n                }\n                else {\n                    label += ': ' + ctx.parsed.y.toFixed(2)\n                }\n                return label;\n            }\n            estimationschart.update();\n        });\n    })(scope);\n  \n</script>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
         "x": 1040,
-        "y": 180,
+        "y": 160,
         "wires": [
             []
         ]
     },
     {
-        "id": "092289e60708b2e4",
+        "id": "a08003bbf1d54b5e",
         "type": "ui_template",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
-        "group": "dee9862e602bda45",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
+        "group": "ae94fc0e9881e8c0",
         "name": "Schedule graph",
         "order": 4,
         "width": "12",
@@ -618,17 +622,17 @@
         "templateScope": "local",
         "className": "",
         "x": 1040,
-        "y": 220,
+        "y": 200,
         "wires": [
             []
         ]
     },
     {
-        "id": "230fe32cbb499a03",
+        "id": "70511c35b60e042e",
         "type": "ui_template",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
-        "group": "dee9862e602bda45",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
+        "group": "ae94fc0e9881e8c0",
         "name": "Price graph",
         "order": 5,
         "width": "12",
@@ -640,17 +644,17 @@
         "templateScope": "local",
         "className": "",
         "x": 1030,
-        "y": 260,
+        "y": 240,
         "wires": [
             []
         ]
     },
     {
-        "id": "773f2582b9dac1d2",
+        "id": "edcf811ad2b88cf5",
         "type": "ui_template",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
-        "group": "dee9862e602bda45",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
+        "group": "ae94fc0e9881e8c0",
         "name": "Costs graph",
         "order": 6,
         "width": "12",
@@ -662,17 +666,17 @@
         "templateScope": "local",
         "className": "",
         "x": 1030,
-        "y": 300,
+        "y": 280,
         "wires": [
             []
         ]
     },
     {
-        "id": "7d6ad77de89b7568",
+        "id": "1c05e67bfea97e5a",
         "type": "ui_template",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
-        "group": "dee9862e602bda45",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
+        "group": "ae94fc0e9881e8c0",
         "name": "arbitraryLine plugin",
         "order": 2,
         "width": 0,
@@ -684,57 +688,57 @@
         "templateScope": "global",
         "className": "",
         "x": 1050,
-        "y": 80,
+        "y": 60,
         "wires": [
             []
         ]
     },
     {
-        "id": "a64ceca6d0094a52",
+        "id": "20e10f730c2e839a",
         "type": "link in",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
         "name": "graphing",
         "links": [
             "6704cb4025128d5e",
             "f715f77e84276ea2"
         ],
         "x": 675,
-        "y": 260,
+        "y": 240,
         "wires": [
             [
-                "c2ed2b91dd3af122"
+                "1f01a60e8785c356"
             ]
         ]
     },
     {
-        "id": "3c45564e22e74842",
+        "id": "1e62895abe419a80",
         "type": "ui_template",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
-        "group": "dee9862e602bda45",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
+        "group": "ae94fc0e9881e8c0",
         "name": "Energy graph",
         "order": 7,
         "width": "24",
         "height": "6",
-        "format": "<div>\n  <canvas id=\"energygraph\" height=\"300px\"></canvas>\n</div>\n\n<script>\n  const enchart = new Chart(\n    document.getElementById('energygraph'),\n    {\n      type: 'bar',\n      data: {\n        labels: [],\n        datasets: [\n          {\n            label: '',\n            data: []\n          }\n        ]\n      },\n      options: {\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true,\n          labels: {\n              filter: function(item, chart) {\n                return !item.text.includes(\"DISCARD\");\n              }\n          }\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD'\n            },\n            title: {\n                display: true,\n                text: \"Energy Graph\"\n            }\n        }\n      },\n      plugins: [arbitraryLine]\n    }\n  );\n  \n    (function(scope) {\n        scope.$watch('msg.payload', function(d) {\n            if (!d) { return }\n\n            enchart.config.options.title.text = d.title || ''\n            enchart.config.data.labels = d.labels\n            enchart.config.data.datasets = d.datasets\n            enchart.update();\n\n        });\n    })(scope);\n  \n</script>",
+        "format": "<div>\n  <canvas id=\"energygraph\" height=\"300px\"></canvas>\n</div>\n\n<script>\n  const enchart = new Chart(\n    document.getElementById('energygraph'),\n    {\n      type: 'bar',\n      data: {\n        labels: [],\n        datasets: [\n          {\n            label: '',\n            data: []\n          }\n        ]\n      },\n      options: {\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true,\n          labels: {\n              filter: function(item, chart) {\n                return !item.text.includes(\"DISCARD\");\n              }\n          }\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD'\n            },\n            title: {\n                display: true,\n                text: \"Energy Graph\"\n            }\n        }\n    },\n      plugins: [arbitraryLine]\n    }\n  );\n  \n    (function(scope) {\n        scope.$watch('msg.payload', function(d) {\n            if (!d) { return }\n            enchart.config.options.title.text = d.title || ''\n            enchart.config.data.labels = d.labels\n            enchart.config.data.datasets = d.datasets\n            enchart.update();\n\n        });\n    })(scope);\n  \n</script>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
         "x": 1040,
-        "y": 340,
+        "y": 320,
         "wires": [
             []
         ]
     },
     {
-        "id": "855051baa774e99a",
+        "id": "753167810ca47123",
         "type": "ui_text",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
-        "group": "dee9862e602bda45",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
+        "group": "ae94fc0e9881e8c0",
         "order": 1,
         "width": "24",
         "height": "1",
@@ -744,32 +748,32 @@
         "layout": "row-left",
         "className": "",
         "x": 1040,
-        "y": 120,
+        "y": 100,
         "wires": []
     },
     {
-        "id": "32c0fa1458112ab5",
+        "id": "bfa38638d23fa9fa",
         "type": "link in",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
         "name": "graphing",
         "links": [
             "6704cb4025128d5e",
             "f715f77e84276ea2"
         ],
         "x": 685,
-        "y": 420,
+        "y": 400,
         "wires": [
             [
-                "bafc34a32180e637"
+                "bf63664939c7edc2"
             ]
         ]
     },
     {
-        "id": "bafc34a32180e637",
+        "id": "bf63664939c7edc2",
         "type": "function",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
         "name": "Control Outputs",
         "func": "const date = new Date()\n\nmsg.payload = {\n    'gs_min_max': Object.values(msg.payload.output.gsmm)[date.getHours()],\n    'feed_in_enabled': Object.values(msg.payload.output.feed_in)[date.getHours()],\n    'battery_is_idle': Object.values(msg.payload.output.idle_b)[date.getHours()]\n}\n\nswitch (msg.payload.gs_min_max) {\n    case 0: msg.payload.gs_min_max = 'Grid setpoint is 0'\n    break\n    case 1: msg.payload.gs_min_max = 'Grid setpoint is minimum (<i>-tg_max</i>)'\n    break\n    case 2: msg.payload.gs_min_max = 'Grid setpoint is maximum (<i>fg_max</i>)'\n}\n\nreturn msg",
         "outputs": 1,
@@ -778,21 +782,21 @@
         "finalize": "",
         "libs": [],
         "x": 820,
-        "y": 420,
+        "y": 400,
         "wires": [
             [
-                "6082cf99017015ea",
-                "a9c87dd7fbd84cb3",
-                "c5f943c25240d8c4"
+                "33a03e45e0cf6521",
+                "05e9121ea2d015df",
+                "5f2a8331697d43b1"
             ]
         ]
     },
     {
-        "id": "6082cf99017015ea",
+        "id": "33a03e45e0cf6521",
         "type": "ui_text",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
-        "group": "07da7699d281bc03",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
+        "group": "1ae086bda8c1d796",
         "order": 2,
         "width": "8",
         "height": "2",
@@ -802,15 +806,15 @@
         "layout": "col-center",
         "className": "",
         "x": 1040,
-        "y": 380,
+        "y": 360,
         "wires": []
     },
     {
-        "id": "a9c87dd7fbd84cb3",
+        "id": "05e9121ea2d015df",
         "type": "ui_text",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
-        "group": "07da7699d281bc03",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
+        "group": "1ae086bda8c1d796",
         "order": 1,
         "width": "8",
         "height": "2",
@@ -820,15 +824,15 @@
         "layout": "col-center",
         "className": "",
         "x": 1080,
-        "y": 420,
+        "y": 400,
         "wires": []
     },
     {
-        "id": "c5f943c25240d8c4",
+        "id": "5f2a8331697d43b1",
         "type": "ui_text",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
-        "group": "07da7699d281bc03",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
+        "group": "1ae086bda8c1d796",
         "order": 3,
         "width": "8",
         "height": "2",
@@ -838,46 +842,46 @@
         "layout": "col-center",
         "className": "",
         "x": 1050,
-        "y": 460,
+        "y": 440,
         "wires": []
     },
     {
-        "id": "c2ed2b91dd3af122",
+        "id": "1f01a60e8785c356",
         "type": "function",
-        "z": "e34aea23abf68cc2",
-        "g": "3f60d2e803c27a4f",
+        "z": "ff6dd285a92b3902",
+        "g": "343fced0041d6faa",
         "name": "Payload to graph",
-        "func": "let overview = {\n    payload: {\n    \"datasets\": [\n        { label: 'Consumption',\n          type: 'line',\n          data: Object.values(msg.payload.output.C),\n          borderColor: \"#fa716e\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },\n        { label: 'Battery',\n          type: 'line',\n          data: Object.values(msg.payload.output.B),\n          borderColor: \"#629acb\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },\n        { label: 'PV yield',\n          type: 'line',\n          data: Object.values(msg.payload.output.PV),\n          borderColor: \"#f8aa3d\",\n          backgroundColor: \"#f8aa3dAA\",\n          fill: true,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        }        \n        ],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nlet schedule = {\n    payload: {\n    \"datasets\": [\n        { label: \"Grid Usage\",\n          data: Object.values(msg.payload.output.g),\n          borderColor: \"#fa716e\",\n          backgroundColor: \"#fa716e\",\n          fill: true\n        },\n        { label: \"Battery usage\",\n          data: Object.values(msg.payload.output.b),\n          borderColor: \"#629acb\",\n          backgroundColor: \"#629acb\",\n          fill: true\n        }],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nlet price = {\n    payload: {\n    \"datasets\": [\n        { label: \"Buy Price\",\n            type: 'line',\n          data: Object.values(msg.payload.output.p_b),\n          borderColor: \"#fa716e\",\n          backgroundColor: \"#fa716e\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },{ label: \"Sell Price\",\n            type: 'line',\n          data: Object.values(msg.payload.output.p_s),\n          borderColor: \"#57BC37\",\n          backgroundColor: \"#57BC37\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nlet costs = {\n    payload: {\n    \"datasets\": [\n        { label: \"Grid costs\",\n          data: Object.values(msg.payload.output.g_cost),\n          borderColor: \"#fa716e\",\n          backgroundColor: \"#fa716e\",\n          fill: true\n        },\n        { label: \"Battery costs\",\n          data: Object.values(msg.payload.output.b_cost),\n          borderColor: \"#629acb\",\n          backgroundColor: \"#629acb\",\n          fill: true\n        }],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nb = Object.values(msg.payload.output.b);\ng = Object.values(msg.payload.output.g);\nC = Object.values(msg.payload.output.C);\nPV = Object.values(msg.payload.output.PV);\nn = C.map((c,i) => PV[i]-c);\n\nto_b = b.map(x => {if(x<0){return -x}else{return 0}});\nfrom_b = b.map(x => {if(x>0){return x}else{return 0}});\nto_g = g.map(x => {if(x<0){return -x}else{return 0}});\nfrom_g = g.map(x => {if(x>0){return x}else{return 0}});\n\nmet_need = C.map((c,i) => Math.min(c,PV[i]));\n\nfrom_g_to_b = []\nfrom_b_to_g = []\n\nfor (let i=0; i<24; i++) {\n    if (Math.sign(b[i]) * Math.sign(g[i]) >= 0){\n        from_b_to_g.push(0)\n        from_g_to_b.push(0)\n    } else if ( Math.sign(b[i]) == 1 & Math.sign(n[i]) == 1) {\n        from_b_to_g.push(b[i])\n        from_g_to_b.push(0)\n    } else if ( Math.sign(b[i]) == 1 & Math.sign(n[i]) == -1) {\n        from_b_to_g.push(-g[i])\n        from_g_to_b.push(0)\n    } else if ( Math.sign(g[i]) == 1 & Math.sign(n[i]) == 1) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(g[i])\n    } else if ( Math.sign(g[i]) == 1 & Math.sign(n[i]) == -1) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(-b[i])\n    }\n}\n\nfrom_g = from_g.map((x,i) => x-from_g_to_b[i])\nfrom_b = from_b.map((x,i) => x-from_b_to_g[i])\nto_b = to_b.map((x,i) => x-from_g_to_b[i])\nto_g = to_g.map((x,i) => x-from_b_to_g[i])\n\nlet energy = {\n    payload: {\n    \"datasets\": [\n        { label: \"Consumption\",\n          type: 'line',\n          data: C,\n          borderColor: \"#fa716e\",\n          backgroundColor: \"#fa716e\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 0,\n          borderWidth: 1\n        },\n        { label: \"PV Yield\",\n          type: 'line',\n          data: PV,\n          borderColor: \"#f8aa3d\",\n          backgroundColor: \"#f8aa3d\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 0,\n          borderWidth: 1\n        },\n        { label: \"\",\n          type: 'bar',\n          data: met_need,\n          legend: false,\n          borderColor: \"#FFFFFF00\",\n          backgroundColor:\"#FFFFFF00\",\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Grid\",\n          type: 'bar',\n          data: from_g,\n          borderColor: \"#F35C58\",\n          backgroundColor:\"#F35C58\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"To Grid\",\n          type: 'bar',\n          data: to_g,\n          borderColor: \"#57BC37\",\n          backgroundColor:\"#57BC37\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Battery\",\n          type: 'bar',\n          data: from_b,\n          borderColor: \"#387DC5\",\n          backgroundColor:\"#387DC5\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"To Battery\",\n          type: 'bar',\n          data: to_b,\n          borderColor: \"#82CDD8\",\n          backgroundColor:\"#82CDD8\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Battery to Grid\",\n          type: 'bar',\n          data: from_b_to_g,\n          borderColor: \"#387DC5\",\n          backgroundColor:\"#57BC37\",\n          borderWidth: 2,\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Grid to Battery\",\n          type: 'bar',\n          data: from_g_to_b,\n          borderColor: \"#F35C58\",\n          borderWidth: 2,\n          backgroundColor:\"#82CDD8\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nreturn [overview, schedule, price, costs, energy];",
+        "func": "let overview = {\n    payload: {\n    \"datasets\": [\n        { label: 'Consumption',\n          type: 'line',\n          data: Object.values(msg.payload.output.C),\n          borderColor: \"#FA716F\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },\n        { label: 'Battery',\n          type: 'line',\n          data: Object.values(msg.payload.output.B),\n          borderColor: \"#4790D0\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },\n        { label: 'PV yield',\n          type: 'line',\n          data: Object.values(msg.payload.output.PV),\n          borderColor: \"#F7AB3E\",\n          backgroundColor: \"#f8aa3dAA\",\n          fill: true,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        }        \n        ],\n    \"labels\": Object.keys(msg.payload.schedule),\n    \"b_max\": msg.payload.options.b_max\n}}\n\nlet schedule = {\n    payload: {\n    \"datasets\": [\n        { label: \"Grid Usage\",\n          data: Object.values(msg.payload.output.g),\n          borderColor: \"#FA716F\",\n          backgroundColor: \"#FA716F\",\n          fill: true\n        },\n        { label: \"Battery usage\",\n          data: Object.values(msg.payload.output.b),\n          borderColor: \"#4790D0\",\n          backgroundColor: \"#4790D0\",\n          fill: true\n        }],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nlet price = {\n    payload: {\n    \"datasets\": [\n        { label: \"Buy Price\",\n            type: 'line',\n          data: Object.values(msg.payload.output.p_b),\n          borderColor: \"#FA716F\",\n          backgroundColor: \"#FA716F\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },{ label: \"Sell Price\",\n            type: 'line',\n          data: Object.values(msg.payload.output.p_s),\n          borderColor: \"#8BC964\",\n          backgroundColor: \"#8BC964\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nlet costs = {\n    payload: {\n    \"datasets\": [\n        { label: \"Grid costs\",\n          data: Object.values(msg.payload.output.g_cost),\n          borderColor: \"#FA716F\",\n          backgroundColor: \"#FA716F\",\n          fill: true\n        },\n        { label: \"Battery costs\",\n          data: Object.values(msg.payload.output.b_cost),\n          borderColor: \"#4790D0\",\n          backgroundColor: \"#4790D0\",\n          fill: true\n        }],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nb = Object.values(msg.payload.output.b);\ng = Object.values(msg.payload.output.g);\nC = Object.values(msg.payload.output.C);\nPV = Object.values(msg.payload.output.PV);\nn = C.map((c,i) => PV[i]-c);\n\nto_b = b.map(x => {if(x<0){return -x}else{return 0}});\nfrom_b = b.map(x => {if(x>0){return x}else{return 0}});\nto_g = g.map(x => {if(x<0){return -x}else{return 0}});\nfrom_g = g.map(x => {if(x>0){return x}else{return 0}});\n\nmet_need = C.map((c,i) => Math.min(c,PV[i]));\n\nfrom_g_to_b = []\nfrom_b_to_g = []\n\nfor (let i=0; i<=23; i++) {\n    if (Math.sign(b[i]) * Math.sign(g[i]) >= 0){\n        from_b_to_g.push(0)\n        from_g_to_b.push(0)\n    } else if ( Math.sign(b[i]) == 1 & Math.sign(n[i]) >= 0) {\n        from_b_to_g.push(b[i])\n        from_g_to_b.push(0)\n    } else if ( Math.sign(b[i]) == 1 & Math.sign(n[i]) == -1) {\n        from_b_to_g.push(-g[i])\n        from_g_to_b.push(0)\n    } else if ( Math.sign(g[i]) == 1 & Math.sign(n[i]) >= 0) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(g[i])\n    } else if ( Math.sign(g[i]) == 1 & Math.sign(n[i]) == -1) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(-b[i])\n    }\n}\n\nfrom_g = from_g.map((x,i) => x-from_g_to_b[i])\nfrom_b = from_b.map((x,i) => x-from_b_to_g[i])\nto_b = to_b.map((x,i) => x-from_g_to_b[i])\nto_g = to_g.map((x,i) => x-from_b_to_g[i])\n\nlet energy = {\n    payload: {\n    \"datasets\": [\n        { label: \"Consumption\",\n          type: 'line',\n          data: C,\n          borderColor: \"#1066B1\",\n          backgroundColor: \"#1066B1\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 0,\n          borderWidth: 1\n        },\n        { label: \"PV Yield\",\n          type: 'line',\n          data: PV,\n          borderColor: \"#F7AB3E\",\n          backgroundColor: \"#F7AB3E\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 0,\n          borderWidth: 1\n        },\n        { label: \"\",\n          type: 'bar',\n          data: met_need,\n          legend: false,\n          borderColor: \"#FFFFFF00\",\n          backgroundColor:\"#FFFFFF00\",\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Grid\",\n          type: 'bar',\n          data: from_g,\n          borderColor: \"#FA716F\",\n          backgroundColor:\"#FA716F\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"To Grid\",\n          type: 'bar',\n          data: to_g,\n          borderColor: \"#8BC964\",\n          backgroundColor:\"#8BC964\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Battery\",\n          type: 'bar',\n          data: from_b,\n          borderColor: \"#4790D0\",\n          backgroundColor:\"#4790D0\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"To Battery\",\n          type: 'bar',\n          data: to_b,\n          borderColor: \"#9683EC\",\n          backgroundColor:\"#9683EC\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Battery to Grid\",\n          type: 'bar',\n          data: from_b_to_g,\n          borderColor: \"#4790D0\",\n          backgroundColor:\"#8BC964\",\n          borderWidth: 4,\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Grid to Battery\",\n          type: 'bar',\n          data: from_g_to_b,\n          borderColor: \"#FA716F\",\n          borderWidth: 4,\n          backgroundColor:\"#9683EC\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nreturn [overview, schedule, price, costs, energy];",
         "outputs": 5,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 810,
-        "y": 260,
+        "y": 240,
         "wires": [
             [
-                "2aa4632775d224bf"
+                "3f45ef088e5fcddb"
             ],
             [
-                "092289e60708b2e4"
+                "a08003bbf1d54b5e"
             ],
             [
-                "230fe32cbb499a03"
+                "70511c35b60e042e"
             ],
             [
-                "773f2582b9dac1d2"
+                "edcf811ad2b88cf5"
             ],
             [
-                "3c45564e22e74842"
+                "1e62895abe419a80"
             ]
         ]
     },
     {
-        "id": "dee9862e602bda45",
+        "id": "ae94fc0e9881e8c0",
         "type": "ui_group",
         "name": "Visualisations",
-        "tab": "e61c7daf0cdfa840",
+        "tab": "cc1a49b54f71c790",
         "order": 2,
         "disp": true,
         "width": "24",
@@ -885,10 +889,10 @@
         "className": ""
     },
     {
-        "id": "07da7699d281bc03",
+        "id": "1ae086bda8c1d796",
         "type": "ui_group",
         "name": "Control outputs",
-        "tab": "e61c7daf0cdfa840",
+        "tab": "cc1a49b54f71c790",
         "order": 3,
         "disp": true,
         "width": "24",
@@ -896,7 +900,7 @@
         "className": ""
     },
     {
-        "id": "e61c7daf0cdfa840",
+        "id": "cc1a49b54f71c790",
         "type": "ui_tab",
         "name": "Dynamic ESS",
         "icon": "dashboard",
