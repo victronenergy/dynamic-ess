@@ -47,7 +47,7 @@ module.exports = function (RED) {
           this.subscription = this.client.subscribe(sub, '/Soc', (msg) => {
             this.activeSOC = msg.value
             if (!ready) {
-              node.status({ fill: 'green', shape: 'dot', text: 'Ready (' + this.activeSOC + '%)' })
+              node.status({ fill: 'green', shape: 'dot', text: 'Ready (' + this.activeSOC.toFixed(1) + '%)' })
               ready = true
             }
           })
@@ -89,7 +89,7 @@ module.exports = function (RED) {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/Start', diff)
 
-        node.status({ fill: 'yellow', shape: 'dot', text: 'Battery in idle state (' + this.activeSOC + '%)' })
+        node.status({ fill: 'yellow', shape: 'dot', text: 'Battery in idle state (' + this.activeSOC.toFixed(1) + '%)' })
       } else {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/AllowDischarge', 1)
@@ -100,7 +100,7 @@ module.exports = function (RED) {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/Soc', 100)
 
-        node.status({ fill: 'green', shape: 'dot', text: 'Battery in active state (' + this.activeSOC + '%)' })
+        node.status({ fill: 'green', shape: 'dot', text: 'Battery in active state (' + this.activeSOC.toFixed(1) + '%)' })
       }
 
       node.send(msg)
