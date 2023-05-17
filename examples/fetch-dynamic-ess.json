@@ -170,11 +170,6 @@
         "props": [
             {
                 "p": "payload"
-            },
-            {
-                "p": "url",
-                "v": "https://vrm-smart-scheduling-api.k.elnino-production.com/",
-                "vt": "str"
             }
         ],
         "repeat": "300",

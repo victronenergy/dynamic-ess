@@ -15,7 +15,7 @@ module.exports = function (RED) {
     let UseGridSetpointMinMax = true
 
     node.on('input', function (msg) {
-      const url = msg.url || 'https://vrmapi.victronenergy.com/v2'
+      const url = msg.url || 'https://vrm-dynamic-ess-api.victronenergy.com'
 
       if (!config.vrmtoken && !msg.vrmtoken) {
         node.status({ fill: 'red', shape: 'dot', text: 'No VRM token set' })
