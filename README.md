@@ -30,6 +30,8 @@ The default filled out values are typical values. If you think you are factors o
 
 <img src="https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/edit-panel.png" width="70%" alt="Edit panel" />
 
+Once everything is filled out, you can deploy the flow and check https://venus.local:1881/ui/ to see how the system will take its actions for the day.
+
 ## Flow screenshot
 
 ![Dynamic ESS](doc/img/dynamic-ess-flow.png)
