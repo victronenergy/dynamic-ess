@@ -4,6 +4,31 @@ A node-red flow that uses VRM forecasting and algorithm to optimize when to sell
 Note:
 - To use this code, your installation on VRM needs to be enabled for a beta group. Until that is done an Error 500 will be shown.
 - This is a proof of concept project. In the future this implementation in Node-RED will become obsolete as the functionality will move into VRM/Venus OS native.
+- This flow uses control paths that may interfere with your normal GX device usage. It adjusts settings (setpoint) and will insert a schedule for charging in the ESS menu. If you don't want that, don't use this node. See below which dbus paths are being used.
+
+## Quick-start
+
+After installing this node, import the _fetch-dynamic-ess_ example (ctrl-i). Once 
+imported, double-click the _Dynamic ESS VRM_ node and fill out all required fields.
+
+<img src="https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/import-example.png" width="70%" alt="Edit panel" />
+
+In the rest of this document some more information may be found on getting the right
+values for optimizing the configuration. In short:
+- Access token - The VRM access token. See below on how to create one for your site.
+- Site ID - Note that this may not be the same as your user ID. You can find your site id in the url on your dashboard. If for example your url for your dashboard is https://vrm.victronenergy.com/installation/654321/dashboard, your Site ID is 654321
+- B_max - Battery capacity (in kWh)
+- tb_max - Maximum Battery charge power (in kW)
+- fb_max  - Maximum Battery discharge power (in kW)
+- tg_max - Maximum Grid Export power (in kW)
+- fg_max - Maximum Grid Import power (in kW). 
+- Price offset - Fee paid for buying or selling energy to the grid (in €/kWh).
+- Battery costs - Cost of charging or discharging battery (in €/kWh).
+- Allow disable feed-in - Grid feed-in will be enabled/disabled
+
+The default filled out values are typical values. If you think you are factors of, you might want to consult on the [community](https://community.victronenergy.com/index.html) and ask for advice on what to fill out. 
+
+<img src="https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/edit-panel.png" width="70%" alt="Edit panel" />
 
 ## Flow screenshot
 
@@ -22,6 +47,8 @@ optimal value, all being taken into account. These factors are:
 - the charge speed of your battery
 - the discharge speed of your battery
 - your predicted consumption
+- the grid cost per kWh
+- the battery cost per kWh
 
 If all of these values are known, VRM can make a calculated optimum setpoint available
 via its application programming interface (API). The _dynamic ess_ node
@@ -68,7 +95,7 @@ energy price from ENTSO-E. ENTSO-E is the European association for the
 cooperation of transmission system operators (TSOs) for electricity. All EU countries
 use this as source for determining their next day dynamic energy prices.
 
-![Edit panel](doc/img/edit-panel.png)
+<img src="https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/edit-panel.png" width="70%" alt="Edit panel" />
 
 # Create an access token
 
