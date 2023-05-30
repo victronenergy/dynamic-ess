@@ -11,7 +11,7 @@ module.exports = function (RED) {
 
     const node = this
 
-    let AllowDisableFeedin = config.allow_disable_feedin
+    let FeedInPossible = config.feed_in_possible
     let UseGridSetpointMinMax = true
 
     node.on('input', function (msg) {
@@ -22,8 +22,8 @@ module.exports = function (RED) {
         return
       }
 
-      if (msg.allow_disable_feedin) {
-        AllowDisableFeedin = msg.allow_disable_feedin
+      if (msg.feed_in_possible) {
+        FeedInPossible = msg.feed_in_possible
       }
 
       if (msg.use_gsmm) {
@@ -59,8 +59,11 @@ module.exports = function (RED) {
         fb_max: (msg.fb_max || config.fb_max || 1).toString(),
         tg_max: (msg.tg_max || config.tg_max || 1).toString(),
         fg_max: (msg.fg_max || config.fg_max || 1).toString(),
-        p_offset: (msg.p_offset || config.p_offset || 0).toString(),
         b_cost: (msg.b_cost || config.b_cost || 0).toString(),
+        provider_fee: (msg.provider_fee || config.p_offset || 0).toString(),
+        vat_percentage: (msg.vat_percentage || (1+(config.vat_percentage/100)) || 1).toString(),
+        feed_in_possible: (msg.feed_in_possible || config.feed_in_possible || true).toString(),
+        feed_in_control_on: (msg.feed_in_control_on || config.feed_in_control_on || true).toString(),
         long: (msg.long || config.long).toString(),
         lat: (msg.lat || config.lat).toString(),
         country: (msg.country || config.country || 'nl').toUpperCase()
@@ -101,13 +104,17 @@ module.exports = function (RED) {
         }
 
         let cheap = 0
-        if (AllowDisableFeedin && msg.payload.output.p[hour] < 0) {
+        if (FeedInPossible && msg.payload.output.p[hour] < 0) {
           cheap = 1
         }
 
         node.send([msgsp, msg, { payload: cheap, price: msg.payload.output.p[hour] }])
       }).catch(function (error) {
-        node.status({ fill: 'red', shape: 'dot', text: 'Error fetching VRM data' })
+        if (error.response && error.response.data && error.response.data.detail) {
+            node.status({ fill: 'red', shape: 'dot', text: error.response.data.detail })
+        } else {
+          node.status({ fill: 'red', shape: 'dot', text: 'Error fetching VRM data' })
+        }
         if (error.response) {
           node.send([null, null, null, { payload: error.response }])
         }

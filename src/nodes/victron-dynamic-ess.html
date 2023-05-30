@@ -14,11 +14,12 @@
             fg_max: { value: 1.0, validate: RED.validators.number() },
             tg_max: { value: 1.0, validate: RED.validators.number() },
             b_cost: { value: 0.0, validate: RED.validators.number() },
-            p_offset: { value: 0.0, validate: RED.validators.number() },
+            provider_fee: { value: 0.0, validate: RED.validators.number() },
+            vat_percentage: { value: 0.0, validate: RED.validators.regex(/^\d{0,99}$/) },
             long: { value: "", validate: RED.validators.number() },
             lat: { valude: "", validate: RED.validators.number() },
-            verbose: { value: false },
-            allow_disable_feedin: { value: true }
+            feed_in_possible: { value: true },
+            feed_in_control_on: { value: true }
         },
         inputs: 1,
         outputs: 4,
@@ -116,20 +117,24 @@
         <input type="text" id="node-input-fg_max" placeholder="Amount the grid can provide (from grid) in one hour (kW)">
     </div>
     <div class="form-row">
-        <label for="node-input-p_offset"><i class="fa fa-balance-scale"></i> Price offset</label>
-        <input type="text" id="node-input-p_offset" placeholder="The offset of buy/sell prices for the grid">
-    </div>
-    <div class="form-row">
         <label for="node-input-b_cost"><i class="fa fa-money"></i> Battery costs</label>
         <input type="text" id="node-input-b_cost" placeholder="Battery costs">
     </div>
     <div class="form-row">
-        <label style="min-width:190px" for="node-input-verbose"><i class="fa fa-volume-up"></i> Verbose</label>
-        <input type="checkbox" checked id="node-input-verbose" style="max-width:30px">
+        <label for="node-input-provider_fee"><i class="fa fa-balance-scale"></i> Price offset</label>
+        <input type="text" id="node-input-provider_fee" placeholder="The provider fee of buy/sell prices for the grid">
     </div>
     <div class="form-row">
-        <label style="min-width:190px" for="node-input-allow_disable_feedin"><i class="fa fa-power"></i> Allow disable feed-in</label>
-        <input type="checkbox" checked id="node-input-allow_disable_feedin" style="max-width:30px">
+        <label for="node-input-vat_percentage"><i class="fa fa-plus-circle"></i> VAT percentage</label>
+        <input type="number" id="node-input-vat_percentage" min="0" max="99" placeholder="The VAT percentage (eg. 21%)">
+    </div>
+    <div class="form-row">
+        <label style="min-width:190px" for="node-input-feed_in_possible"><i class="fa fa-power"></i> Feed in possible: Can you sell back to the grid?</label>
+        <input type="checkbox" checked id="node-input-feed_in_possible" style="max-width:30px">
+    </div>
+    <div class="form-row">
+        <label style="min-width:190px" for="node-input-feed_in_control_on"><i class="fa fa-power"></i> Feed-in control: Allow control over the feed-in variable (turn it off automatically when the prices are negative)?</label>
+        <input type="checkbox" checked id="node-input-feed_in_control_on" style="max-width:30px">
     </div>
 </script>
 
@@ -145,7 +150,7 @@
         <li>the solar prediction</li>
         <li>your (dynamic) energy contract price</li>
         <li>your battery size</li>
-        <li>the charge speed of yur battery</li>
+        <li>the charge speed of your battery</li>
         <li>the discharge speed of your battery</li>
         <li>your predicted consumption</li>
     </ul>
@@ -222,10 +227,12 @@ to use.
   to <em>1</em>1 kW.</li>
   <li><tt>msg.tg_max</tt> - The amount the grid can receive (to grid). Defaults to <em>1</em> kW.</em></li>
   <li><tt>msg.fg_max</tt> - The amount the grid can provide (from grid). Defaults to <em>1</em> kW.</em></li>
-  <li><tt>msg.p_offset</tt> - The offset of buy/sell prices for the grid.</li>
   <li><tt>msg.b_cost</tt> - Battery costs (per kWh for discharging or charging).</li>
-  <li><tt>msg.url</tt> - <em>For debugging only.</em> This can be set to overrule the default VRM API url (<code>https://vrmapi.victronenergy.com/v2</code></li>).
-  <li><tt>msg.allow_disable_feedin</tt> - For overruling the configured value. Should be a boolean value.</li>
+  <li><tt>msg.provider_fee</tt> - The provider fee of buy/sell prices for the grid.</li>
+  <li><tt>msg.vat_percentage</tt> - The VAT percentage (e.g. should be <code>1.21</code> for 21%)</li>
+  <li><tt>msg.feed_in_possible</tt> - For overruling the configured value. Should be a boolean value.</li>
+  <li><tt>msg.feed_in_control_on</tt> - For overruling the configured value. Should be a boolean value.</li>
+  <li><tt>msg.url</tt> - <em>For debugging only.</em> This can be set to overrule the default VRM API url (<code>https://vrm-dynamic-ess-api.victronenergy.com</code></li>).
   </ul>
 
   <h3>Outputs</h3>

@@ -17,16 +17,18 @@ In the rest of this document some more information may be found on getting the r
 values for optimizing the configuration. In short:
 - Access token - The VRM access token. See below on how to create one for your site.
 - Site ID - Note that this may not be the same as your user ID. You can find your site id in the url on your dashboard. If for example your url for your dashboard is https://vrm.victronenergy.com/installation/654321/dashboard, your Site ID is 654321
-- B_max - Battery capacity (in kWh)
-- tb_max - Maximum Battery charge power (in kW)
-- fb_max  - Maximum Battery discharge power (in kW)
-- tg_max - Maximum Grid Export power (in kW)
-- fg_max - Maximum Grid Import power (in kW). 
+- B\_max - Battery capacity (in kWh)
+- tb\_max - Maximum Battery charge power (in kW)
+- fb\_max  - Maximum Battery discharge power (in kW)
+- tg\_max - Maximum Grid Export power (in kW)
+- fg\_max - Maximum Grid Import power (in kW).
 - Price offset - Fee paid for buying or selling energy to the grid (in €/kWh).
 - Battery costs - Cost of charging or discharging battery (in €/kWh).
-- Allow disable feed-in - Grid feed-in will be enabled/disabled
+- VAT percentage - Teh VAT percentage
+- Feed in possible - Can you sell back to the grid?
+- Feed-in control - Allow control over the feed-in variable (turn it off automatically when the prices are negative)?
 
-The default filled out values are typical values. If you think you are factors of, you might want to consult on the [community](https://community.victronenergy.com/index.html) and ask for advice on what to fill out. 
+The default filled out values are typical values. If you think you are factors of, you might want to consult on the [community](https://community.victronenergy.com/index.html) and ask for advice on what to fill out.
 
 <img src="https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/edit-panel.png" width="70%" alt="Edit panel" />
 
@@ -51,6 +53,9 @@ optimal value, all being taken into account. These factors are:
 - your predicted consumption
 - the grid cost per kWh
 - the battery cost per kWh
+- the VAT percentage
+- is feed-in possible
+- allow control over the feed-in variable
 
 If all of these values are known, VRM can make a calculated optimum setpoint available
 via its application programming interface (API). The _dynamic ess_ node
