@@ -55,7 +55,7 @@ module.exports = function (RED) {
 
       const options = {
         site_id: (msg.site_id || config.site_id).toString(),
-        b_max: (msg.b_max || config.b_max || 1).toString(),
+        B_max: (msg.b_max || config.b_max || 1).toString(),
         tb_max: (msg.tb_max || config.tb_max || 1).toString(),
         fb_max: (msg.fb_max || config.fb_max || 1).toString(),
         tg_max: (msg.tg_max || config.tg_max || 1).toString(),
