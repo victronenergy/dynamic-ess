@@ -35,30 +35,41 @@ module.exports = function (RED) {
         console.log(error)
       })
 
-    // Subscribe to retrieve the active SOC
-    const activeSOC = (x) => {
+    const SOCinfo = (x) => {
       const services = x.client.client.services
       for (const key in services) {
+        // For the activeSOC
         if (services[key].name.startsWith('com.victronenergy.battery')) {
           let sub = 'com.victronenergy.battery/' + services[key].deviceInstance
           if (nrcvVersion === '1.4.23') {
             sub = services[key].name
           }
-          this.subscription = this.client.subscribe(sub, '/Soc', (msg) => {
+          this.subActiveSOC = this.client.subscribe(sub, '/Soc', (msg) => {
             this.activeSOC = msg.value
             if (!ready) {
               node.status({ fill: 'green', shape: 'dot', text: 'Ready (' + this.activeSOC.toFixed(1) + '%)' })
               ready = true
             }
           })
-
-          break
+          continue
         }
+        // For the ActiveSocLimit
+        if (services[key].name.startsWith('com.victronenergy.system')) {
+          let sub = 'com.victronenergy.system/0'
+          if (nrcvVersion === '1.4.23') {
+            sub = services[key].name
+          }
+          this.subSocLimit = this.client.subscribe(sub, '/Control/ActiveSocLimit', (msg) => {
+            this.ActiveSocLimit = msg.value
+          })
+          continue
+        }
+
       }
       node.status({ fill: 'red', shape: 'dot', text: 'Unable to determine SOC (no battery?)' })
     }
 
-    setTimeout(activeSOC, 1000, this)
+    setTimeout(SOCinfo, 1000, this)
 
     const AShandlerId = this.configNode.addStatusListener(this, 'com.victronenergy.battery',
       '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/AllowDischarge')
@@ -83,7 +94,7 @@ module.exports = function (RED) {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/Duration', 600)
         this.client.publish('com.victronenergy.settings',
-          '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/Soc', this.activeSOC - 5)
+          '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/Soc', this.ActiveSocLimit || (this.activeSOC - 5))
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/Day', 7)
         this.client.publish('com.victronenergy.settings',
