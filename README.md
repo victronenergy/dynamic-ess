@@ -14,6 +14,7 @@ our community or file and issue on the
 
 After installing this node, import the _fetch-dynamic-ess_ example (ctrl-i). Once 
 imported, double-click the _Dynamic ESS VRM_ node and fill out all required fields.
+Note that, if you haven't already, also need to install the [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard).
 
 <img src="https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/import-example.png" width="70%" alt="Edit panel" />
 
@@ -40,7 +41,7 @@ Once everything is filled out, you can deploy the flow and check https://venus.l
 
 ## Flow screenshot
 
-![Dynamic ESS](doc/img/dynamic-ess-flow.png)
+![Dynamic ESS](https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/dynamic-ess-flow.png)
 
 The _dynamic ess_ node is for users that have an energy storage system (ESS)
 in combination with a solar system and want to set it automatically to the
@@ -122,7 +123,7 @@ https://vrm-api-docs.victronenergy.com/#/operations/auth/login
 On the right of the screen there is an interactive box, where you can entery your VRM
 credentials and push the `Send API Request` button.
 
-![API bearer token](doc/img/api-bearer-token.png)
+![API bearer token](https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/api-bearer-token.png)
 
 Make sure to add the `"remember_me": true`, allowing some extra time to create the access
 token.
@@ -150,7 +151,7 @@ https://vrm-api-docs.victronenergy.com/#/operations/users/idUser/accesstokens/cr
 fill out the parameters. Give the access token a name in the body and hit the
 `Send API request` button.
 
-![Access token](doc/img/api-access-token.png)
+![Access token](https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/api-access-token.png)
 
 Store the access token in your password vault as you won't be able to retrieve it again. You
 will also need to fill out this token in the _dynamic ess_ node.
