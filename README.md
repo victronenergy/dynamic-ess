@@ -24,7 +24,7 @@ values for optimizing the configuration. In short:
 - fg\_max - Maximum Grid Import power (in kW).
 - Price offset - Fee paid for buying or selling energy to the grid (in €/kWh).
 - Battery costs - Cost of charging or discharging battery (in €/kWh).
-- VAT percentage - Teh VAT percentage
+- VAT percentage - The VAT percentage
 - Feed in possible - Can you sell back to the grid?
 - Feed-in control - Allow control over the feed-in variable (turn it off automatically when the prices are negative)?
 
