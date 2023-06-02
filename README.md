@@ -102,7 +102,7 @@ energy price from ENTSO-E. ENTSO-E is the European association for the
 cooperation of transmission system operators (TSOs) for electricity. All EU countries
 use this as source for determining their next day dynamic energy prices.
 
-<img src="https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/edit-panel.png" width="70%" alt="Edit panel" />
+<img src="https://github.com/victronenergy/dynamic-ess/assets/3098947/e943c799-b0f8-40fe-b7ff-a5d12e309888" width="70%" alt="Edit panel" />
 
 # Create an access token
 
