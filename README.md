@@ -2,9 +2,13 @@
 A node-red flow that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero. For use in systems that have hourly day ahead prices, such as is now available for consumers in the Netherlands by ANWB, Tibber and the likes.
 
 Note:
-- To use this code, your installation on VRM needs to be enabled for a beta group. Until that is done an Error 500 will be shown.
 - This is a proof of concept project. In the future this implementation in Node-RED will become obsolete as the functionality will move into VRM/Venus OS native.
 - This flow uses control paths that may interfere with your normal GX device usage. It adjusts settings (setpoint) and will insert a schedule for charging in the ESS menu. If you don't want that, don't use this node. See below which dbus paths are being used.
+
+If you use this and have questions, issues and/or suggestions, please ask them
+in the [Node-RED space](https://community.victronenergy.com/smart-spaces/71/node-red.html) of
+our community or file and issue on the
+[GitHub](https://github.com/victronenergy/dynamic-ess/issues) site.
 
 ## Quick-start
 
