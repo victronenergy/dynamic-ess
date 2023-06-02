@@ -108,6 +108,10 @@ module.exports = function (RED) {
           cheap = 1
         }
 
+        if (msg.payload.warnings && msg.payload.warnings.length > 0) {
+          node.warn(msg.payload.warnings)
+        }
+
         node.send([msgsp, msg, { payload: cheap, price: msg.payload.output.p[hour] }])
       }).catch(function (error) {
         if (error.response && error.response.data && error.response.data.detail) {
