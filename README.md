@@ -30,7 +30,7 @@ values for optimizing the configuration. In short:
 
 The default filled out values are typical values. If you think you are factors of, you might want to consult on the [community](https://community.victronenergy.com/index.html) and ask for advice on what to fill out.
 
-<img src="https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/edit-panel.png" width="70%" alt="Edit panel" />
+<img src="https://github.com/victronenergy/dynamic-ess/assets/3098947/e943c799-b0f8-40fe-b7ff-a5d12e309888" width="70%" alt="Edit panel" />
 
 Once everything is filled out, you can deploy the flow and check https://venus.local:1881/ui/ to see how the system will take its actions for the day.
 
