@@ -75,7 +75,7 @@ getting the predicted solar yield.
 # Used dbus paths
 
 When correctly deployed, these nodes do write (and read) from the dbus (using [node-red-contrib-victron](https://github.com/victronenergy/node-red-contrib-victron) nodes).
-The following services and pahts are being written to:
+The following services and paths are being written to:
 - `com.victronenergy.settings /Settings/CGwacs/AcPowerSetPoint` - the obvious one, for setting the grid setpoint.
 - `com.victronenergy.settings /Settings/CGwacs/OvervoltageFeedIn` - to enable or disable the "Grid feed-in".
 - `com.victronenergy.settings /Settings/CGwacs/BatteryLife/Schedule/Charge/0/*`  - to put the battery in "idle" mode.
@@ -163,4 +163,3 @@ Request` for logging out and invalidating the Bearer token.
 You can also [list](https://vrm-api-docs.victronenergy.com/#/operations/users/idUser/accesstokens/list)
 and [revoke](https://vrm-api-docs.victronenergy.com/#/operations/users/idUser/accesstokens/revoke)
 existing tokens via the VRM API.
-
