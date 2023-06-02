@@ -62,7 +62,7 @@ module.exports = function (RED) {
         fg_max: (msg.fg_max || config.fg_max || 1).toString(),
         b_cost: (msg.b_cost || config.b_cost || 0).toString(),
         provider_fee: (msg.provider_fee || config.p_offset || 0).toString(),
-        vat_percentage: (msg.vat_percentage || (1+(config.vat_percentage/100)) || 1).toString(),
+        vat_percentage: (msg.vat_percentage || (1 + (config.vat_percentage / 100)) || 1).toString(),
         feed_in_possible: (msg.feed_in_possible || config.feed_in_possible || true).toString(),
         feed_in_control_on: (msg.feed_in_control_on || config.feed_in_control_on || true).toString(),
         long: (msg.long || config.long).toString(),

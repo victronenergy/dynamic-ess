@@ -64,7 +64,6 @@ module.exports = function (RED) {
           })
           continue
         }
-
       }
       node.status({ fill: 'red', shape: 'dot', text: 'Unable to determine SOC (no battery?)' })
     }
