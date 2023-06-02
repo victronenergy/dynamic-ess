@@ -13,6 +13,7 @@ module.exports = function (RED) {
 
     let FeedInPossible = config.feed_in_possible
     let UseGridSetpointMinMax = true
+    node.lastValidUpdate = Date.now()
 
     node.on('input', function (msg) {
       const url = msg.url || 'https://vrm-dynamic-ess-api.victronenergy.com'
@@ -112,15 +113,22 @@ module.exports = function (RED) {
           node.warn(msg.payload.warnings)
         }
 
+        node.lastValidUpdate = Date.now()
+
         node.send([msgsp, msg, { payload: cheap, price: msg.payload.output.p[hour] }])
       }).catch(function (error) {
         if (error.response && error.response.data && error.response.data.detail) {
-            node.status({ fill: 'red', shape: 'dot', text: error.response.data.detail })
+          node.status({ fill: 'red', shape: 'dot', text: error.response.data.detail })
         } else {
           node.status({ fill: 'red', shape: 'dot', text: 'Error fetching VRM data' })
         }
         if (error.response) {
           node.send([null, null, null, { payload: error.response }])
+        }
+
+        if (node.lastValidUpdate && (Date.now() - node.lastValidUpdate) > 3600000) {
+          node.warn('Unable to connect to VRM for more than an hour, disabling dynamic ESS')
+          node.send([{ payload: 0 }, { payload: { output_idle_b: Array(24).fill(false) } }, { payload: false }, { payload: 'Unable to connect to VRM for more than an hour, disabling dynamic ESS'}])
         }
       })
     })
