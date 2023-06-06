@@ -16,6 +16,10 @@ After installing this node, import the _fetch-dynamic-ess_ example (ctrl-i). Onc
 imported, double-click the _Dynamic ESS VRM_ node and fill out all required fields.
 Note that, if you haven't already, also need to install the [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard).
 
+Also make sure that you set your sites position correctly in VRM, as that is used
+for determining the predicted solar forecast. This can be set under _Settings ->
+Set location_ in VRM.
+
 <img src="https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/import-example.png" width="70%" alt="Edit panel" />
 
 In the rest of this document some more information may be found on getting the right
@@ -68,9 +72,10 @@ utilizes that API to fetch it in a userfriendly way.  Where optimum means the
 setting that should result in the lowest energy costs.
 
 Some of the information is deducted from set parameters. Like the country determines
-the energy price (as retrieved from ENTSOE) and the longitude and latitude determine
+the energy price (as retrieved from ENTSOE). The VRM location determines
 the solar forecast. It uses solcast and the Global Horizontal Irradiance (GHI) for
-getting the predicted solar yield.
+getting the predicted solar yield. So it is important to set your location
+correctly in VRM.
 
 # Used dbus paths
 
@@ -96,9 +101,6 @@ As the information is being retrieved via the [VRM API](https://vrm-api-docs.vic
 a token is needed to be able to get the required information. This token will
 then be used instead of your VRM credentials. See [create an access token](#create_an_access_token)
 below on how to do that.
-
-Furthermore you will need to fill out the longitude and latitude of your PV
-system.
 
 While it is probably possible to deduct the country based on the longitude and
 latitude, it is a lot easier if you fill it out yourself. So you will need to

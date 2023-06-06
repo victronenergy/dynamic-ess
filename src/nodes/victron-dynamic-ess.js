@@ -36,15 +36,6 @@ module.exports = function (RED) {
         return
       }
 
-      if (!config.long && !msg.long) {
-        node.status({ fill: 'red', shape: 'dot', text: 'No longitude set' })
-        return
-      }
-
-      if (!config.lat && !msg.lat) {
-        node.status({ fill: 'red', shape: 'dot', text: 'No latitude token set' })
-        return
-      }
       msg.topic = 'VRM dynamic ess'
       msg.payload = null
 
@@ -65,8 +56,6 @@ module.exports = function (RED) {
         vat_percentage: (msg.vat_percentage || config.vat_percentage || 0).toString(),
         feed_in_possible: (msg.feed_in_possible || config.feed_in_possible || true).toString(),
         feed_in_control_on: (msg.feed_in_control_on || config.feed_in_control_on || true).toString(),
-        long: (msg.long || config.long).toString(),
-        lat: (msg.lat || config.lat).toString(),
         country: (msg.country || config.country || 'nl').toUpperCase()
       }
       const headers = {

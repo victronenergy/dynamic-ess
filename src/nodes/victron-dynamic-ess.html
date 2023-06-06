@@ -16,8 +16,6 @@
             b_cost: { value: 0.0, validate: RED.validators.number() },
             provider_fee: { value: 0.0, validate: RED.validators.number() },
             vat_percentage: { value: 0.0, validate: RED.validators.regex(/^\d{0,99}$/) },
-            long: { value: "", validate: RED.validators.number() },
-            lat: { valude: "", validate: RED.validators.number() },
             feed_in_possible: { value: true },
             feed_in_control_on: { value: true }
         },
@@ -42,14 +40,6 @@
     <div class="form-row">
         <label for="node-input-site_id"><i class="fa fa-id-card"></i> VRM site id</label>
         <input type="text" id="node-input-site_id" placeholder="VRM site id" required>
-    </div>
-    <div class="form-row">
-        <label for="node-input-long"><i class="fa fa-location-arrow"></i> Longitude</label>
-        <input type="text" id="node-input-long" placeholder="Longitude" required>
-    </div>
-    <div class="form-row">
-        <label for="node-input-lat"><i class="fa fa-location-arrow"></i> Latitude</label>
-        <input type="text" id="node-input-lat" placeholder="Latitude" required>
     </div>
     <div class="form-row">
         <label for="node-input-country"><i class="fa fa-location-arrow"></i> Country</label>
@@ -164,9 +154,10 @@
 
     <p>
         Some of the information is deducted from set parameters. Like the country determines
-        the energy price (as retrieved from ENTSOE) and the longitude and latitude determine
-        the solar forecast. It uses solcast and the Global Horizontal Irradiance (GHI) for
-        getting the predicted solar yield.
+        the energy price (as retrieved from ENTSOE). The location that has been set for the site
+        in VRM is used for determining the predicted solar forecast. It uses solcast and the Global
+        Horizontal Irradiance (GHI) for getting the predicted solar yield. So it is important
+        to set the location correctly in VRM (<i>Settings -> Set location</i>).
     </p>
 
     <p>
@@ -183,13 +174,9 @@
     Also several other configuration fields need to be filled out.
   </p>
 
-  <p>In order to get the correct solar forecasting for the site, it is needed
-    to fill out the longitude and latitude. In order to find your location, a site
-as <a href="https://maps.google.com">https://maps.google.com</a> can be used. The
-longitude and latitude are shown when you drop a pointer on the map.</p>
-
-<p>For calculating with the correct tarrif of the energy supplier, the country code 
-    of the site is needed.
+<p>For calculating with the correct tarrif of the energy supplier, the buy and sell
+    price formula needs to be filled out. The variable <tt>p</tt> can be used to
+   in the formula to represent the dynamic tarrif.
 </p>
 
 <p>If the <em>verbose</em> checkbox has been set, the node becomes a bit
@@ -212,8 +199,6 @@ longitude and latitude are shown when you drop a pointer on the map.</p>
 
   <ul>
   <li><tt>msg.site_id</tt> - The vrm id to fetch the data for. This is the unique number of the site and can be found in the url of the VRM dashboard.</li>
-  <li><tt>msg.long</tt> - The longitude of the site.</li>
-  <li><tt>msg.lat</tt> - The latitude of the site.</li>
   <li><tt>msg.country</tt> - The country code that is used for determining the hourly
 tarrif of the energy.</li>. See the dropdown in the select for the two-letter value
 to use.
