@@ -52,8 +52,8 @@ module.exports = function (RED) {
         tg_max: (msg.tg_max || config.tg_max || 1).toString(),
         fg_max: (msg.fg_max || config.fg_max || 1).toString(),
         b_cost: (msg.b_cost || config.b_cost || 0).toString(),
-        provider_fee: (msg.provider_fee || config.provider_fee || 0).toString(),
-        vat_percentage: (msg.vat_percentage || config.vat_percentage || 0).toString(),
+        buy_price_formula: (msg.buy_price_formula || config.buy_price_formula || 'p').toString(),
+        sell_price_formula: (msg.sell_price_formula || config.sell_price_formula || 'p').toString(),
         feed_in_possible: (msg.feed_in_possible || config.feed_in_possible || true).toString(),
         feed_in_control_on: (msg.feed_in_control_on || config.feed_in_control_on || true).toString(),
         country: (msg.country || config.country || 'nl').toUpperCase()
@@ -117,7 +117,7 @@ module.exports = function (RED) {
 
         if (node.lastValidUpdate && (Date.now() - node.lastValidUpdate) > 3600000) {
           node.warn('Unable to connect to VRM for more than an hour, disabling dynamic ESS')
-          node.send([{ payload: 0 }, { payload: { output_idle_b: Array(24).fill(false) } }, { payload: false }, { payload: 'Unable to connect to VRM for more than an hour, disabling dynamic ESS'}])
+          node.send([{ payload: 0 }, { payload: { output_idle_b: Array(24).fill(false) } }, { payload: false }, { payload: 'Unable to connect to VRM for more than an hour, disabling dynamic ESS' }])
         }
       })
     })

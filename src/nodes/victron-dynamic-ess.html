@@ -14,8 +14,8 @@
             fg_max: { value: 1.0, validate: RED.validators.number() },
             tg_max: { value: 1.0, validate: RED.validators.number() },
             b_cost: { value: 0.0, validate: RED.validators.number() },
-            provider_fee: { value: 0.0, validate: RED.validators.number() },
-            vat_percentage: { value: 0.0, validate: RED.validators.regex(/^\d{0,99}$/) },
+            buy_price_formula: { value: "p", validate: RED.validators.regex(/^[p0-9+-/*\.()]*$/) },
+            sell_price_formula: { value: "p", validate: RED.validators.regex(/^[p0-9+-/*\.()]*$/) },
             feed_in_possible: { value: true },
             feed_in_control_on: { value: true },
             verbose: { value: true }
@@ -112,24 +112,24 @@
         <input type="text" id="node-input-b_cost" placeholder="Battery costs">
     </div>
     <div class="form-row">
-        <label for="node-input-provider_fee"><i class="fa fa-balance-scale"></i> Price offset</label>
-        <input type="text" id="node-input-provider_fee" placeholder="The provider fee of buy/sell prices for the grid">
+        <label for="node-input-buy_price_formula"><i class="fa fa-pencil"></i> Buy price</label>
+        <input type="text" id="node-input-buy_price_formula" placeholder="The buy price formula">
     </div>
     <div class="form-row">
-        <label for="node-input-vat_percentage"><i class="fa fa-plus-circle"></i> VAT percentage</label>
-        <input type="number" id="node-input-vat_percentage" min="0" max="99" placeholder="The VAT percentage (eg. 21%)">
+        <label for="node-input-sell_price_formula"><i class="fa fa-pencil"></i> Sell price</label>
+        <input type="text" id="node-input-sell_price_formula" placeholder="The sell price formula">
     </div>
-    <div class="form-row">
-        <label style="min-width:390px" for="node-input-feed_in_possible"><i class="fa fa-power"></i> Feed in possible: Can you sell back to the grid?</label>
-        <input type="checkbox" checked id="node-input-feed_in_possible" style="max-width:30px">
+    <div class="form-row" style="margin-bottom:0px;">
+        <input type="checkbox" checked id="node-input-feed_in_possible" style="display:inline-block; margin-left:8px; width:auto; vertical-align:top;">
+        <label style="width: 70%" for="node-input-feed_in_possible"><i class="fa fa-power"></i> Feed in possible: Can you sell back to the grid?</label>
     </div>
-    <div class="form-row">
+    <div class="form-row" style="margin-bottom:0px;">
+        <input type="checkbox" checked id="node-input-feed_in_control_on" style="display:inline-block; margin-left:8px; width:auto; vertical-align:top;">
         <label style="min-width:390px" for="node-input-feed_in_control_on"><i class="fa fa-power"></i> Feed-in control: Allow control over the feed-in variable (turn it off automatically when the prices are negative)?</label>
-        <input type="checkbox" checked id="node-input-feed_in_control_on" style="max-width:30px">
     </div>
-    <div class="form-row">
+    <div class="form-row" style="margin-bottom:0px;">
+        <input type="checkbox" checked id="node-input-verbose" style="display:inline-block; margin-left:8px; width:auto; vertical-align:top;">
         <label style="min-width:390px" for="node-input-verbose"><i class="fa fa-power"></i> Verbose: show the used <tt>curl</tt> command in the debug tab?</label>
-        <input type="checkbox" checked id="node-input-verbose" style="max-width:30px">
     </div>
 </script>
 
@@ -176,20 +176,34 @@
   has been set. This is the number that is found in the url of the VRM dashboard.</p>
 
   <p>
-    Also several other configuration fields need to be filled out.
+    Also several other configuration fields need to be filled out for the battery.
+    This includes capacity and max speed for to battery (<em>TB</em>), from battery (<em>FB</em>),
+    to grid (<em>TG</em>), from grid (<em>FG</em>) and write off costs per kWh
+    for charging/discharging the battery.
   </p>
 
 <p>For calculating with the correct tarrif of the energy supplier, the buy and sell
     price formula needs to be filled out. The variable <tt>p</tt> can be used to
-   in the formula to represent the dynamic tarrif.
+   in the formula to represent the dynamic tarrif. An example formula can be
+   <code>(p+0.02+0.13)*1.21</code>. This can be stripped down as:
+   <ul>
+    <li><code>p</code> - the dynamic price / kWh</li>
+    <li>&euro; 0.02 - <em>energy provider profit share</em></li>
+    <li>&euro; 0.13 - <em>DSO working price + contributions/levy/taxes</em></li>
+    <li>21% - <em>tax</em></li>
+   </ul>
 </p>
 
-<p>If the <em>verbose</em> checkbox has been set, the node becomes a bit
-    more verbose and sends out some extra debugging information.</p>
+    <p>The <i>Feed in possible</i> checkbox is to let the system know if you can
+        sell back to the grid.</p>
 
-    <p>The <i>Allow disable feed-in</i> checkbox is to allow the system to disable
+        <p>The <i>Feed-in control</i> checkbox is there to disable
         grid feed-in when the energy prices are negative.</p>
 
+        <p>If the <em>verbose</em> checkbox has been set, the node becomes a bit
+            more verbose and sends out some extra debugging information like
+        the used <tt>curl</tt> command. This is mainly useful when debugging.</p>
+        
   <h3>Input</h3>
 
   <p>Whenever the input receives a value, the new setpoint is fetched from
@@ -198,7 +212,7 @@
   on VRM.</p>
 
   <p>
-    Overruling the configured settings of the node can be done by injecting one 
+    Overruling the configured settings of the node can be done by injecting one
     or more of the following values:
   </p>
 
@@ -208,7 +222,7 @@
 tarrif of the energy.</li>. See the dropdown in the select for the two-letter value
 to use.
   <li><tt>msg.b_max</tt> - This is the
-  capacity the battery can hold in kWh. Defaults to <em>10</em>> kWh.</li>
+  capacity the battery can hold in kWh. Defaults to <em>10</em> kWh.</li>
   <li><tt>msg.tb_max</tt> - This is the
   speed in kW that the battery can be charged at in an hour (to battery). Defaults
   to <em>1</em> kW.</li>
@@ -218,8 +232,8 @@ to use.
   <li><tt>msg.tg_max</tt> - The amount the grid can receive (to grid). Defaults to <em>1</em> kW.</em></li>
   <li><tt>msg.fg_max</tt> - The amount the grid can provide (from grid). Defaults to <em>1</em> kW.</em></li>
   <li><tt>msg.b_cost</tt> - Battery costs (per kWh for discharging or charging).</li>
-  <li><tt>msg.provider_fee</tt> - The provider fee of buy/sell prices for the grid.</li>
-  <li><tt>msg.vat_percentage</tt> - The VAT percentage (e.g. should be <code>1.21</code> for 21%)</li>
+  <li><tt>msg.buy_price_formula</tt> - Buy price formula. The variable <code>p</code> is the dynamic price. Defaults to <em>p</em>.</li>
+  <li><tt>msg.sell_price_formula</tt> - Sell price formula. The variable <code>p</code> is the dynamic price. Defaults to <em>p</em>.</li>
   <li><tt>msg.feed_in_possible</tt> - For overruling the configured value. Should be a boolean value.</li>
   <li><tt>msg.feed_in_control_on</tt> - For overruling the configured value. Should be a boolean value.</li>
   <li><tt>msg.url</tt> - <em>For debugging only.</em> This can be set to overrule the default VRM API url (<code>https://vrm-dynamic-ess-api.victronenergy.com</code></li>).
@@ -232,8 +246,8 @@ to use.
   <p>The second output is for generating graphics.</p>
 
   <p>The third output can be used to disable _grid feed-in_ when the actual energy prices are
-    below zero. When the prices are below zero, the output will be <tt>1</tt>, but only if the 
-    configuration has been set to <i>Allow disable feed-in</i>. The output can be directly connected to an 
+    below zero. When the prices are below zero, the output will be <tt>1</tt>, but only if the
+    configuration has been set to <i>Allow disable feed-in</i>. The output can be directly connected to an
     <i>ESS control</i> node, set to "Disable feed-in".
     Alternatively you can use this output to steer your power hungry equipment.
   </p>
