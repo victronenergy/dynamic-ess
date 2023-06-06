@@ -13,10 +13,18 @@ module.exports = function (RED) {
 
     let FeedInPossible = config.feed_in_possible
     let UseGridSetpointMinMax = true
+    let justDeployed = true
     node.lastValidUpdate = Date.now()
 
     node.on('input', function (msg) {
       const url = msg.url || 'https://vrm-dynamic-ess-api.victronenergy.com'
+
+      const nextUpdate = 290 - ((Date.now() - node.lastValidUpdate) / 1000).toFixed(0)
+      if (nextUpdate > 0 && !justDeployed) {
+        node.status({ fill: 'red', shape: 'dot', text: `Trying to update too quickly, wait ${nextUpdate} seconds` })
+        return
+      }
+      justDeployed = false
 
       if (!config.vrmtoken && !msg.vrmtoken) {
         node.status({ fill: 'red', shape: 'dot', text: 'No VRM token set' })
