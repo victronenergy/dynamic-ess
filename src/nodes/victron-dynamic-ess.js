@@ -125,7 +125,7 @@ module.exports = function (RED) {
     node.on('close', function () {
     })
 
-    if (config.verbose) {
+    if (config.verbose === true) {
       curlirize(axios)
     }
   }

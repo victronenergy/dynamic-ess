@@ -17,7 +17,8 @@
             provider_fee: { value: 0.0, validate: RED.validators.number() },
             vat_percentage: { value: 0.0, validate: RED.validators.regex(/^\d{0,99}$/) },
             feed_in_possible: { value: true },
-            feed_in_control_on: { value: true }
+            feed_in_control_on: { value: true },
+            verbose: { value: true }
         },
         inputs: 1,
         outputs: 4,
@@ -119,12 +120,16 @@
         <input type="number" id="node-input-vat_percentage" min="0" max="99" placeholder="The VAT percentage (eg. 21%)">
     </div>
     <div class="form-row">
-        <label style="min-width:190px" for="node-input-feed_in_possible"><i class="fa fa-power"></i> Feed in possible: Can you sell back to the grid?</label>
+        <label style="min-width:390px" for="node-input-feed_in_possible"><i class="fa fa-power"></i> Feed in possible: Can you sell back to the grid?</label>
         <input type="checkbox" checked id="node-input-feed_in_possible" style="max-width:30px">
     </div>
     <div class="form-row">
-        <label style="min-width:190px" for="node-input-feed_in_control_on"><i class="fa fa-power"></i> Feed-in control: Allow control over the feed-in variable (turn it off automatically when the prices are negative)?</label>
+        <label style="min-width:390px" for="node-input-feed_in_control_on"><i class="fa fa-power"></i> Feed-in control: Allow control over the feed-in variable (turn it off automatically when the prices are negative)?</label>
         <input type="checkbox" checked id="node-input-feed_in_control_on" style="max-width:30px">
+    </div>
+    <div class="form-row">
+        <label style="min-width:390px" for="node-input-verbose"><i class="fa fa-power"></i> Verbose: show the used <tt>curl</tt> command in the debug tab?</label>
+        <input type="checkbox" checked id="node-input-verbose" style="max-width:30px">
     </div>
 </script>
 
