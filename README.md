@@ -39,7 +39,7 @@ With different providers, the formula will likely be different. So this does req
 
 The default filled out values are typical values. If you think you are factors of, you might want to consult on the [community](https://community.victronenergy.com/index.html) and ask for advice on what to fill out.
 
-<img src="https://github.com/victronenergy/dynamic-ess/assets/3098947/e943c799-b0f8-40fe-b7ff-a5d12e309888" width="70%" alt="Edit panel" />
+<img src="https://raw.githubusercontent.com/victronenergy/dynamic-ess/master/doc/img/edit-panel.png" width="70%" alt="Edit panel" />
 
 Once everything is filled out, you can deploy the flow and check https://venus.local:1881/ui/ to see how the system will take its actions for the day.
 
@@ -90,7 +90,7 @@ As the information is being retrieved via the [VRM API](https://vrm-api-docs.vic
 
 While it is probably possible to deduct the country based on the longitude and latitude, it is a lot easier if you fill it out yourself. So you will need to fill out the country as well. This information is used to retrieve the current energy price from ENTSO-E. ENTSO-E is the European association for the cooperation of transmission system operators (TSOs) for electricity. All EU countries use this as source for determining their next day dynamic energy prices.
 
-<img src="https://github.com/victronenergy/dynamic-ess/assets/3098947/e943c799-b0f8-40fe-b7ff-a5d12e309888" width="70%" alt="Edit panel" />
+<img src="https://raw.githubusercontent.com/victronenergy/dynamic-ess/master/doc/img/edit-panel.png" width="70%" alt="Edit panel" />
 
 # Create an access token
 
