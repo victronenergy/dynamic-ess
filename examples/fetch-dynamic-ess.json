@@ -565,7 +565,7 @@
         "tg_max": "2.5",
         "b_cost": "0.04",
         "buy_price_formula": "(p+0.02+0.13)*1.21",
-        "sell_price_formula": "(p+0.02+0.13)*1.21",
+        "sell_price_formula": "(p-0.02+0.13)*1.21",
         "feed_in_possible": true,
         "feed_in_control_on": true,
         "verbose": true,

@@ -35,6 +35,8 @@ The other thing to configure is the _buy price formula_ and _sell price formula_
 - € 0.13 - DSO working price + contributions/levy/taxes
 - 21% - tax
 
+The sell price formula looks often identical and in common cases looks something like `(p-0.02+0.13)*1.21`. So the energy provider profit share works the other way around.
+
 With different providers, the formula will likely be different. So this does require some research on how your pricing is build up.
 
 The default filled out values are typical values. If you think you are factors of, you might want to consult on the [community](https://community.victronenergy.com/index.html) and ask for advice on what to fill out.
