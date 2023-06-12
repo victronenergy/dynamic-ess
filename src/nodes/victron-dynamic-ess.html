@@ -30,8 +30,11 @@
             document.getElementById("node-input-sell_price_formula").disabled = ! $('input#node-input-feed_in_possible').is(':checked')
             $('input#node-input-feed_in_possible').on('click', function() {
                 if ( $(this).is(':checked')) {
+                    document.getElementById("node-input-tg_max").disabled = false
                     document.getElementById("node-input-sell_price_formula").disabled = false
                 } else {
+                    document.getElementById("node-input-tg_max").value = 0
+                    document.getElementById("node-input-tg_max").disabled = true
                     document.getElementById("node-input-sell_price_formula").disabled = true
                 }
             })

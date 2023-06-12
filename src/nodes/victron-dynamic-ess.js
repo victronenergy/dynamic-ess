@@ -57,7 +57,7 @@ module.exports = function (RED) {
         B_max: (msg.b_max || config.b_max || 1).toString(),
         tb_max: (msg.tb_max || config.tb_max || 1).toString(),
         fb_max: (msg.fb_max || config.fb_max || 1).toString(),
-        tg_max: (msg.tg_max || config.tg_max || 1).toString(),
+        tg_max: (msg.tg_max || config.tg_max || 0).toString(),
         fg_max: (msg.fg_max || config.fg_max || 1).toString(),
         b_cost: (msg.b_cost || config.b_cost || 0).toString(),
         buy_price_formula: (msg.buy_price_formula || config.buy_price_formula || 'p').toString(),
