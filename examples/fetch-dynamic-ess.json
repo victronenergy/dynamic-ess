@@ -1,43 +1,43 @@
 [
     {
-        "id": "7050e8853082c09c",
+        "id": "6d2df96628e11781",
         "type": "group",
-        "z": "89827d782ab51de2",
+        "z": "56d0b82efbbcde18",
         "name": "Setpoint",
         "style": {
             "label": true
         },
         "nodes": [
-            "87fd19fdf66dcfa6",
-            "1267c7dd167127e0"
+            "28a187712f56df1e",
+            "6e879a974c1b8360"
         ],
         "x": 24,
-        "y": 199,
+        "y": 219,
         "w": 592,
         "h": 82
     },
     {
-        "id": "87fd19fdf66dcfa6",
+        "id": "28a187712f56df1e",
         "type": "link in",
-        "z": "89827d782ab51de2",
-        "g": "7050e8853082c09c",
+        "z": "56d0b82efbbcde18",
+        "g": "6d2df96628e11781",
         "name": "setpoint",
         "links": [
-            "7cd4e2b1308fa03b"
+            "ed154d46f4fecf6d"
         ],
         "x": 65,
-        "y": 240,
+        "y": 260,
         "wires": [
             [
-                "1267c7dd167127e0"
+                "6e879a974c1b8360"
             ]
         ]
     },
     {
-        "id": "1267c7dd167127e0",
+        "id": "6e879a974c1b8360",
         "type": "victron-output-ess",
-        "z": "89827d782ab51de2",
-        "g": "7050e8853082c09c",
+        "z": "56d0b82efbbcde18",
+        "g": "6d2df96628e11781",
         "service": "com.victronenergy.settings",
         "path": "/Settings/CGwacs/AcPowerSetPoint",
         "serviceObj": {
@@ -137,35 +137,35 @@
         "initial": "",
         "name": "",
         "x": 430,
-        "y": 240,
+        "y": 260,
         "wires": []
     },
     {
-        "id": "5cc567ad856b9b3f",
+        "id": "67b51999f76a26c5",
         "type": "group",
-        "z": "89827d782ab51de2",
+        "z": "56d0b82efbbcde18",
         "name": "Dynamic ESS",
         "style": {
             "label": true
         },
         "nodes": [
-            "84c2fb5f89933995",
-            "7cd4e2b1308fa03b",
-            "cc1bb8799eacb3a0",
-            "63c76421fdf4a9de",
-            "731857109e6dc3be",
-            "043262a2201a618b"
+            "8d04135f6d27fecc",
+            "ed154d46f4fecf6d",
+            "8f5df8d850d18a73",
+            "87bb924e1e97064c",
+            "16f9951e5cfb6bc4",
+            "90379381449d0a85"
         ],
         "x": 24,
-        "y": 19,
+        "y": 39,
         "w": 592,
         "h": 162
     },
     {
-        "id": "84c2fb5f89933995",
+        "id": "8d04135f6d27fecc",
         "type": "inject",
-        "z": "89827d782ab51de2",
-        "g": "5cc567ad856b9b3f",
+        "z": "56d0b82efbbcde18",
+        "g": "67b51999f76a26c5",
         "name": "",
         "props": [
             {
@@ -180,153 +180,157 @@
         "payload": "",
         "payloadType": "date",
         "x": 140,
-        "y": 100,
+        "y": 120,
         "wires": [
             [
-                "043262a2201a618b"
+                "90379381449d0a85"
             ]
         ]
     },
     {
-        "id": "7cd4e2b1308fa03b",
+        "id": "ed154d46f4fecf6d",
         "type": "link out",
-        "z": "89827d782ab51de2",
-        "g": "5cc567ad856b9b3f",
+        "z": "56d0b82efbbcde18",
+        "g": "67b51999f76a26c5",
         "name": "setpoint",
         "mode": "link",
         "links": [
-            "87fd19fdf66dcfa6"
+            "28a187712f56df1e"
         ],
         "x": 525,
-        "y": 60,
+        "y": 80,
         "wires": []
     },
     {
-        "id": "cc1bb8799eacb3a0",
+        "id": "8f5df8d850d18a73",
         "type": "link out",
-        "z": "89827d782ab51de2",
-        "g": "5cc567ad856b9b3f",
+        "z": "56d0b82efbbcde18",
+        "g": "67b51999f76a26c5",
         "name": "graphing",
         "mode": "link",
         "links": [
             "b805402f793a2bb6",
             "a64ceca6d0094a52",
             "32c0fa1458112ab5",
-            "b9937375dde5a371",
+            "4d573f8cc6d09808",
             "0d3598ae63cce673",
             "83140894628e8954",
-            "fbcbce99efb8f6fe",
-            "403ae704fabad49a"
+            "3b6d7052cf70cecd",
+            "45c38ee8490b8195",
+            "87e176cd12c6bd8b",
+            "25a614a1f05dc6e7",
+            "47c35131a7b8a4b3"
         ],
         "x": 575,
-        "y": 80,
+        "y": 100,
         "wires": []
     },
     {
-        "id": "63c76421fdf4a9de",
+        "id": "87bb924e1e97064c",
         "type": "link out",
-        "z": "89827d782ab51de2",
-        "g": "5cc567ad856b9b3f",
+        "z": "56d0b82efbbcde18",
+        "g": "67b51999f76a26c5",
         "name": "grid feed-in",
         "mode": "link",
         "links": [
-            "32039fbe0e1ef31c"
+            "7a080c2373e45b2f"
         ],
         "x": 575,
-        "y": 120,
-        "wires": []
-    },
-    {
-        "id": "731857109e6dc3be",
-        "type": "link out",
-        "z": "89827d782ab51de2",
-        "g": "5cc567ad856b9b3f",
-        "name": "api info",
-        "mode": "link",
-        "links": [
-            "c7d2b09710ccb259"
-        ],
-        "x": 525,
         "y": 140,
         "wires": []
     },
     {
-        "id": "043262a2201a618b",
+        "id": "16f9951e5cfb6bc4",
+        "type": "link out",
+        "z": "56d0b82efbbcde18",
+        "g": "67b51999f76a26c5",
+        "name": "api info",
+        "mode": "link",
+        "links": [
+            "f26b21993d6e0f75",
+            "c50a15a7a345c90f"
+        ],
+        "x": 525,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "90379381449d0a85",
         "type": "victron-dynamic-ess",
-        "z": "89827d782ab51de2",
-        "g": "5cc567ad856b9b3f",
-        "name": "Dynamic ESS VRM site",
-        "vrmtoken": "",
+        "z": "56d0b82efbbcde18",
+        "g": "67b51999f76a26c5",
+        "name": "",
         "site_id": "",
+        "vrmtoken": "",
         "country": "nl",
-        "b_max": "14",
-        "fb_max": "4.5",
-        "tb_max": "6.5",
-        "fg_max": "2.5",
-        "tg_max": "2.5",
+        "b_max": "10.0",
+        "fb_max": "1.1",
+        "tb_max": "1.2",
+        "fg_max": "1",
+        "tg_max": "1",
         "b_cost": "0.04",
-        "buy_price_formula": "(p+0.02+0.13)*1.21",
-        "sell_price_formula": "(p-0.02+0.13)*1.21",
+        "buy_price_formula": "p",
+        "sell_price_formula": "p",
         "feed_in_possible": true,
         "feed_in_control_on": true,
-        "verbose": true,
-        "x": 350,
-        "y": 100,
+        "verbose": false,
+        "x": 360,
+        "y": 120,
         "wires": [
             [
-                "7cd4e2b1308fa03b"
+                "ed154d46f4fecf6d"
             ],
             [
-                "cc1bb8799eacb3a0"
+                "8f5df8d850d18a73"
             ],
             [
-                "63c76421fdf4a9de"
+                "87bb924e1e97064c"
             ],
             [
-                "731857109e6dc3be"
+                "16f9951e5cfb6bc4"
             ]
         ]
     },
     {
-        "id": "59d28485dacd2ecb",
+        "id": "5e11b34b66b27db2",
         "type": "group",
-        "z": "89827d782ab51de2",
+        "z": "56d0b82efbbcde18",
         "name": "Idle battery",
         "style": {
             "label": true
         },
         "nodes": [
-            "b9937375dde5a371",
-            "de56c5cb141de43d",
-            "5e5c133f2c2d9415"
+            "4d573f8cc6d09808",
+            "6085b97cfd2d5a50",
+            "c22714abeac34af2"
         ],
         "x": 24,
-        "y": 399,
+        "y": 419,
         "w": 592,
         "h": 82
     },
     {
-        "id": "b9937375dde5a371",
+        "id": "4d573f8cc6d09808",
         "type": "link in",
-        "z": "89827d782ab51de2",
-        "g": "59d28485dacd2ecb",
+        "z": "56d0b82efbbcde18",
+        "g": "5e11b34b66b27db2",
         "name": "link in 1",
         "links": [
-            "cc1bb8799eacb3a0"
+            "8f5df8d850d18a73"
         ],
         "x": 65,
-        "y": 440,
+        "y": 460,
         "wires": [
             [
-                "de56c5cb141de43d"
+                "6085b97cfd2d5a50"
             ]
         ]
     },
     {
-        "id": "de56c5cb141de43d",
+        "id": "6085b97cfd2d5a50",
         "type": "function",
-        "z": "89827d782ab51de2",
-        "g": "59d28485dacd2ecb",
+        "z": "56d0b82efbbcde18",
+        "g": "5e11b34b66b27db2",
         "name": "Battery control",
         "func": "const date = new Date()\n\nmsg.payload = Object.values(msg.payload.output.idle_b)[date.getHours()]\n\nreturn msg;",
         "outputs": 1,
@@ -335,175 +339,62 @@
         "finalize": "",
         "libs": [],
         "x": 200,
-        "y": 440,
+        "y": 460,
         "wires": [
             [
-                "5e5c133f2c2d9415"
+                "c22714abeac34af2"
             ]
         ]
     },
     {
-        "id": "5e5c133f2c2d9415",
+        "id": "c22714abeac34af2",
         "type": "victron-idle-battery",
-        "z": "89827d782ab51de2",
-        "g": "59d28485dacd2ecb",
+        "z": "56d0b82efbbcde18",
+        "g": "5e11b34b66b27db2",
         "name": "",
         "x": 500,
-        "y": 440,
+        "y": 460,
         "wires": []
     },
     {
-        "id": "87dbd8b5ac2bcff0",
+        "id": "fd2f9f76d88fad15",
         "type": "group",
-        "z": "89827d782ab51de2",
-        "name": "API info",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "d3e0c644eea916dd",
-            "c7d2b09710ccb259",
-            "b792cd3f6bb51397",
-            "9be2229126170bc0"
-        ],
-        "x": 24,
-        "y": 499,
-        "w": 592,
-        "h": 122
-    },
-    {
-        "id": "d3e0c644eea916dd",
-        "type": "debug",
-        "z": "89827d782ab51de2",
-        "g": "87dbd8b5ac2bcff0",
-        "name": "API info",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 510,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "c7d2b09710ccb259",
-        "type": "link in",
-        "z": "89827d782ab51de2",
-        "g": "87dbd8b5ac2bcff0",
-        "name": "link in 2",
-        "links": [
-            "731857109e6dc3be"
-        ],
-        "x": 65,
-        "y": 540,
-        "wires": [
-            [
-                "b792cd3f6bb51397",
-                "d3e0c644eea916dd"
-            ]
-        ]
-    },
-    {
-        "id": "b792cd3f6bb51397",
-        "type": "function",
-        "z": "89827d782ab51de2",
-        "g": "87dbd8b5ac2bcff0",
-        "name": "Informative text",
-        "func": "let info = {\n    'topic': 'Note: Light gray background on the charts display the recorded values, while the transparent background shows the estimated/planned values. The darker gray part designates the current hour.'\n}\n\nif (msg.payload.status && msg.payload.status !== 500) {\n    info.topic = msg.payload.statusText\n}\n\nif (msg.payload.data && msg.payload.data.detail) {\n    info.payload = msg.payload.data.detail\n}\n\nreturn info",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 260,
-        "y": 580,
-        "wires": [
-            [
-                "9be2229126170bc0"
-            ]
-        ]
-    },
-    {
-        "id": "9be2229126170bc0",
-        "type": "ui_text",
-        "z": "89827d782ab51de2",
-        "g": "87dbd8b5ac2bcff0",
-        "group": "ae94fc0e9881e8c0",
-        "order": 1,
-        "width": "24",
-        "height": "1",
-        "name": "Informative Text",
-        "label": "{{msg.topic}}",
-        "format": "{{msg.payload}}",
-        "layout": "col-center",
-        "className": "",
-        "x": 510,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "ae94fc0e9881e8c0",
-        "type": "ui_group",
-        "name": "Visualisations",
-        "tab": "cc1a49b54f71c790",
-        "order": 5,
-        "disp": true,
-        "width": "24",
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "cc1a49b54f71c790",
-        "type": "ui_tab",
-        "name": "Dynamic ESS",
-        "icon": "dashboard",
-        "order": 1,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "39e693f9a3a90276",
-        "type": "group",
-        "z": "89827d782ab51de2",
+        "z": "56d0b82efbbcde18",
         "name": "Grid feed-in",
         "style": {
             "label": true
         },
         "nodes": [
-            "32039fbe0e1ef31c",
-            "5eff37a03acaa50f"
+            "7a080c2373e45b2f",
+            "d113883229f42347"
         ],
         "x": 24,
-        "y": 299,
+        "y": 319,
         "w": 592,
         "h": 82
     },
     {
-        "id": "32039fbe0e1ef31c",
+        "id": "7a080c2373e45b2f",
         "type": "link in",
-        "z": "89827d782ab51de2",
-        "g": "39e693f9a3a90276",
+        "z": "56d0b82efbbcde18",
+        "g": "fd2f9f76d88fad15",
         "name": "grid feed-in",
         "links": [
-            "63c76421fdf4a9de"
+            "87bb924e1e97064c"
         ],
         "x": 65,
-        "y": 340,
+        "y": 360,
         "wires": [
             [
-                "5eff37a03acaa50f"
+                "d113883229f42347"
             ]
         ]
     },
     {
-        "id": "5eff37a03acaa50f",
+        "id": "d113883229f42347",
         "type": "victron-output-ess",
-        "z": "89827d782ab51de2",
-        "g": "39e693f9a3a90276",
+        "z": "56d0b82efbbcde18",
+        "g": "fd2f9f76d88fad15",
         "service": "com.victronenergy.settings",
         "path": "/Settings/CGwacs/PreventFeedback",
         "serviceObj": {
@@ -607,42 +498,45 @@
         "initial": "",
         "name": "",
         "x": 350,
-        "y": 340,
+        "y": 360,
         "wires": []
     },
     {
-        "id": "a3ba8f90cad2fca7",
+        "id": "a87ee310d8b6b3dd",
         "type": "group",
-        "z": "89827d782ab51de2",
+        "z": "56d0b82efbbcde18",
         "name": "Dashboard",
         "style": {
             "label": true
         },
         "nodes": [
-            "3046cbbc13f53517",
-            "9224a53edda67367",
-            "95b4391c9ff3b18c",
-            "88b16b82417d3dcb",
-            "c351f95c49e17279",
-            "fbcbce99efb8f6fe",
-            "7bd7f1ef8c2923e6",
-            "403ae704fabad49a",
-            "b75ebfea89a0b462",
-            "93a7613583bf4809",
-            "b76abd21b6ea94e7",
-            "6be33194e8501461",
-            "394ee43f9af7fb12"
+            "dae32967fb93f303",
+            "bf5d2e4d2e541144",
+            "9517a8621cfebbc4",
+            "528b0c24b2cb779d",
+            "01aebdb76a08fc98",
+            "3b6d7052cf70cecd",
+            "4b79ce7ca152b505",
+            "45c38ee8490b8195",
+            "1da685ba246ae1f8",
+            "0199da911d531fde",
+            "47d88843433acb4b",
+            "dbce8f53cdbde959",
+            "a24234b13220fb35",
+            "f26b21993d6e0f75",
+            "968f6a7041a7d360",
+            "7ba5c6b4793ca0b3"
         ],
-        "x": 644,
-        "y": 19,
+        "x": 634,
+        "y": 39,
         "w": 592,
-        "h": 402
+        "h": 462
     },
     {
-        "id": "3046cbbc13f53517",
+        "id": "dae32967fb93f303",
         "type": "ui_template",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "group": "ae94fc0e9881e8c0",
         "name": "Overview graph",
         "order": 3,
@@ -654,17 +548,17 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1050,
-        "y": 100,
+        "x": 1040,
+        "y": 120,
         "wires": [
             []
         ]
     },
     {
-        "id": "9224a53edda67367",
+        "id": "bf5d2e4d2e541144",
         "type": "ui_template",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "group": "ae94fc0e9881e8c0",
         "name": "Schedule graph",
         "order": 4,
@@ -676,17 +570,17 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1050,
-        "y": 140,
+        "x": 1040,
+        "y": 160,
         "wires": [
             []
         ]
     },
     {
-        "id": "95b4391c9ff3b18c",
+        "id": "9517a8621cfebbc4",
         "type": "ui_template",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "group": "ae94fc0e9881e8c0",
         "name": "Price graph",
         "order": 5,
@@ -698,17 +592,17 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1040,
-        "y": 180,
+        "x": 1030,
+        "y": 200,
         "wires": [
             []
         ]
     },
     {
-        "id": "88b16b82417d3dcb",
+        "id": "528b0c24b2cb779d",
         "type": "ui_template",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "group": "ae94fc0e9881e8c0",
         "name": "Costs graph",
         "order": 6,
@@ -720,17 +614,17 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1040,
-        "y": 220,
+        "x": 1030,
+        "y": 240,
         "wires": [
             []
         ]
     },
     {
-        "id": "c351f95c49e17279",
+        "id": "01aebdb76a08fc98",
         "type": "ui_template",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "group": "ae94fc0e9881e8c0",
         "name": "arbitraryLine plugin",
         "order": 2,
@@ -742,35 +636,35 @@
         "resendOnRefresh": true,
         "templateScope": "global",
         "className": "",
-        "x": 1060,
-        "y": 60,
+        "x": 1050,
+        "y": 80,
         "wires": [
             []
         ]
     },
     {
-        "id": "fbcbce99efb8f6fe",
+        "id": "3b6d7052cf70cecd",
         "type": "link in",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "name": "graphing",
         "links": [
             "6704cb4025128d5e",
-            "cc1bb8799eacb3a0"
+            "8f5df8d850d18a73"
         ],
-        "x": 685,
-        "y": 180,
+        "x": 675,
+        "y": 200,
         "wires": [
             [
-                "394ee43f9af7fb12"
+                "a24234b13220fb35"
             ]
         ]
     },
     {
-        "id": "7bd7f1ef8c2923e6",
+        "id": "4b79ce7ca152b505",
         "type": "ui_template",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "group": "ae94fc0e9881e8c0",
         "name": "Energy graph",
         "order": 7,
@@ -782,35 +676,35 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1050,
-        "y": 260,
+        "x": 1040,
+        "y": 280,
         "wires": [
             []
         ]
     },
     {
-        "id": "403ae704fabad49a",
+        "id": "45c38ee8490b8195",
         "type": "link in",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "name": "graphing",
         "links": [
             "6704cb4025128d5e",
-            "cc1bb8799eacb3a0"
+            "8f5df8d850d18a73"
         ],
-        "x": 695,
-        "y": 340,
+        "x": 685,
+        "y": 360,
         "wires": [
             [
-                "b75ebfea89a0b462"
+                "1da685ba246ae1f8"
             ]
         ]
     },
     {
-        "id": "b75ebfea89a0b462",
+        "id": "1da685ba246ae1f8",
         "type": "function",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "name": "Control Outputs",
         "func": "const date = new Date()\n\nmsg.payload = {\n    'gs_min_max': Object.values(msg.payload.output.gsmm)[date.getHours()],\n    'feed_in_enabled': Object.values(msg.payload.output.feed_in)[date.getHours()],\n    'battery_is_idle': Object.values(msg.payload.output.idle_b)[date.getHours()]\n}\n\nswitch (msg.payload.gs_min_max) {\n    case 0: msg.payload.gs_min_max = 'Grid setpoint is 0'\n    break\n    case 1: msg.payload.gs_min_max = 'Grid setpoint is minimum (<i>-tg_max</i>)'\n    break\n    case 2: msg.payload.gs_min_max = 'Grid setpoint is maximum (<i>fg_max</i>)'\n}\n\nreturn msg",
         "outputs": 1,
@@ -818,21 +712,21 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 830,
-        "y": 340,
+        "x": 820,
+        "y": 360,
         "wires": [
             [
-                "93a7613583bf4809",
-                "b76abd21b6ea94e7",
-                "6be33194e8501461"
+                "0199da911d531fde",
+                "47d88843433acb4b",
+                "dbce8f53cdbde959"
             ]
         ]
     },
     {
-        "id": "93a7613583bf4809",
+        "id": "0199da911d531fde",
         "type": "ui_text",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "group": "1ae086bda8c1d796",
         "order": 2,
         "width": "8",
@@ -842,15 +736,15 @@
         "format": "{{msg.payload.battery_is_idle}}",
         "layout": "col-center",
         "className": "",
-        "x": 1050,
-        "y": 300,
+        "x": 1040,
+        "y": 320,
         "wires": []
     },
     {
-        "id": "b76abd21b6ea94e7",
+        "id": "47d88843433acb4b",
         "type": "ui_text",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "group": "1ae086bda8c1d796",
         "order": 1,
         "width": "8",
@@ -860,15 +754,15 @@
         "format": "{{msg.payload.gs_min_max}}",
         "layout": "col-center",
         "className": "",
-        "x": 1090,
-        "y": 340,
+        "x": 1080,
+        "y": 360,
         "wires": []
     },
     {
-        "id": "6be33194e8501461",
+        "id": "dbce8f53cdbde959",
         "type": "ui_text",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "group": "1ae086bda8c1d796",
         "order": 3,
         "width": "8",
@@ -878,15 +772,15 @@
         "format": "{{msg.payload.feed_in_enabled}}",
         "layout": "col-center",
         "className": "",
-        "x": 1060,
-        "y": 380,
+        "x": 1050,
+        "y": 400,
         "wires": []
     },
     {
-        "id": "394ee43f9af7fb12",
+        "id": "a24234b13220fb35",
         "type": "function",
-        "z": "89827d782ab51de2",
-        "g": "a3ba8f90cad2fca7",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
         "name": "Payload to graph",
         "func": "let overview = {\n    payload: {\n    \"datasets\": [\n        { label: 'Consumption',\n          type: 'line',\n          data: Object.values(msg.payload.output.C),\n          borderColor: \"#FA716F\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },\n        { label: 'Battery',\n          type: 'line',\n          data: Object.values(msg.payload.output.B),\n          borderColor: \"#4790D0\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },\n        { label: 'PV yield',\n          type: 'line',\n          data: Object.values(msg.payload.output.PV),\n          borderColor: \"#F7AB3E\",\n          backgroundColor: \"#f8aa3dAA\",\n          fill: true,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        }        \n        ],\n    \"labels\": Object.keys(msg.payload.schedule),\n    \"B_max\": msg.payload.options.B_max\n}}\n\nlet schedule = {\n    payload: {\n    \"datasets\": [\n        { label: \"Grid Usage\",\n          data: Object.values(msg.payload.output.g),\n          borderColor: \"#FA716F\",\n          backgroundColor: \"#FA716F\",\n          fill: true\n        },\n        { label: \"Battery usage\",\n          data: Object.values(msg.payload.output.b),\n          borderColor: \"#4790D0\",\n          backgroundColor: \"#4790D0\",\n          fill: true\n        }],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nlet price = {\n    payload: {\n    \"datasets\": [\n        { label: \"Buy Price\",\n            type: 'line',\n          data: Object.values(msg.payload.output.p_b),\n          borderColor: \"#FA716F\",\n          backgroundColor: \"#FA716F\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },{ label: \"Sell Price\",\n            type: 'line',\n          data: Object.values(msg.payload.output.p_s),\n          borderColor: \"#8BC964\",\n          backgroundColor: \"#8BC964\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 1,\n          borderWidth: 1\n        },],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nlet costs = {\n    payload: {\n    \"datasets\": [\n        { label: \"Grid costs\",\n          data: Object.values(msg.payload.output.g_cost),\n          borderColor: \"#FA716F\",\n          backgroundColor: \"#FA716F\",\n          fill: true\n        },\n        { label: \"Battery costs\",\n          data: Object.values(msg.payload.output.b_cost),\n          borderColor: \"#4790D0\",\n          backgroundColor: \"#4790D0\",\n          fill: true\n        }],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nb = Object.values(msg.payload.output.b);\ng = Object.values(msg.payload.output.g);\nC = Object.values(msg.payload.output.C);\nPV = Object.values(msg.payload.output.PV);\nn = C.map((c,i) => PV[i]-c);\n\nto_b = b.map(x => {if(x<0){return -x}else{return 0}});\nfrom_b = b.map(x => {if(x>0){return x}else{return 0}});\nto_g = g.map(x => {if(x<0){return -x}else{return 0}});\nfrom_g = g.map(x => {if(x>0){return x}else{return 0}});\n\nmet_need = C.map((c,i) => Math.min(c,PV[i]));\n\nfrom_g_to_b = []\nfrom_b_to_g = []\n\nfor (let i=0; i<=23; i++) {\n    if (Math.sign(b[i]) * Math.sign(g[i]) >= 0){\n        from_b_to_g.push(0)\n        from_g_to_b.push(0)\n    } else if ( Math.sign(b[i]) == 1 & Math.sign(n[i]) >= 0) {\n        from_b_to_g.push(b[i])\n        from_g_to_b.push(0)\n    } else if ( Math.sign(b[i]) == 1 & Math.sign(n[i]) == -1) {\n        from_b_to_g.push(-g[i])\n        from_g_to_b.push(0)\n    } else if ( Math.sign(g[i]) == 1 & Math.sign(n[i]) >= 0) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(g[i])\n    } else if ( Math.sign(g[i]) == 1 & Math.sign(n[i]) == -1) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(-b[i])\n    }\n}\n\nfrom_g = from_g.map((x,i) => x-from_g_to_b[i])\nfrom_b = from_b.map((x,i) => x-from_b_to_g[i])\nto_b = to_b.map((x,i) => x-from_g_to_b[i])\nto_g = to_g.map((x,i) => x-from_b_to_g[i])\n\nlet energy = {\n    payload: {\n    \"datasets\": [\n        { label: \"Consumption\",\n          type: 'line',\n          data: C,\n          borderColor: \"#1066B1\",\n          backgroundColor: \"#1066B1\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 0,\n          borderWidth: 1\n        },\n        { label: \"PV Yield\",\n          type: 'line',\n          data: PV,\n          borderColor: \"#F7AB3E\",\n          backgroundColor: \"#F7AB3E\",\n          fill: false,\n          stepped: 'middle',\n          pointRadius: 0,\n          borderWidth: 1\n        },\n        { label: \"\",\n          type: 'bar',\n          data: met_need,\n          legend: false,\n          borderColor: \"#FFFFFF00\",\n          backgroundColor:\"#FFFFFF00\",\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Grid\",\n          type: 'bar',\n          data: from_g,\n          borderColor: \"#FA716F\",\n          backgroundColor:\"#FA716F\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"To Grid\",\n          type: 'bar',\n          data: to_g,\n          borderColor: \"#8BC964\",\n          backgroundColor:\"#8BC964\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Battery\",\n          type: 'bar',\n          data: from_b,\n          borderColor: \"#4790D0\",\n          backgroundColor:\"#4790D0\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"To Battery\",\n          type: 'bar',\n          data: to_b,\n          borderColor: \"#9683EC\",\n          backgroundColor:\"#9683EC\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Battery to Grid\",\n          type: 'bar',\n          data: from_b_to_g,\n          borderColor: \"#4790D0\",\n          backgroundColor:\"#8BC964\",\n          borderWidth: 4,\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },\n        { label: \"From Grid to Battery\",\n          type: 'bar',\n          data: from_g_to_b,\n          borderColor: \"#FA716F\",\n          borderWidth: 4,\n          backgroundColor:\"#9683EC\",\n          barPercentage: 0.95,\n          fill: true,\n          stack: 1,\n        },],\n    \"labels\": Object.keys(msg.payload.schedule)\n}}\n\nreturn [overview, schedule, price, costs, energy];",
         "outputs": 5,
@@ -894,35 +788,110 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 820,
-        "y": 180,
+        "x": 810,
+        "y": 200,
         "wires": [
             [
-                "3046cbbc13f53517"
+                "dae32967fb93f303"
             ],
             [
-                "9224a53edda67367"
+                "bf5d2e4d2e541144"
             ],
             [
-                "95b4391c9ff3b18c"
+                "9517a8621cfebbc4"
             ],
             [
-                "88b16b82417d3dcb"
+                "528b0c24b2cb779d"
             ],
             [
-                "7bd7f1ef8c2923e6"
+                "4b79ce7ca152b505"
             ]
         ]
+    },
+    {
+        "id": "f26b21993d6e0f75",
+        "type": "link in",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
+        "name": "link in 2",
+        "links": [
+            "16f9951e5cfb6bc4"
+        ],
+        "x": 685,
+        "y": 460,
+        "wires": [
+            [
+                "968f6a7041a7d360"
+            ]
+        ]
+    },
+    {
+        "id": "968f6a7041a7d360",
+        "type": "function",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
+        "name": "Informative text",
+        "func": "let info = {\n    'topic': 'Note: Light gray background on the charts display the recorded values, while the transparent background shows the estimated/planned values. The darker gray part designates the current hour.'\n}\n\nif (msg.payload.status && msg.payload.status !== 500) {\n    info.topic = msg.payload.statusText\n}\n\nif (msg.payload.data && msg.payload.data.detail) {\n    info.payload = msg.payload.data.detail\n}\n\nreturn info",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 460,
+        "wires": [
+            [
+                "7ba5c6b4793ca0b3"
+            ]
+        ]
+    },
+    {
+        "id": "7ba5c6b4793ca0b3",
+        "type": "ui_text",
+        "z": "56d0b82efbbcde18",
+        "g": "a87ee310d8b6b3dd",
+        "group": "ae94fc0e9881e8c0",
+        "order": 1,
+        "width": "24",
+        "height": "1",
+        "name": "Informative Text",
+        "label": "{{msg.topic}}",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 1040,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "ae94fc0e9881e8c0",
+        "type": "ui_group",
+        "name": "Visualisations",
+        "tab": "cc1a49b54f71c790",
+        "order": 2,
+        "disp": true,
+        "width": "24",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "1ae086bda8c1d796",
         "type": "ui_group",
         "name": "Control outputs",
         "tab": "cc1a49b54f71c790",
-        "order": 8,
+        "order": 3,
         "disp": true,
         "width": "24",
         "collapse": false,
         "className": ""
+    },
+    {
+        "id": "cc1a49b54f71c790",
+        "type": "ui_tab",
+        "name": "Dynamic ESS",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
     }
 ]

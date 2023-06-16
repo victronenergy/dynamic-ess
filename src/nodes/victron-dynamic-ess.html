@@ -5,8 +5,8 @@
         color: '#f7ab3e',
         defaults: {
             name: { value: "" },
+            site_id: { value: "", validate: RED.validators.regex(/^[a-z0-9]{1,12}$/) },
             vrmtoken: { value: "", validate: RED.validators.regex(/^[a-z0-9]{64}$/) },
-            site_id: { value: "", validate: RED.validators.number() },
             country: { value: "", validate: RED.validators.regex(/^[a-z]{2}$/) },
             b_max: { value: 10, validate: RED.validators.number() },
             fb_max: { value: 1.1, validate: RED.validators.number() },
@@ -18,7 +18,7 @@
             sell_price_formula: { value: "p", validate: RED.validators.regex(/^[p0-9+-/*\.()]*$/) },
             feed_in_possible: { value: true },
             feed_in_control_on: { value: true },
-            verbose: { value: true }
+            verbose: { value: false }
         },
         inputs: 1,
         outputs: 4,
@@ -48,12 +48,12 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-vrmtoken"><i class="fa fa-user-secret"></i> VRM token</label>
-        <input type="password" id="node-input-vrmtoken" placeholder="VRM token" required>
-    </div>
-    <div class="form-row">
         <label for="node-input-site_id"><i class="fa fa-id-card"></i> VRM site id</label>
         <input type="text" id="node-input-site_id" placeholder="VRM site id" required>
+    </div>
+    <div class="form-row">
+        <label for="node-input-vrmtoken"><i class="fa fa-user-secret"></i> VRM token</label>
+        <input type="password" id="node-input-vrmtoken" placeholder="VRM token" required>
     </div>
     <div class="form-row">
         <label for="node-input-country"><i class="fa fa-location-arrow"></i> Country</label>
@@ -135,144 +135,102 @@
     </div>
 </script>
 
-<script type="text/html" data-help-name="victron-dynamic-ess">
-    <p>The <i>dynamic ess</i> node is for users that have an energy storage system (ESS)
-    in combination with a solar system and want to set it automatically to the
-    optimal value. Where optimal means that it is set so you will pay the least
-    amount for your energy usage.  There are several factors determining the
-    optimal value, all being taken into account. These factors are:</p>
+<script type="text/markdown" data-help-name="victron-dynamic-ess">
+A node that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero. 
+See the [README](https://github.com/victronenergy/dynamic-ess/blob/main/README.md) on GitHub for the most up
+to date documentation and a [QuickStart](https://github.com/victronenergy/dynamic-ess/blob/main/README.md#QuickStart).
 
-    <ul>
-        <li>the VRM id</li>
-        <li>the solar prediction</li>
-        <li>your (dynamic) energy contract price</li>
-        <li>your battery size</li>
-        <li>the charge speed of your battery</li>
-        <li>the discharge speed of your battery</li>
-        <li>your predicted consumption</li>
-    </ul>
+### Inputs
 
-    <p>
-        If all of these values are known, VRM can make a calculated optimum setpoint available
-        via its application programming interface (API). The <i>dynamic ess</i> node
-        utilizes that API to fetch it in a userfriendly way.  Where optimum means the
-       setting that should result in the lowest energy costs.
-    </p>
+: payload (string|number) :  the trigger to start (re-)calculating the optimal setpoint
 
-    <p>
-        Some of the information is deducted from set parameters. Like the country determines
-        the energy price (as retrieved from ENTSOE). The location that has been set for the site
-        in VRM is used for determining the predicted solar forecast. It uses solcast and the Global
-        Horizontal Irradiance (GHI) for getting the predicted solar yield. So it is important
-        to set the location correctly in VRM (<i>Settings -> Set location</i>).
-    </p>
+### Outputs
 
-    <p>
-        More info can be found on the <a href="https://github.com/victronenergy/dynamic-ess">github</a> site for this node.
-    </p>
+1. Grid setpoint
+: payload (number) : the optimal grid setpoint.
 
-  <h3>Configuration</h3>
+2. Standard error
+: payload (string) : the standard error of the command.
 
-  <p>In order to function, the <em>VRM site id</em> of the system needs to be
-  given. The node can only access the information if also a <em>VRM token</em>
-  has been set. This is the number that is found in the url of the VRM dashboard.</p>
+### Configuration
 
-  <p>
-    Also several other configuration fields need to be filled out for the battery.
-    This includes capacity and max speed for to battery (<em>TB</em>), from battery (<em>FB</em>),
-    to grid (<em>TG</em>), from grid (<em>FG</em>) and write off costs per kWh
-    for charging/discharging the battery.
-  </p>
+: name (string) : The name of the node
+: VRM site id (string | number) : The VRM id to fetch the data for. This is the unique number of the site and can be found in the url of your VRM dashboard.
+: VRM token (string) : The VRM API token.
+: Country (string) : The country code that is used for determining the hourly tarrif of the energy.
+: B max (float) : Battery capacity (in kWh)
+: TB max (float) : Maximum battery charge power (in kW) (**T**o **B**attery)
+: FB max (float) : Maximum battery discharge power (in kW) (***F**rom **B**attery)
+: TG max (float) : Maximum grid export power (in kW) (**T**o **G**rid)
+: FG max (float) : Maximum grid import power (in kW) (**F**rom **G**rid)
+: Battery costs (float) : Cost of charging or discharging the battery (in €/kWh)
+: Buy price (string) : The buy price formula. The variable `p` represents the dynamic price / kWh.
+: Sell price (string) : The sell price formula. The variable `p` represents the dynamic price / kWh.
+: Feed-in possible (boolean) : Can you sell back to the grid?
+: Feed-in control (boolean) : Allow control over the feed-in variable (turn it off automatically when the prices are negative)?
+: Verbose (boolean) : Show the `curl` command in the debug tab?
 
-<p>For calculating with the correct tarrif of the energy supplier, the buy
-    price formula needs to be filled out. The variable <tt>p</tt> can be used to
-   in the formula to represent the dynamic tarrif. An example formula can be
-   <code>(p+0.02+0.13)*1.21</code>. This can be stripped down as:
-   </p>
-   <ul>
-    <li><code>p</code> - the dynamic price / kWh</li>
-    <li>&euro; 0.02 - <em>energy provider profit share</em></li>
-    <li>&euro; 0.13 - <em>DSO working price + contributions/levy/taxes</em></li>
-    <li>21% - <em>tax</em></li>
-   </ul>
+See [here](https://github.com/victronenergy/dynamic-ess#create-an-access-token) for more information on creating an VRM access token.
 
-   <p>
-The sell price formula looks often identical and in common cases looks
-something like <code>(p-0.02+0.13)*1.21</code>. So the energy provider profit
-share works the other way around.
-  </p>
+The buy formula looks typically something like: `(p+0.02+0.13)*1.21`. It this example it breaks down to:  
+- p - the dynamic price / kWh
+- € 0.02 - energy provider profit share
+- € 0.13 - DSO working price + contributions/levy/taxes
+- 21% - tax
 
-   <p>
-   If the <em>Feed in possible</em> checkbox has been checked, meaning that you
-   can sell back to the grid, the <i>sell price formula</i> also needs to be
-   filled out.
-</p>
+The sell price formula looks often identical and in common cases looks something like `(p-0.02+0.13)*1.21`. So the energy provider profit share works the other way around.
 
-        <p>The <i>Feed-in control</i> checkbox is there to disable
-        grid feed-in when the energy prices are negative.</p>
+### Details
 
-        <p>If the <em>verbose</em> checkbox has been set, the node becomes a bit
-            more verbose and sends out some extra debugging information like
-        the used <tt>curl</tt> command. This is mainly useful when debugging.</p>
+For usage, please import the _fetch-dynamic-ess_ example and configure that. The complete example uses VRM forecasting and algorithm to optimize when to 
+sell, buy and hold the grid to zero. For use in systems that have hourly  day ahead prices, such as is now available for a lot of consumers in Europe. 
+There are several factors determining the optimal value, all being taken into account. These factors are:
 
-  <h3>Input</h3>
+- The VRM ID
+- The solar prediction
+- Your (dynamic) energy contract price
+- Your battery size
+- The charge speed of your battery
+- The discharge speed of your battery
+- Your predicted consumption
+- The grid costs per kWh
+- The battery costs per kWh
+- Is grid feed-in possible
+- Allow control over feed-in variable
 
-  <p>Whenever the input receives a value, the new setpoint is fetched from
-  VRM. A repeating inject node (interval 5 minutes) is recommended.
-  More often has no use as the ideal setpoint only gets calculated that often
-  on VRM.</p>
+If all of these values are known, VRM can make a calculated optimum setpoint available via its application programming interface (API). The dynamic
+ess node utilizes that API to fetch it in a userfriendly way. Where optimum means the setting that should result in the lowest energy costs.
 
-  <p>
-    Overruling the configured settings of the node can be done by injecting one
-    or more of the following values:
-  </p>
+Some of the information is deducted from set parameters. Like the country determines the energy price (as retrieved from ENTSOE). The VRM location
+determines the solar forecast. It uses solcast and the Global Horizontal Irradiance (GHI) for getting the predicted solar yield. So it is important
+to set your location correctly in VRM.
 
-  <ul>
-  <li><tt>msg.site_id</tt> - The vrm id to fetch the data for. This is the unique number of the site and can be found in the url of the VRM dashboard.</li>
-  <li><tt>msg.country</tt> - The country code that is used for determining the hourly
-tarrif of the energy.</li>. See the dropdown in the select for the two-letter value
-to use.
-  <li><tt>msg.b_max</tt> - This is the
-  capacity the battery can hold in kWh. Defaults to <em>10</em> kWh.</li>
-  <li><tt>msg.tb_max</tt> - This is the
-  speed in kW that the battery can be charged at in an hour (to battery). Defaults
-  to <em>1</em> kW.</li>
-  <li><tt>msg.fb_max</tt> -  This is the
-  speed in kW that the battery can be drained at in an hour (from battery). Defaults
-  to <em>1</em>1 kW.</li>
-  <li><tt>msg.tg_max</tt> - The amount the grid can receive (to grid). Defaults to <em>1</em> kW.</em></li>
-  <li><tt>msg.fg_max</tt> - The amount the grid can provide (from grid). Defaults to <em>1</em> kW.</em></li>
-  <li><tt>msg.b_cost</tt> - Battery costs (per kWh for discharging or charging).</li>
-  <li><tt>msg.buy_price_formula</tt> - Buy price formula. The variable <code>p</code> is the dynamic price. Defaults to <em>p</em>.</li>
-  <li><tt>msg.sell_price_formula</tt> - Sell price formula. The variable <code>p</code> is the dynamic price. Defaults to <em>p</em>.</li>
-  <li><tt>msg.feed_in_possible</tt> - For overruling the configured value. Should be a boolean value.</li>
-  <li><tt>msg.feed_in_control_on</tt> - For overruling the configured value. Should be a boolean value.</li>
-  <li><tt>msg.url</tt> - <em>For debugging only.</em> This can be set to overrule the default VRM API url (<code>https://vrm-dynamic-ess-api.victronenergy.com</code></li>).
-  </ul>
+`msg.payload` is used to trigger a (re)calculation of the optimal setpoint. As the VRM backend only updates every 5 minutes, there is no reason to
+trigger this node more frequent.
 
-  <h3>Outputs</h3>
+It is also possible to overrule configuration settings via setting one of the following `msg` properties.
 
-  <p>The first output sets the ESS setpoint as <code>msg.payload</code>. The second output gives more information for the coming 24 hours.</p>
+: site_id (number) :  The vrm id to fetch the data for. This is the unique number of the site and can be found in the url of the VRM dashboard.
+: country (string) : The country code that is used for determining the hourly tarrif of the energy. See the dropdown in the select for the two-letter value to use.
+: b_max (float) : This is the capacity the battery can hold in kWh.
+: tb_max (float) : This is the speed in kW that the battery can be charged at in an hour (to battery).
+: fb_max (float) : This is the speed in kW that the battery can be drained at in an hour (from battery).
+: tg_max (float) : The amount the grid can receive (to grid).
+: fg_max (float) : The amount the grid can provide (from grid).
+: b_cost (float) : Battery costs (per kWh for discharging or charging).
+: url (string) : _For debugging only_. This can be set to overrule the default VRM API url.
 
-  <p>The second output is for generating graphics.</p>
+### Note
 
-  <p>The third output can be used to disable _grid feed-in_ when the actual energy prices are
-    below zero. When the prices are below zero, the output will be <tt>1</tt>, but only if the
-    configuration has been set to <i>Allow disable feed-in</i>. The output can be directly connected to an
-    <i>ESS control</i> node, set to "Disable feed-in".
-    Alternatively you can use this output to steer your power hungry equipment.
-  </p>
+- This is a proof of concept project. In the future this implementation in Node-RED will become obsolete as the functionality will move into VRM/Venus OS native.
+- This flow uses control paths that may interfere with your normal GX device usage. It adjusts settings (setpoint) and will insert a schedule for charging in the ESS menu. If you don't want that, don't use this node. See below which dbus paths are being used.
+- When the API gets updated, there is a fair change that the node also needs to be updated. The API will respond with a 426 / Please update http status code.
 
-  <p>The fourth output gives some extra information when the API calls fails. It contains
-    the error response of the API, usually consisting of <tt>status</tt>, <tt>statusText</tt>,
-    <tt>headers</tt>, <tt>config</tt>, <tt>request</tt> and <tt>data</tt>.
-  </p>
+### References
 
-  <h3>Status</h3>
-
-  <p>When everything works correctly, the node shows a green dot with the current ideal ESS setpoint.
-    Else it shows a yellow dot containing the http statuscode. Connect a debug node to the fourth
-    output for more information on what is happening.
-  </p>
+Please use either the issues on the GitHub site or the Node-RED space on our community for questions, troubleshooting and suggestions.
+- [GitHub](https://github.com/victronenergy/dynamic-ess) - the nodes github repository
+- [Community](https://community.victronenergy.com/smart-spaces/71/node-red.html) - Node-RED space in the Victron Energy community.
 
 </script>
+
