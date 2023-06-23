@@ -1,25 +1,70 @@
 # Dynamic ESS
-A node-red flow that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero. For use in systems that have hourly day ahead prices, such as is now available for consumers in the Netherlands by ANWB, Tibber and the likes. It is not limited to use from users from the Netherlands. With the latest update you are able to configure the buy and sell formula's, allowing to configure your providers pricing.
 
-Note:
-- This is a proof of concept project. In the future this implementation in Node-RED will become obsolete as the functionality will move into VRM/Venus OS native.
-- This flow uses control paths that may interfere with your normal GX device usage. It adjusts settings (setpoint) and will insert a schedule for charging in the ESS menu. If you don't want that, don't use this node. See below which dbus paths are being used.
-- When the API gets updated, there is a fair change that the node also needs to be updated. The API will respond with a `426` / Please update
-http status code.
+A Node-RED flow that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero. For use in systems that have hourly day ahead prices, which is the case in a big part of Europe.
 
+Do check the [about](#about) and  [disclaimer](#disclaimer) below.
+
+# Prerequisites
+
+In order to successfuly use this node, installations must:  
+- Be an ESS (Energy Storage System)
+- Have a dynamic energy contract
+- Not use generators
+- Not be mobile
+- For best results:
+  - Have 28 days of operation time
+  - Have location set for at least 28 days
+
+# QuickStart
+
+- Install the following nodes via the palette manager:
+  - `victron-dynamic-ess`
+  - `node-red-dashboard`
+- Set your sites location in VRM.
+- Import the _fetch-dynamic-ess_ example.
+- Configure the _Victron Dynamic ESS_ node.
+- Deploy the flow and check [the dashboard](https://venus.local:1881/ui).
+
+All of the parts are written down in more detail below.
 If you use this and have questions, issues and/or suggestions, please ask them in the [Node-RED space](https://community.victronenergy.com/smart-spaces/71/node-red.html) of our community or file and issue on the [GitHub](https://github.com/victronenergy/dynamic-ess/issues) site.
 
-## Quick-start
+## Installing required nodes
 
-After installing this node, import the _fetch-dynamic-ess_ example (ctrl-i). Once imported, double-click the _Dynamic ESS VRM_ node and fill out all required fields.  Note that, if you haven't already, also need to install the [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard).
+From the palette manager, install the following nodes:
+- [victron-dynamic-ess](https://flows.nodered.org/node/victron-dynamic-ess)
+- [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
 
-Also make sure that you set your sites position correctly in VRM, as that is used for determining the predicted solar forecast. This can be set under _Settings -> Set location_ in VRM.
+Below is a short screen recording showing how to install them.
 
-<img src="https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/import-example.png" width="70%" alt="Edit panel" />
+![Screen recording: install victron-dynamic-ess](https://raw.githubusercontent.com/victronenergy/dynamic-ess/main/doc/img/install-dynamic-ess.gif)
 
-In the rest of this document some more information may be found on getting the right values for optimizing the configuration. In short:
-- Access token - The VRM access token. See below on how to create one for your site.
-- Site ID - Note that this may not be the same as your user ID. You can find your site id in the url on your dashboard. If for example your url for your dashboard is https://vrm.victronenergy.com/installation/654321/dashboard, your Site ID is 654321
+Node-RED also has documentation on [adding nodes](https://nodered.org/docs/user-guide/runtime/adding-nodes).
+
+## Set your location in VRM
+
+Make sure that you set your sites position correctly in VRM, as that is used for determining the predicted solar forecast. This can be set under _Settings -> Set location_ in VRM for your site.
+
+## Importing the _fetch-dynamic-ess_ example
+
+Import the [_fetch-dynamic-ess_ example](https://github.com/victronenergy/dynamic-ess/blob/main/examples/fetch-dynamic-ess.json) (ctrl-i). Once imported, double-click the _Dynamic ESS VRM_ node and fill out all required fields.
+
+![Screen recording: import fetch-dynamic-ess](https://raw.githubusercontent.com/victronenergy/dynamic-ess/main/doc/img/import-fetch-dynamic-ess.gif)
+
+The imported flow looks like this:
+
+![Dynamic ESS](https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/dynamic-ess-flow.png)
+
+Note that there also another example that you can import: [_fetch-dynamic-ess-with-average-price-switching.json_](https://github.com/victronenergy/dynamic-ess/blob/main/examples/fetch-dynamic-ess-with-average-price-switching.json). This example shows how to switch on/off a relay based on the average (dynamic) price.
+
+## Configuration of the Victron Dynamic ESS node
+
+<img src="https://raw.githubusercontent.com/victronenergy/dynamic-ess/master/doc/img/edit-panel.png" width="428px" alt="Edit panel" />
+
+Double click the _Dynamic ESS VRM site_ to open the edit panel to configure the node. The following
+fields need to be filled out:
+
+- VRM token - The VRM access token. See [below](#create-an-access-token) on how to create one for your site.
+- VRM site ID - Note that this may not be the same as your user ID. You can find your site id in the url on your dashboard. If for example your url for your dashboard is https://vrm.victronenergy.com/installation/654321/dashboard, your Site ID is 654321.
 - B\_max - Battery capacity (in kWh)
 - tb\_max - Maximum Battery charge power (in kW)
 - fb\_max  - Maximum Battery discharge power (in kW)
@@ -41,32 +86,7 @@ With different providers, the formula will likely be different. So this does req
 
 The default filled out values are typical values. If you think you are factors of, you might want to consult on the [community](https://community.victronenergy.com/index.html) and ask for advice on what to fill out.
 
-<img src="https://raw.githubusercontent.com/victronenergy/dynamic-ess/master/doc/img/edit-panel.png" width="70%" alt="Edit panel" />
-
 Once everything is filled out, you can deploy the flow and check https://venus.local:1881/ui/ to see how the system will take its actions for the day.
-
-## Flow screenshot
-
-![Dynamic ESS](https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/dynamic-ess-flow.png)
-
-The _dynamic ess_ node is for users that have an energy storage system (ESS) in combination with a solar system and want to set it automatically to the optimal value. Where optimal means that it is set so you will pay the least amount for your energy usage.  There are several factors determining the optimal value, all being taken into account. These factors are:
-
-- the VRM id
-- the solar prediction
-- your (dynamic) energy contract price
-- your battery size
-- the charge speed of your battery
-- the discharge speed of your battery
-- your predicted consumption
-- the grid cost per kWh
-- the battery cost per kWh
-- the VAT percentage
-- is feed-in possible
-- allow control over the feed-in variable
-
-If all of these values are known, VRM can make a calculated optimum setpoint available via its application programming interface (API). The _dynamic ess_ node utilizes that API to fetch it in a userfriendly way.  Where optimum means the setting that should result in the lowest energy costs.
-
-Some of the information is deducted from set parameters. Like the country determines the energy price (as retrieved from ENTSOE). The VRM location determines the solar forecast. It uses solcast and the Global Horizontal Irradiance (GHI) for getting the predicted solar yield. So it is important to set your location correctly in VRM.
 
 # Used dbus paths
 
@@ -91,8 +111,6 @@ On each input, the flow generated fresh graphs, which are displayed on the Node-
 As the information is being retrieved via the [VRM API](https://vrm-api-docs.victronenergy.com/#/), a token is needed to be able to get the required information. This token will then be used instead of your VRM credentials. See [create an access token](#create_an_access_token) below on how to do that.
 
 While it is probably possible to deduct the country based on the longitude and latitude, it is a lot easier if you fill it out yourself. So you will need to fill out the country as well. This information is used to retrieve the current energy price from ENTSO-E. ENTSO-E is the European association for the cooperation of transmission system operators (TSOs) for electricity. All EU countries use this as source for determining their next day dynamic energy prices.
-
-<img src="https://raw.githubusercontent.com/victronenergy/dynamic-ess/master/doc/img/edit-panel.png" width="70%" alt="Edit panel" />
 
 # Create an access token
 
@@ -133,3 +151,20 @@ Store the access token in your password vault as you won't be able to retrieve i
 When you are done you can point your browser to https://vrm-api-docs.victronenergy.com/#/operations/auth/logout and `Send API Request` for logging out and invalidating the Bearer token.
 
 You can also [list](https://vrm-api-docs.victronenergy.com/#/operations/users/idUser/accesstokens/list) and [revoke](https://vrm-api-docs.victronenergy.com/#/operations/users/idUser/accesstokens/revoke) existing tokens via the VRM API.
+
+# About
+
+The goal of Dynamic ESS can be formulated in the following way:  
+- Minimize the costs made on the grid and battery,
+- By using the grid and battery to indirectly control the energy flow,
+- While taking the consumption estimates, PV yield estimates, grid limitations, battery limitations and energy prices into account.
+
+By taking the mentioned factors into account, Dynamic ESS builds a comprehensive model of the site to be able to generate a schedule of battery and grid usage for the installation to follow throughout the day to minimize its costs.
+
+# Disclaimer
+
+- This is a proof of concept project. In the future this implementation in Node-RED will become obsolete as the functionality will move into VRM/Venus OS native.
+- This flow uses control paths that may interfere with your normal GX device usage. It adjusts settings (setpoint) and will insert a schedule for charging in the ESS menu. If you don't want that, don't use this node. See below which dbus paths are being used.
+- When the API gets updated, there is a fair change that the node also needs to be updated. The API will respond with a `426` / Please update http status code.
+
+
