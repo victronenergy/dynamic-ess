@@ -898,7 +898,7 @@
         "id": "a60535f66374e712",
         "type": "group",
         "z": "56d0b82efbbcde18",
-        "name": "Switch based on average buy price",
+        "name": "Switch based on buy price",
         "style": {
             "label": true
         },
@@ -908,30 +908,35 @@
             "245547e4591ab1c4",
             "0eb0fab6efa16cbe",
             "96db5372e1ad2e33",
-            "47c35131a7b8a4b3"
+            "47c35131a7b8a4b3",
+            "be044ff4a19c5356",
+            "ec1ff5f368ada517",
+            "a18d4ec997818c0d",
+            "c9e6618e4e39a9a9"
         ],
         "x": 24,
         "y": 519,
         "w": 1202,
-        "h": 122
+        "h": 202
     },
     {
         "id": "b45c543381a5e16d",
         "type": "function",
         "z": "56d0b82efbbcde18",
         "g": "a60535f66374e712",
-        "name": "Add average price to p_b",
-        "func": "const values = Object.values(msg.payload.output.p_b);\n\n// Calculate the sum of all values\nconst sum = values.reduce((acc, curr) => acc + curr, 0);\n\n// Calculate the average\nlet average_price = sum / values.length;\n\n// Prevent division by zero\nif (average_price === 0) { average_price = 0.000001; }\n\n// Add a flag to each object indicating above, below, or equal to average\nfor (const key in msg.payload.output.p_b) {\n    if (msg.payload.output.p_b.hasOwnProperty(key)) {\n        const value = msg.payload.output.p_b[key];\n        const flag = value > average_price ? \"above\" : value < average_price ? \"below\" : \"equal\";\n        const offset_perc = (value - average_price)/average_price;\n        msg.payload.output.p_b[key] = { value, flag, offset_perc };\n    }\n}\n\nconst d = new Date()\n\nmsg.payload.average_price = average_price\nmsg.payload.price_compared_to_average = msg.payload.output.p_b[d.getHours()].flag\nmsg.payload.price_offset_percentage = msg.payload.output.p_b[d.getHours()].offset_perc\n\nreturn msg;",
+        "name": "Parse buy price info",
+        "func": "const values = Object.values(msg.payload.output.p_b);\n\n// Calculate the sum of all values\nconst sum = values.reduce((acc, curr) => acc + curr, 0);\n\n// Calculate the average\nlet average_price = sum / values.length;\n\n// Prevent division by zero\nif (average_price === 0) { average_price = 0.000001; }\n\n// Add a flag to each object indicating above, below, or equal to average\nfor (const key in msg.payload.output.p_b) {\n    if (msg.payload.output.p_b.hasOwnProperty(key)) {\n        const value = msg.payload.output.p_b[key];\n        const flag = value > average_price ? \"above\" : value < average_price ? \"below\" : \"equal\";\n        const offset_perc = (value - average_price)/average_price;\n        msg.payload.output.p_b[key] = { value, flag, offset_perc };\n    }\n}\n\nconst d = new Date()\n\nmsg.payload.average_price = average_price\nmsg.payload.price_compared_to_average = msg.payload.output.p_b[d.getHours()].flag\nmsg.payload.price_offset_percentage = msg.payload.output.p_b[d.getHours()].offset_perc\nmsg.payload.negative_price = msg.payload.output.p_b[d.getHours()].value <= 0\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 230,
+        "x": 220,
         "y": 580,
         "wires": [
             [
-                "412b2c07c7b348fa"
+                "412b2c07c7b348fa",
+                "be044ff4a19c5356"
             ]
         ]
     },
@@ -1077,5 +1082,123 @@
                 "b45c543381a5e16d"
             ]
         ]
+    },
+    {
+        "id": "be044ff4a19c5356",
+        "type": "switch",
+        "z": "56d0b82efbbcde18",
+        "g": "a60535f66374e712",
+        "name": "Check for negative price",
+        "property": "payload.negative_price",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 490,
+        "y": 640,
+        "wires": [
+            [
+                "ec1ff5f368ada517"
+            ],
+            [
+                "a18d4ec997818c0d"
+            ]
+        ],
+        "outputLabels": [
+            "negative buy price",
+            "positive buy price"
+        ]
+    },
+    {
+        "id": "ec1ff5f368ada517",
+        "type": "change",
+        "z": "56d0b82efbbcde18",
+        "g": "a60535f66374e712",
+        "name": "Open relay",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 640,
+        "wires": [
+            [
+                "c9e6618e4e39a9a9"
+            ]
+        ]
+    },
+    {
+        "id": "a18d4ec997818c0d",
+        "type": "change",
+        "z": "56d0b82efbbcde18",
+        "g": "a60535f66374e712",
+        "name": "Close relay",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 680,
+        "wires": [
+            [
+                "c9e6618e4e39a9a9"
+            ]
+        ]
+    },
+    {
+        "id": "c9e6618e4e39a9a9",
+        "type": "victron-output-relay",
+        "z": "56d0b82efbbcde18",
+        "g": "a60535f66374e712",
+        "service": "com.victronenergy.system/0",
+        "path": "/Relay/1/State",
+        "serviceObj": {
+            "service": "com.victronenergy.system/0",
+            "name": "Venus device"
+        },
+        "pathObj": {
+            "path": "/Relay/1/State",
+            "type": "enum",
+            "name": "Venus relay 2 state",
+            "enum": {
+                "0": "Open",
+                "1": "Closed"
+            },
+            "writable": true
+        },
+        "initial": "",
+        "name": "",
+        "onlyChanges": false,
+        "x": 1060,
+        "y": 660,
+        "wires": []
     }
 ]
