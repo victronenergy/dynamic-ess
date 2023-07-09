@@ -39,12 +39,12 @@ module.exports = function (RED) {
       const services = x.client.client.services
       for (const key in services) {
         // For the activeSOC
-        if (services[key].name.startsWith('com.victronenergy.battery')) {
-          let sub = 'com.victronenergy.battery/' + services[key].deviceInstance
+        if (services[key].name.startsWith('com.victronenergy.system')) {
+          let sub = 'com.victronenergy.system/' + services[key].deviceInstance
           if (nrcvVersion === '1.4.23') {
             sub = services[key].name
           }
-          this.subActiveSOC = this.client.subscribe(sub, '/Soc', (msg) => {
+          this.subActiveSOC = this.client.subscribe(sub, '/Dc/Battery/Soc', (msg) => {
             this.activeSOC = msg.value
             if (!ready) {
               node.status({ fill: 'green', shape: 'dot', text: 'Ready (' + this.activeSOC.toFixed(1) + '%)' })
