@@ -74,11 +74,11 @@ fields need to be filled out:
 - Feed in possible - Can you sell back to the grid?
 - Feed-in control - Allow control over the feed-in variable (turn it off automatically when the prices are negative)?
 
-Battery costs are the costs that charging a battery costs, expressed in €/kWh. A typical calculation for this is:  
+Battery costs indicate how expensive it is to use it for charging and discharging, expressed in €/kWh. A typical calculation for this is:  
 > costs for buying the battery in € / (charging cycles * battery capacity in kWh)
 
 One battery charge cycle equals full battery charged to 100% and fully used to 0%. If you only use half of the battery power, then recharge it and repeat it the following day — it will also count as one charge cycle instead of two. The number of charging cycles is a number that differs per brand.  The battery costs is usually somewhere between € 0.02 and € 0.06 /kWh.  
-Some feedback of users is that they don’t care about the battery costs, as they already payed for it, so it does not matter to them. In that case we still advise to put a small amount in as battery costs. E.g. 0.01 €/kWh.
+Some feedback of users is that they don’t care about the battery costs, as they already paid for it, so technically there’s no additional costs to charge it. In that case we still advise to put a small amount in as battery costs. E.g. 0.01 €/kWh.
 
 The other thing to configure is the _buy price formula_ and _sell price formula_ (if you are allowed to sell back to the grid). This formula looks typically something like: `(p+0.02+0.13)*1.21`. It this example it breaks down to:  
 - p - the dynamic price / kWh
