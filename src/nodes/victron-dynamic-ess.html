@@ -7,7 +7,7 @@
             name: { value: "" },
             site_id: { value: "", validate: RED.validators.regex(/^[a-z0-9]{1,12}$/) },
             vrmtoken: { value: "", validate: RED.validators.regex(/^[a-z0-9]{64}$/) },
-            country: { value: "", validate: RED.validators.regex(/^[a-z]{2}$/) },
+            country: { value: "", validate: RED.validators.regex(/^[a-z]{2}[-()a-z0-9]*$/) },
             b_max: { value: 10, validate: RED.validators.number() },
             fb_max: { value: 1.1, validate: RED.validators.number() },
             tb_max: { value: 1.2, validate: RED.validators.number() },
