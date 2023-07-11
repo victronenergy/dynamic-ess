@@ -47,18 +47,10 @@ module.exports = function (RED) {
           this.subActiveSOC = this.client.subscribe(sub, '/Dc/Battery/Soc', (msg) => {
             this.activeSOC = msg.value
             if (!ready) {
-              node.status({ fill: 'green', shape: 'dot', text: 'Ready (' + this.activeSOC.toFixed(1) + '%)' })
+              node.status({ fill: 'green', shape: 'dot', text: 'Ready (' + this.activeSOC.toFixed(1) + '%, minSoc ' + this.ActiveSocLimit.toFixed(1) + '%)' })
               ready = true
             }
           })
-          continue
-        }
-        // For the ActiveSocLimit
-        if (services[key].name.startsWith('com.victronenergy.system')) {
-          let sub = 'com.victronenergy.system/0'
-          if (nrcvVersion === '1.4.23') {
-            sub = services[key].name
-          }
           this.subSocLimit = this.client.subscribe(sub, '/Control/ActiveSocLimit', (msg) => {
             this.ActiveSocLimit = msg.value
           })
@@ -99,7 +91,7 @@ module.exports = function (RED) {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/Start', diff)
 
-        node.status({ fill: 'yellow', shape: 'dot', text: 'Battery in idle state (' + this.activeSOC.toFixed(1) + '%)' })
+        node.status({ fill: 'yellow', shape: 'dot', text: 'Idle (' + this.activeSOC.toFixed(1) + '%, min: ' + this.ActiveSocLimit.toFixed(10) + '%)' })
       } else {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/AllowDischarge', 1)
@@ -110,7 +102,7 @@ module.exports = function (RED) {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/Soc', 100)
 
-        node.status({ fill: 'green', shape: 'dot', text: 'Battery in active state (' + this.activeSOC.toFixed(1) + '%)' })
+        node.status({ fill: 'green', shape: 'dot', text: 'Active (' + this.activeSOC.toFixed(1) + '%, min: ' + this.ActiveSocLimit.toFixed(1) + '%)' })
       }
 
       node.send(msg)

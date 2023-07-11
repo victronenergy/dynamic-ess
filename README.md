@@ -100,7 +100,10 @@ When correctly deployed, these nodes do write (and read) from the dbus (using [n
 The following services and paths are being written to:  
 - `com.victronenergy.settings /Settings/CGwacs/AcPowerSetPoint` - the obvious one, for setting the grid setpoint.
 - `com.victronenergy.settings /Settings/CGwacs/OvervoltageFeedIn` - to enable or disable the "Grid feed-in".
+
+The _victron-idle-battery_ node uses:
 - `com.victronenergy.settings /Settings/CGwacs/BatteryLife/Schedule/Charge/0/*`  - to put the battery in "idle" mode.
+- `com.victronenergy.system /Dc/Battery/Soc` - for showing the state of charge.
 
 # Graphs
 
