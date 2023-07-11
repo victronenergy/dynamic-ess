@@ -104,6 +104,7 @@ The following services and paths are being written to:
 The _victron-idle-battery_ node uses:
 - `com.victronenergy.settings /Settings/CGwacs/BatteryLife/Schedule/Charge/0/*`  - to put the battery in "idle" mode.
 - `com.victronenergy.system /Dc/Battery/Soc` - for showing the state of charge.
+- `com.victronenergy.system /Control/ActiveSocLimit` - for showing the active SOC limit.
 
 # Graphs
 
