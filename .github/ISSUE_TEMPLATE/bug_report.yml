@@ -128,7 +128,6 @@ body:
       placeholder: ex. 2.7
     validations:
       required: false
-
   - type: input
     id: buy_price_formula
     attributes:
@@ -161,7 +160,6 @@ body:
       options:
         - label: yes
           required: false
- 
  - type: textarea
     id: what-happened
     attributes:
