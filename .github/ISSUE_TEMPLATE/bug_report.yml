@@ -160,7 +160,7 @@ body:
       options:
         - label: yes
           required: false
- - type: textarea
+  - type: textarea
     id: what-happened
     attributes:
       label: What happened?
