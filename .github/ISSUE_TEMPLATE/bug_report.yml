@@ -21,7 +21,7 @@ body:
       label: VRM / Site iD
       description: The vrm or site id the problem plays
       placeholder: ex. 123456
-    validattions:
+    validations:
       required: false
   - type: textarea
     id: what-happened
