@@ -11,9 +11,7 @@ body:
         Thanks for taking the time to fill out this bug report! Make sure that
         you have upgraded your flow to use the latest release of dynamic ESS
         before continuing.
-
         We understand that it might be a lot of fields to fill out. For us it is better to have all info and not need it than to need info and not have it.
-
         So not all fields are required, but it does help to resolve your issue quicker.
   - type: input
     id: contact
