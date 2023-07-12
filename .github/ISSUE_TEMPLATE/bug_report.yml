@@ -19,8 +19,56 @@ body:
     id: id
     attributes:
       label: VRM / Site iD
-      description: The vrm or site id the problem plays
+      description: The vrm or site id the problem plays. If you don't want to give that, please do fill out the parameter inputs.
       placeholder: ex. 123456
+    validations:
+      required: false
+  - type: input
+    id: B_max
+    attributes:
+      label: B max
+      description: Usable battery capacity (kWh)
+      placeholder: ex. 15
+    validations:
+      required: false
+  - type: input
+    id: TB_max
+    attributes:
+      label: TB max
+      description: Amount the battery charges in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: FB_max
+    attributes:
+      label: FB max
+      description: Amount the battery discharges in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: TG_max
+    attributes:
+      label: TG max
+      description: Amount the grid can receive (to grid) in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: FG_max
+    attributes:
+      label: FG max
+      description: Amount the grid can provide (from grid) in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: b_costs
+    attributes:
+      label: Battery costs
+      description: Battery costs (&euro;/kWh)
+      placeholder: ex. 2.7
     validations:
       required: false
   - type: textarea
