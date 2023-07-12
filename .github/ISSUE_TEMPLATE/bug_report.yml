@@ -26,54 +26,6 @@ body:
       placeholder: ex. 123456
     validations:
       required: false
-  - type: input
-    id: B_max
-    attributes:
-      label: B max
-      description: Usable battery capacity (kWh)
-      placeholder: ex. 15
-    validations:
-      required: false
-  - type: input
-    id: TB_max
-    attributes:
-      label: TB max
-      description: Amount the battery charges in one hour (kW)
-      placeholder: ex. 2.7
-    validations:
-      required: false
-  - type: input
-    id: FB_max
-    attributes:
-      label: FB max
-      description: Amount the battery discharges in one hour (kW)
-      placeholder: ex. 2.7
-    validations:
-      required: false
-  - type: input
-    id: TG_max
-    attributes:
-      label: TG max
-      description: Amount the grid can receive (to grid) in one hour (kW)
-      placeholder: ex. 2.7
-    validations:
-      required: false
-  - type: input
-    id: FG_max
-    attributes:
-      label: FG max
-      description: Amount the grid can provide (from grid) in one hour (kW)
-      placeholder: ex. 2.7
-    validations:
-      required: false
-  - type: input
-    id: b_costs
-    attributes:
-      label: Battery costs
-      description: Battery costs (&euro;/kWh)
-      placeholder: ex. 2.7
-    validations:
-      required: false
   - type: dropdown
     id: country
     attributes:
@@ -128,7 +80,89 @@ body:
       - Ukraine - IPS (ua-ips)
     validations:
       required: false
-  - type: textarea
+  - type: input
+    id: B_max
+    attributes:
+      label: B max
+      description: Usable battery capacity (kWh)
+      placeholder: ex. 15
+    validations:
+      required: false
+  - type: input
+    id: TB_max
+    attributes:
+      label: TB max
+      description: Amount the battery charges in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: FB_max
+    attributes:
+      label: FB max
+      description: Amount the battery discharges in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: TG_max
+    attributes:
+      label: TG max
+      description: Amount the grid can receive (to grid) in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: FG_max
+    attributes:
+      label: FG max
+      description: Amount the grid can provide (from grid) in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: b_costs
+    attributes:
+      label: Battery costs
+      description: Battery costs (&euro;/kWh)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+
+  - type: input
+    id: buy_price_formula
+    attributes:
+      label: Buy price
+      description: The buy price formula
+      placeholder: ex. (p+0.02+0.13)*1.21
+    validations:
+      required: false
+  - type: input
+    id: sell_price_formula
+    attributes:
+      label: Sell price
+      description: The sell price formula
+      placeholder: ex. (p-0.02+0.13)*1.21
+    validations:
+      required: false
+  - type: checkboxes
+    id: feed_in_possible
+    attributes:
+      label: feed-in possible
+      description: Can you sell back to the grid?
+      options:
+        - label: yes
+          required: false
+  - type: checkboxes
+    id: feed_in_control_on
+    attributes:
+      label: feed-in possible
+      description: Allow control over the feed-in variable (turn it off automatically when the prices are negative)?
+      options:
+        - label: yes
+          required: false
+ 
+ - type: textarea
     id: what-happened
     attributes:
       label: What happened?
