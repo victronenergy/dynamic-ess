@@ -146,27 +146,27 @@ body:
       placeholder: ex. (p-0.02+0.13)*1.21
     validations:
       required: false
-  - type: checkboxes
+  - type: dropdown
     id: feed_in_possible
     attributes:
       label: feed-in possible
       description: Can you sell back to the grid?
       options:
-        - label: "yes"
-          required: false
-        - label: "no"
-          required: false
-  - type: checkboxes
+        - 'yes'
+        - 'no'
+    validations:
+      required: false
+  - type: dropdown
     id: feed_in_control_on
     attributes:
       label: feed-in possible
       description: Allow control over the feed-in variable (turn it off automatically
         when the prices are negative)?
       options:
-        - label: "yes"
-          required: false
-        - label: "no"
-          required: false
+        - 'yes'
+        - 'no'
+    validations:
+      required: false
   - type: textarea
     id: what-happened
     attributes:
