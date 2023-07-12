@@ -7,6 +7,9 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report! Make sure that you have upgraded your flow to use the latest release of dynamic ESS before continuing.
+
+        We understand that it might be a lot of fields to fill out. For us it is better to have all info and not need it than to need info and not have it.
+        So not all fields are required, but it does help to resolve your issue quicker.
   - type: input
     id: contact
     attributes:
@@ -69,6 +72,60 @@ body:
       label: Battery costs
       description: Battery costs (&euro;/kWh)
       placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: dropdown
+    id: country
+    attributes:
+      label: Country / region
+      description: What country/region have you set?
+      options:
+      - Austria (at)
+      - Belgium (be)
+      - Bulgaria (bg)
+      - Croatia (hr)
+      - Czech Republic (cz)
+      - Denmark (dk)
+      - Estonia (ee)
+      - Finland (fi)
+      - France (fr)
+      - Germany (de)
+      - Greece (gr)
+      - Hungary (hu)
+      - Italy - Calabria (it-calabria)
+      - Italy - Centre-North (it-centre-north)
+      - Italy - Centre-South (it-centre-south)
+      - Italy - North (it-north)
+      - Italy - SACOAC (it-sacoac)
+      - Italy - SACODC (it-sacodc)
+      - Italy - Sardinia (it-sardinia)
+      - Italy - Sicily (it-sicily)
+      - Italy - South (it-south)
+      - Latvia (lv)
+      - Lithuania (lt)
+      - Luxembourg (lu)
+      - Montenegro (me)
+      - Netherlands (nl)
+      - North Macedonia (mk)
+      - Norway (no-1)
+      - Norway (no-2)
+      - Norway (no-2nsl)
+      - Norway (no-3)
+      - Norway (no-4)
+      - Norway (no-5)
+      - Poland (pl)
+      - Portugal (pt)
+      - Romania (ro)
+      - Serbia (rs)
+      - Slovakia (sk)
+      - Slovenia (si)
+      - Spain (es)
+      - Sweden - SE1 (se-1)
+      - Sweden - SE2 (se-2)
+      - Sweden - SE3 (se-3)
+      - Sweden - SE4 (se-4)
+      - Switzerland (ch)
+      - Ukraine - IPS (ua-ips)
     validations:
       required: false
   - type: textarea
