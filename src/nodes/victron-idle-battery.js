@@ -91,7 +91,7 @@ module.exports = function (RED) {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/Start', diff)
 
-        node.status({ fill: 'yellow', shape: 'dot', text: 'Idle (' + this.activeSOC.toFixed(1) + '%, min: ' + this.ActiveSocLimit.toFixed(10) + '%)' })
+        node.status({ fill: 'yellow', shape: 'dot', text: 'Idle (' + this.activeSOC.toFixed(1) + '%, min: ' + this.ActiveSocLimit.toFixed(1) + '%)' })
       } else {
         this.client.publish('com.victronenergy.settings',
           '/Settings/CGwacs/BatteryLife/Schedule/Charge/0/AllowDischarge', 1)
