@@ -12,26 +12,24 @@ module.exports = function (RED) {
     const node = this
 
     let url = 'https://vrm-dynamic-ess-api.victronenergy.com'
-    let justDeployed = true
 
-    function outputDESSSschedule() {
+    function outputDESSSschedule () {
       /* This function actually sends out the active schedule. This can be either
          triggered via an input node, but will also be triggered on each whole hour.
          If there is no schedule (yet), fetch a new one.
       */
-      justDeployed = false
       const d = new Date()
       const hour = d.getHours()
 
-      var target_soc = { topic: 'Target SOC' }
-      var feed_in_enabled = { topic: 'Feed-in enabled'}
-      var context = node.context().flow;
-      var dess = context.get('dess')
+      const target_soc = { topic: 'Target SOC' }
+      const feed_in_enabled = { topic: 'Feed-in enabled' }
+      const context = node.context().flow
+      const dess = context.get('dess')
 
       if (dess === undefined) {
-        node.status({ fill: 'red', shape: 'dot', text: `Schedule unavailable in flow context` })
+        node.status({ fill: 'red', shape: 'dot', text: 'Schedule unavailable in flow context' })
         fetchVRMSchedule()
-        return      
+        return
       }
 
       if (dess.output) {
@@ -39,16 +37,16 @@ module.exports = function (RED) {
         feed_in_enabled.payload = dess.output.feed_in[hour]
       }
 
-      node.send([target_soc, feed_in_enabled]);
+      node.send([target_soc, feed_in_enabled])
     }
 
-    function outputHourlySchedule() {
+    function outputHourlySchedule () {
       /* On each whole hour trigger sending out the latest schedule
       */
-      var currentTime = new Date();
+      const currentTime = new Date()
       if (currentTime.getMinutes() === 0 && currentTime.getSeconds() === 0) {
-        if (config.warn) { 
-          node.warn("Hourly output of schedule")
+        if (config.warn) {
+          node.warn('Hourly output of schedule')
         }
         outputDESSSschedule()
       }
@@ -57,20 +55,20 @@ module.exports = function (RED) {
       which case we disable Dynamic ESS. Only check on the whole minute.
       */
       if (currentTime.getSeconds() === 0) {
-        var context = node.context().flow;
+        const context = node.context().flow
 
         if (context.get('lastValidUpdate') && (currentTime - context.get('lastValidUpdate')) > 3600000) {
           node.warn('Unable to connect to VRM for more than an hour, disabling dynamic ESS')
           node.send([{ payload: 0 }, { payload: { output_idle_b: Array(24).fill(false) } }, { payload: false }, { payload: 'Unable to connect to VRM for more than an hour, disabling dynamic ESS' }])
-        }  
+        }
       }
     }
 
-    function fetchVRMSchedule() {
-      let flowContext = node.context().flow;
+    function fetchVRMSchedule () {
+      const flowContext = node.context().flow
 
       const nextUpdate = 290 - ((Date.now() - flowContext.get('lastValidUpdate')) / 1000).toFixed(0) || 0
-      if (nextUpdate > 0 && !justDeployed) {
+      if (nextUpdate > 0) {
         node.status({ fill: 'red', shape: 'dot', text: `Trying to update too quickly, wait ${nextUpdate} seconds` })
         return
       }
@@ -85,7 +83,7 @@ module.exports = function (RED) {
         return
       }
 
-      let msg = {}
+      const msg = {}
       msg.topic = 'VRM dynamic ess'
       msg.payload = null
 
@@ -94,7 +92,7 @@ module.exports = function (RED) {
         payload: null
       }
 
-      let context = node.context()
+      const context = node.context()
 
       const options = {
         site_id: (context.get('site_id') || config.site_id).toString(),
@@ -127,8 +125,7 @@ module.exports = function (RED) {
       node.status({ fill: 'yellow', shape: 'ring', text: 'Retrieving setpoint' })
       axios.get(url, { params: options, headers }).then(function (response) {
         if (response.status === 200) {
-
-          let data = response.data
+          const data = response.data
           data.options = options
           flowContext.set('dess', data)
 
@@ -141,8 +138,6 @@ module.exports = function (RED) {
           node.warn(response.data.warnings)
         }
         flowContext.set('lastValidUpdate', Date.now())
-      
-
       }).catch(function (error) {
         node.warn(error)
         if (error.response && error.response.data && error.response.data.detail) {
@@ -151,15 +146,14 @@ module.exports = function (RED) {
           node.status({ fill: 'red', shape: 'dot', text: 'Error fetching VRM data' })
         }
       })
-
     }
 
-    setInterval(outputHourlySchedule, 1000);
+    setInterval(outputHourlySchedule, 1000)
     // Retrieve the latest schedule 5 times an hour
     setInterval(fetchVRMSchedule, 12 * 60 * 1000)
 
     node.on('input', function (msg) {
-      var context = node.context()
+      const context = node.context()
 
       if (msg.url) {
         url = msg.url
@@ -170,11 +164,10 @@ module.exports = function (RED) {
       outputDESSSschedule()
     })
 
-    node.on("close", function() {
+    node.on('close', function () {
       clearInterval(outputHourlySchedule)
       clearInterval(fetchVRMSchedule)
-    });
-
+    })
 
     if (config.verbose === true) {
       curlirize(axios)
