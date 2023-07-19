@@ -12,8 +12,6 @@ module.exports = function (RED) {
     const node = this
 
     let url = 'https://vrm-dynamic-ess-api.victronenergy.com'
-    let FeedInPossible = config.feed_in_possible
-    let UseGridSetpointMinMax = true
     let justDeployed = true
 
     function outputDESSSschedule() {
@@ -31,7 +29,7 @@ module.exports = function (RED) {
       var dess = context.get('dess')
 
       if (dess === undefined) {
-        node.status({ fill: 'red', shape: 'dot', text: `Schedule unavailable in node context` })
+        node.status({ fill: 'red', shape: 'dot', text: `Schedule unavailable in flow context` })
         fetchVRMSchedule()
         return      
       }
@@ -69,7 +67,6 @@ module.exports = function (RED) {
     }
 
     function fetchVRMSchedule() {
-      node.warn("Fetching VRM Schedule");
       let flowContext = node.context().flow;
 
       const nextUpdate = 290 - ((Date.now() - flowContext.get('lastValidUpdate')) / 1000).toFixed(0) || 0
