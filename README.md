@@ -19,11 +19,10 @@ In order to successfuly use this node, installations must:
 
 - Install the following nodes via the palette manager:
   - `victron-dynamic-ess`
-  - `node-red-dashboard`
 - Set your sites location in VRM.
 - Import the _fetch-dynamic-ess_ example.
 - Configure the _Victron Dynamic ESS_ node.
-- Deploy the flow and check [the dashboard](https://venus.local:1881/ui).
+- Deploy the flow and check [the dashboard](https://venus.local:1881/dess).
 
 All of the parts are written down in more detail below.
 If you use this and have questions, issues and/or suggestions, please ask them in the [Node-RED space](https://community.victronenergy.com/smart-spaces/71/node-red.html) of our community or file and issue on the [GitHub](https://github.com/victronenergy/dynamic-ess/issues) site.
@@ -32,7 +31,6 @@ If you use this and have questions, issues and/or suggestions, please ask them i
 
 From the palette manager, install the following nodes:
 - [victron-dynamic-ess](https://flows.nodered.org/node/victron-dynamic-ess)
-- [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
 
 Below is a short screen recording showing how to install them.
 
@@ -98,13 +96,8 @@ Once everything is filled out, you can deploy the flow and check https://venus.l
 
 When correctly deployed, these nodes do write (and read) from the dbus (using [node-red-contrib-victron](https://github.com/victronenergy/node-red-contrib-victron) nodes).
 The following services and paths are being written to:  
-- `com.victronenergy.settings /Settings/CGwacs/AcPowerSetPoint` - the obvious one, for setting the grid setpoint.
-- `com.victronenergy.settings /Settings/CGwacs/OvervoltageFeedIn` - to enable or disable the "Grid feed-in".
-
-The _victron-idle-battery_ node uses:
-- `com.victronenergy.settings /Settings/CGwacs/BatteryLife/Schedule/Charge/0/*`  - to put the battery in "idle" mode.
-- `com.victronenergy.system /Dc/Battery/Soc` - for showing the state of charge.
-- `com.victronenergy.system /Control/ActiveSocLimit` - for showing the active SOC limit.
+- `com.victronenergy.settings /Settings/DynamicESS/Mode` - The mode of Dynamic ESS will be set to 'auto'
+- `com.victronenergy.settings /Settings/DynamicESS/Schedule/*/*` - Depending on the used example 1 or more schedules are written to, containing the desired Soc, AllowGridFeedin, Start and Duration.
 
 # Graphs
 
@@ -115,8 +108,6 @@ On each input, the flow generated fresh graphs, which are displayed on the Node-
 ![Price graph](./doc/img/price-graph.png)  
 ![Costs graph](./doc/img/costs-graph.png)  
 ![Energy graph](./doc/img/energy-graph.png)
-
-_Note that the graphs will likely interfere with other node-red-dashboard charts. See [this issue](https://github.com/victronenergy/dynamic-ess/issues/9) for more information._
 
 # Usage
 
