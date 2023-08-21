@@ -21,7 +21,7 @@
             verbose: { value: false }
         },
         inputs: 1,
-        outputs: 2,
+        outputs: 4,
         icon: "victronenergy.svg",
         label: function () {
             return this.name || "Dynamic ESS";
@@ -179,13 +179,19 @@ to date documentation and a [QuickStart](https://github.com/victronenergy/dynami
 
 : payload (string|number) :  the trigger to start (re-)calculating the optimal setpoint
 
+Triggering the node to start working is not needed as the node will automatically fetch updated information with
+a 12 minute interval after deployment.
+
 ### Outputs
 
-1. Grid setpoint
-: payload (number) : the optimal grid setpoint.
+1. Schedule current hour
+: soc (number) : the scheduled SOC
+: feed_in (boolean) : is grid feed in allowed
+: duration (number) : duration in seconds for this schedule (always 3600)
+: start (number) : unix timestamp on when to start this schedule (begining of current hour)
 
-2. Standard error
-: payload (string) : the standard error of the command.
+Output will be done on each whole hour (as a new schedules gets active then) and also every 12 minutes after deployment.
+Notice that there is no `msg.payload` field.
 
 ### Configuration
 

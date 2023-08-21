@@ -18,11 +18,6 @@ module.exports = function (RED) {
          triggered via an input node, but will also be triggered on each whole hour.
          If there is no schedule (yet), fetch a new one.
       */
-      const d = new Date()
-      const hour = d.getHours()
-
-      const target_soc = { topic: 'Target SOC' }
-      const feed_in_enabled = { topic: 'Feed-in enabled' }
       const context = node.context().flow
       const dess = context.get('dess')
 
@@ -32,12 +27,24 @@ module.exports = function (RED) {
         return
       }
 
+      const output = []
       if (dess.output) {
-        target_soc.payload = Number((dess.output.SOC[hour]).toFixed(1))
-        feed_in_enabled.payload = dess.output.feed_in[hour]
+        for (let schedule = 0; schedule <= 3; schedule++) {
+          const currentDateTime = new Date()
+          currentDateTime.setMinutes(schedule*60, 0, 0)
+          const currentHour = currentDateTime.getHours()
+          const unixTimestamp = Math.floor(currentDateTime.getTime() / 1000)
+             output.push({
+            topic: `Schedule ${schedule}`,
+            soc : Number((dess.output.SOC[currentHour]).toFixed(1)),
+            feed_in: dess.output.feed_in[currentHour] ? 1 : 0,
+            duration: 3600,
+            start: unixTimestamp
+          })
+        }
       }
 
-      node.send([target_soc, feed_in_enabled])
+      node.send(output)
     }
 
     function outputHourlySchedule () {
@@ -130,6 +137,8 @@ module.exports = function (RED) {
           flowContext.set('dess', data)
 
           node.status({ fill: 'green', shape: 'dot', text: 'Ok' })
+
+          outputDESSSschedule()
         } else {
           node.status({ fill: 'yellow', shape: 'dot', text: response.status })
         }
@@ -151,6 +160,16 @@ module.exports = function (RED) {
     setInterval(outputHourlySchedule, 1000)
     // Retrieve the latest schedule 5 times an hour
     setInterval(fetchVRMSchedule, 12 * 60 * 1000)
+
+    // Also retrieve the VRM schedule on deploy
+    RED.events.on("runtime-event", function(event) {
+      if (event.id === "runtime-deploy") {
+        // Remove the lastValidUpdate field, so we can fetch
+        const flowContext = node.context().flow
+        delete flowContext['lastValidUpdate']
+        fetchVRMSchedule()
+      }
+    })
 
     node.on('input', function (msg) {
       const context = node.context()
