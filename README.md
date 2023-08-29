@@ -2,7 +2,7 @@
 
 A Node-RED flow that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero. For use in systems that have hourly day ahead prices, which is the case in a big part of Europe.
 
-Do check the [about](#about) and  [disclaimer](#disclaimer) below.
+Note that this is a proof-of-concept. Do check the [about](#about) and  [disclaimer](#disclaimer) below for more information
 
 # Prerequisites
 
@@ -14,6 +14,7 @@ In order to successfuly use this node, installations must:
 - For best results:
   - Have 28 days of operation time
   - Have location set for at least 28 days
+- Not be running the VRM implementation of Dynamic ESS, as this will bite each other. The service `com.victronenergy.settings` and path `/Settings/DynamicEss/Mode` is used for this. Mode `1` (auto) is used by VRM. Mode `4` (Node-RED) can be used for Node-RED implementataions.
 
 # QuickStart
 
@@ -54,6 +55,12 @@ The imported flow looks like this:
 
 Note that there also another example that you can import: [_fetch-dynamic-ess-with-average-price-switching.json_](https://github.com/victronenergy/dynamic-ess/blob/main/examples/fetch-dynamic-ess-with-average-price-switching.json). This example shows how to switch on/off a relay based on the average (dynamic) price.
 
+If you want to link to the site from a dashboard node, you can simply add a template node that links
+to the site:
+```
+[{"id":"46b70ef9a19626f0","type":"ui_template","z":"ccbcca84c2779cd2","group":"ab8b2a192b041af5","name":"","order":0,"width":0,"height":0,"format":"<a href=\"/dess\">Dynamic ESS</a>","storeOutMessages":true,"fwdInMessages":true,"resendOnRefresh":true,"templateScope":"local","className":"","x":860,"y":860,"wires":[[]]},{"id":"ab8b2a192b041af5","type":"ui_group","name":"Dynamic ESS","tab":"cc1a49b54f71c790","order":2,"disp":false,"width":"20","collapse":false,"className":""},{"id":"cc1a49b54f71c790","type":"ui_tab","name":"Dynamic ESS","icon":"dashboard","order":1,"disabled":false,"hidden":false}]
+```
+
 ## Configuration of the Victron Dynamic ESS node
 
 <img src="https://raw.githubusercontent.com/victronenergy/dynamic-ess/master/doc/img/edit-panel.png" width="428px" alt="Edit panel" />
@@ -62,7 +69,7 @@ Double click the _Dynamic ESS VRM site_ to open the edit panel to configure the 
 fields need to be filled out:
 
 - VRM token - The VRM access token. See [below](#create-an-access-token) on how to create one for your site.
-- VRM site ID - Note that this may not be the same as your user ID. You can find your site id in the url on your dashboard. If for example your url for your dashboard is https://vrm.victronenergy.com/installation/654321/dashboard, your Site ID is 654321.
+- VRM portal ID - the VRM Portal ID can be found in the menu _Settings -> VRM Logger_ and on VRM under the _Device list -> Gateway_. It looks like this: `c0619ab27f32`
 - B\_max - Battery capacity (in kWh)
 - tb\_max - Maximum Battery charge power (in kW)
 - fb\_max  - Maximum Battery discharge power (in kW)
@@ -90,7 +97,7 @@ With different providers, the formula will likely be different. So this does req
 
 The default filled out values are typical values. If you think you are factors of, you might want to consult on the [community](https://community.victronenergy.com/index.html) and ask for advice on what to fill out.
 
-Once everything is filled out, you can deploy the flow and check https://venus.local:1881/ui/ to see how the system will take its actions for the day.
+Once everything is filled out, you can deploy the flow and check https://venus.local:1881/dess/ to see how the system will take its actions for the day.
 
 # Used dbus paths
 
@@ -123,6 +130,17 @@ In order to use the _dynamic ess_ node, you will need an VRM API access token.  
 
 Go to the [access token](https://vrm.victronenergy.com/access-tokens) part of VRM and add a new token. Name the new token _Node-RED dynamic ESS_ or something that your mind will link
 to dynamic ESS. Once generated, store the access token in your password vault as you won't be able to retrieve it again. You will also need to fill out this token in the _dynamic ess_ node.
+
+# Troubleshooting
+
+## The battery discharges less and less each day
+
+You probably have the battery set to _Optimized (with batterylife)_. As long as the battery does not
+reach 100% state of charge (which it probably does not reach while running Dynamic ESS), it will
+increase the Active Min SOC each day by 5% until it reaches 100%. This gives Dynamic ESS less space
+to play. At the moment Dynamic ESS has no way of coping with this. The current work-a-round is to either
+accept this behavior or set the mode to _Optimized (without BatteryLife)_ and 
+periodically disable Dynamic ESS and charge your battery yourself.
 
 # About
 

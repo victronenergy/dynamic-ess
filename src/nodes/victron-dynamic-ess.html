@@ -5,7 +5,7 @@
         color: '#f7ab3e',
         defaults: {
             name: { value: "" },
-            site_id: { value: "", validate: RED.validators.regex(/^[a-z0-9]{1,12}$/) },
+            vrm_id: { value: "", validate: RED.validators.regex(/^[a-z0-9]{12}$/) },
             vrmtoken: { value: "", validate: RED.validators.regex(/^[a-z0-9]{64}$/) },
             country: { value: "", validate: RED.validators.regex(/^[a-z]{2}[-()a-z0-9]*$/) },
             b_max: { value: 10, validate: RED.validators.number() },
@@ -66,8 +66,8 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-site_id"><i class="fa fa-id-card"></i> VRM site id</label>
-        <input type="text" id="node-input-site_id" placeholder="VRM site id" required>
+        <label for="node-input-vrm_id"><i class="fa fa-id-card"></i> VRM id</label>
+        <input type="text" id="node-input-vrm_id" placeholder="VRM id" required>
     </div>
     <div class="form-row">
         <label for="node-input-vrmtoken"><i class="fa fa-user-secret"></i> VRM token</label>
@@ -196,7 +196,7 @@ Notice that there is no `msg.payload` field.
 ### Configuration
 
 : name (string) : The name of the node
-: VRM site id (string | number) : The VRM id to fetch the data for. This is the unique number of the site and can be found in the url of your VRM dashboard.
+: VRM id (string | number) : The VRM id to fetch the data for.
 : VRM token (string) : The VRM API token.
 : Country (string) : The country code that is used for determining the hourly tarrif of the energy.
 : B max (float) : Battery capacity (in kWh)
@@ -257,7 +257,7 @@ trigger this node more frequent.
 
 It is also possible to overrule configuration settings via setting one of the following `msg` properties.
 
-: site_id (number) :  The vrm id to fetch the data for. This is the unique number of the site and can be found in the url of the VRM dashboard.
+: vrm_id (number) :  The vrm id to fetch the data for.
 : country (string) : The country code that is used for determining the hourly tarrif of the energy. See the dropdown in the select for the two-letter value to use.
 : b_max (float) : This is the capacity the battery can hold in kWh.
 : tb_max (float) : This is the speed in kW that the battery can be charged at in an hour (to battery).

@@ -5,6 +5,7 @@ module.exports = function (RED) {
   const curlirize = require('axios-curlirize')
   const path = require('path')
   const packageJson = require(path.join(__dirname, '../../', 'package.json'))
+  let deployed = false
 
   function VictronDynamicEss (config) {
     RED.nodes.createNode(this, config)
@@ -23,6 +24,7 @@ module.exports = function (RED) {
 
       if (dess === undefined) {
         node.status({ fill: 'red', shape: 'dot', text: 'Schedule unavailable in flow context' })
+
         fetchVRMSchedule()
         return
       }
@@ -31,12 +33,17 @@ module.exports = function (RED) {
       if (dess.output) {
         for (let schedule = 0; schedule <= 3; schedule++) {
           const currentDateTime = new Date()
+          const currentDay = currentDateTime.getDay()
           currentDateTime.setMinutes(schedule*60, 0, 0)
-          const currentHour = currentDateTime.getHours()
+          const scheduleDay = currentDateTime.getDay()
+          let currentHour = currentDateTime.getHours()
+          if ( currentDay != scheduleDay ) {
+            currentHour += 24
+          }
           const unixTimestamp = Math.floor(currentDateTime.getTime() / 1000)
              output.push({
             topic: `Schedule ${schedule}`,
-            soc : Number((dess.output.SOC[currentHour]).toFixed(1)),
+            soc : Number((dess.output.SOC[currentHour])),
             feed_in: dess.output.feed_in[currentHour] ? 1 : 0,
             duration: 3600,
             start: unixTimestamp
@@ -45,6 +52,7 @@ module.exports = function (RED) {
       }
 
       node.send(output)
+      deployed = false
     }
 
     function outputHourlySchedule () {
@@ -52,7 +60,7 @@ module.exports = function (RED) {
       */
       const currentTime = new Date()
       if (currentTime.getMinutes() === 0 && currentTime.getSeconds() === 0) {
-        if (config.warn) {
+        if (config.verbose === true) {
           node.warn('Hourly output of schedule')
         }
         outputDESSSschedule()
@@ -65,28 +73,30 @@ module.exports = function (RED) {
         const context = node.context().flow
 
         if (context.get('lastValidUpdate') && (currentTime - context.get('lastValidUpdate')) > 3600000) {
-          node.warn('Unable to connect to VRM for more than an hour, disabling dynamic ESS')
-          node.send([{ payload: 0 }, { payload: { output_idle_b: Array(24).fill(false) } }, { payload: false }, { payload: 'Unable to connect to VRM for more than an hour, disabling dynamic ESS' }])
+          node.warn('Unable to connect to VRM for more than an hour')
+          // No need to actually disable the schedule, as it will run out automatically
         }
       }
     }
 
     function fetchVRMSchedule () {
-      const flowContext = node.context().flow
-
-      const nextUpdate = 290 - ((Date.now() - flowContext.get('lastValidUpdate')) / 1000).toFixed(0) || 0
-      if (nextUpdate > 0) {
-        node.status({ fill: 'red', shape: 'dot', text: `Trying to update too quickly, wait ${nextUpdate} seconds` })
-        return
-      }
+      // node.warn("fetchVRMSchedule called by " + (new Error()).stack.split("\n")[2].trim().split(" ")[1])
 
       if (!config.vrmtoken) {
         node.status({ fill: 'red', shape: 'dot', text: 'No VRM token set' })
         return
       }
 
-      if (!config.site_id) {
-        node.status({ fill: 'red', shape: 'dot', text: 'No VRM ID token set' })
+      if (!config.vrm_id) {
+        node.status({ fill: 'red', shape: 'dot', text: 'No VRM ID set' })
+        return
+      }
+
+      const flowContext = node.context().flow
+
+      const nextUpdate = 290 - ((Date.now() - flowContext.get('lastValidUpdate')) / 1000).toFixed(0) || 0
+      if (nextUpdate > 0) {
+        node.status({ fill: 'yellow', shape: 'dot', text: `Trying to update too quickly, wait ${nextUpdate} seconds` })
         return
       }
 
@@ -94,26 +104,22 @@ module.exports = function (RED) {
       msg.topic = 'VRM dynamic ess'
       msg.payload = null
 
-      const msgsp = {
-        topic: 'ideal setpoint',
-        payload: null
-      }
-
       const context = node.context()
+      const dess_config = flowContext.get('dess_config') || {}
 
       const options = {
-        site_id: (context.get('site_id') || config.site_id).toString(),
-        B_max: (config.b_max || 1).toString(),
-        tb_max: (config.tb_max || 1).toString(),
-        fb_max: (config.fb_max || 1).toString(),
-        tg_max: (config.tg_max || 0).toString(),
-        fg_max: (config.fg_max || 1).toString(),
-        b_cost: (config.b_cost || 0).toString(),
-        buy_price_formula: (config.buy_price_formula || 'p').toString(),
-        sell_price_formula: (config.sell_price_formula || 'p').toString(),
-        feed_in_possible: (config.feed_in_possible || true).toString(),
-        feed_in_control_on: (config.feed_in_control_on || true).toString(),
-        country: (config.country || 'nl').toUpperCase()
+        vrm_id: (dess_config.vrm_id || config.vrm_id || '').toString(),
+        b_max: (dess_config.b_max || config.b_max || 1).toString(),
+        tb_max: (dess_config.tb_max || config.tb_max || 1).toString(),
+        fb_max: (dess_config.fb_max || config.fb_max || 1).toString(),
+        tg_max: (dess_config.tg_max || config.tg_max || 0).toString(),
+        fg_max: (dess_config.fg_max || config.fg_max || 1).toString(),
+        b_cost: (dess_config.b_cost || config.b_cost || 0).toString(),
+        buy_price_formula: (dess_config. buy_price_formula || config.buy_price_formula || 'p').toString(),
+        sell_price_formula: (dess_config.sell_price_formula || config.sell_price_formula || 'p').toString(),
+        feed_in_possible: (dess_config.feed_in_possible || config.feed_in_possible || true).toString(),
+        feed_in_control_on: (dess_config.feed_in_control || config.feed_in_control_on || true).toString(),
+        country: (dess_config.country || config.country || 'nl').toUpperCase()
       }
       const headers = {
         'X-Authorization': 'Token ' + config.vrmtoken,
@@ -157,16 +163,38 @@ module.exports = function (RED) {
       })
     }
 
-    setInterval(outputHourlySchedule, 1000)
-    // Retrieve the latest schedule 5 times an hour
-    setInterval(fetchVRMSchedule, 12 * 60 * 1000)
-
     // Also retrieve the VRM schedule on deploy
     RED.events.on("runtime-event", function(event) {
       if (event.id === "runtime-deploy") {
         // Remove the lastValidUpdate field, so we can fetch
         const flowContext = node.context().flow
-        delete flowContext['lastValidUpdate']
+        flowContext.set('lastValidUpdate', 0)
+
+        // Trick to only call this function once
+        if (deployed) {
+          return
+        }
+
+        setInterval(outputHourlySchedule, 1000)
+        // Retrieve the latest schedule 5 times an hour
+        setInterval(fetchVRMSchedule, 12 * 60 * 1000)
+
+        flowContext.set('dess_config', {
+          vrm_id: config.vrm_id,
+          country: config.country,
+          b_max: config.b_max,
+          tb_max: config.tb_max,
+          fb_max: config.fb_max,
+          tg_max: config.tg_max,
+          fg_max: config.fg_max,
+          b_cost: config.b_cost,
+          buy_price_formula: config.buy_price_formula,
+          sell_price_formula: config.sell_price_formula,
+          feed_in_possible: config.feed_in_possible,
+          feed_in_control_on: config.feed_in_control_on
+        })
+        deployed = true
+
         fetchVRMSchedule()
       }
     })
@@ -177,8 +205,8 @@ module.exports = function (RED) {
       if (msg.url) {
         url = msg.url
       }
-      if (msg.site_id) {
-        context.set('site_id', msg.site_id)
+      if (msg.vrm_id) {
+        context.set('vrm_id', msg.vrm_id)
       }
       outputDESSSschedule()
     })

@@ -2,7 +2,7 @@
     {
         "id": "4f5b463efe029f84",
         "type": "group",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "name": "Dynamic ESS",
         "style": {
             "label": true
@@ -12,20 +12,21 @@
             "0a258a4a88409834",
             "04be7571633ea6bd",
             "d653e0ee49164bd1",
-            "b7244f77487893f6"
+            "b7244f77487893f6",
+            "f3819fb5aa20061c"
         ],
-        "x": 194,
-        "y": 39,
-        "w": 352,
+        "x": 854,
+        "y": 59,
+        "w": 372,
         "h": 162
     },
     {
         "id": "74fc8e63bf9bbd47",
         "type": "victron-dynamic-ess",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "4f5b463efe029f84",
         "name": "",
-        "site_id": "",
+        "vrm_id": "",
         "vrmtoken": "",
         "country": "nl",
         "b_max": "14",
@@ -39,8 +40,8 @@
         "feed_in_possible": true,
         "feed_in_control_on": true,
         "verbose": true,
-        "x": 300,
-        "y": 140,
+        "x": 980,
+        "y": 160,
         "wires": [
             [
                 "0a258a4a88409834"
@@ -59,96 +60,281 @@
     {
         "id": "0a258a4a88409834",
         "type": "link out",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "4f5b463efe029f84",
-        "name": "link out 1",
+        "name": "schedule 0 - current hour",
         "mode": "link",
         "links": [
-            "d75fe820bd4079fd"
+            "d75fe820bd4079fd",
+            "8d723ea6a3f644bc"
         ],
-        "x": 455,
-        "y": 80,
+        "x": 1135,
+        "y": 100,
         "wires": []
     },
     {
         "id": "04be7571633ea6bd",
         "type": "link out",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "4f5b463efe029f84",
-        "name": "link out 2",
+        "name": "schedule 1 - current hour +1",
         "mode": "link",
         "links": [
             "7e361835e40e9612"
         ],
-        "x": 505,
-        "y": 100,
+        "x": 1185,
+        "y": 120,
         "wires": []
     },
     {
         "id": "d653e0ee49164bd1",
         "type": "link out",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "4f5b463efe029f84",
-        "name": "link out 3",
+        "name": "schedule 2 - current hour +2",
         "mode": "link",
         "links": [
             "85d9b1f2d1083440"
         ],
-        "x": 455,
-        "y": 140,
+        "x": 1135,
+        "y": 160,
         "wires": []
     },
     {
         "id": "b7244f77487893f6",
         "type": "link out",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "4f5b463efe029f84",
-        "name": "link out 4",
+        "name": "schedule 3 - current hour +3",
         "mode": "link",
         "links": [
             "67ab1cc124f6edbc"
         ],
-        "x": 505,
-        "y": 160,
+        "x": 1185,
+        "y": 180,
         "wires": []
+    },
+    {
+        "id": "f3819fb5aa20061c",
+        "type": "inject",
+        "z": "f877df8cbb5d9508",
+        "g": "4f5b463efe029f84",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 970,
+        "y": 100,
+        "wires": [
+            [
+                "74fc8e63bf9bbd47"
+            ]
+        ]
+    },
+    {
+        "id": "cec1e66ec533743a",
+        "type": "group",
+        "z": "f877df8cbb5d9508",
+        "name": "Dynamic ESS activation",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "aca5786b0db9a892",
+            "353bb3cea1947ff3",
+            "55495378d8a4e89c",
+            "afdb5b686f86bb57",
+            "0d80c2fbc7d8094b"
+        ],
+        "x": 134,
+        "y": 59,
+        "w": 712,
+        "h": 162
+    },
+    {
+        "id": "aca5786b0db9a892",
+        "type": "inject",
+        "z": "f877df8cbb5d9508",
+        "g": "cec1e66ec533743a",
+        "name": "Disable Dynamic ESS (mode: off)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 310,
+        "y": 140,
+        "wires": [
+            [
+                "353bb3cea1947ff3"
+            ]
+        ]
+    },
+    {
+        "id": "353bb3cea1947ff3",
+        "type": "victron-output-custom",
+        "z": "f877df8cbb5d9508",
+        "g": "cec1e66ec533743a",
+        "service": "com.victronenergy.settings",
+        "path": "/Settings/DynamicEss/Mode",
+        "serviceObj": {
+            "service": "com.victronenergy.settings",
+            "name": "com.victronenergy.settings"
+        },
+        "pathObj": {
+            "path": "/Settings/DynamicEss/Mode",
+            "name": "/Settings/DynamicEss/Mode",
+            "type": "number"
+        },
+        "name": "Dynamic ESS mode",
+        "onlyChanges": false,
+        "x": 720,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "55495378d8a4e89c",
+        "type": "inject",
+        "z": "f877df8cbb5d9508",
+        "g": "cec1e66ec533743a",
+        "name": "Enable Dynamic ESS (mode: Node-RED)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "4",
+        "payloadType": "num",
+        "x": 340,
+        "y": 100,
+        "wires": [
+            [
+                "353bb3cea1947ff3"
+            ]
+        ]
+    },
+    {
+        "id": "afdb5b686f86bb57",
+        "type": "victron-input-custom",
+        "z": "f877df8cbb5d9508",
+        "g": "cec1e66ec533743a",
+        "service": "com.victronenergy.settings",
+        "path": "/Settings/DynamicEss/Mode",
+        "serviceObj": {
+            "service": "com.victronenergy.settings",
+            "name": "com.victronenergy.settings"
+        },
+        "pathObj": {
+            "path": "/Settings/DynamicEss/Mode",
+            "name": "/Settings/DynamicEss/Mode",
+            "type": "number"
+        },
+        "name": "",
+        "onlyChanges": true,
+        "x": 370,
+        "y": 180,
+        "wires": [
+            [
+                "0d80c2fbc7d8094b"
+            ]
+        ]
+    },
+    {
+        "id": "0d80c2fbc7d8094b",
+        "type": "change",
+        "z": "f877df8cbb5d9508",
+        "g": "cec1e66ec533743a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "dess_mode",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 180,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "1004b1568061f0ed",
         "type": "group",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "name": "/dess page",
         "style": {
             "label": true
         },
         "nodes": [
             "93d84929a7e8f215",
-            "f60accecc1f46a08",
             "3fecddb497bc5365",
             "928878cbd3fac1e6",
             "f695815874773519",
             "557e436c8a1b3fe5",
-            "adfc9cf290646821",
             "adba20b403a6eb54",
             "7c4a51c3a3bb9f4f",
-            "71e94c59bd88518d"
+            "71e94c59bd88518d",
+            "f9e95524651ecaa6",
+            "2297338ce02e1686"
         ],
-        "x": 574,
-        "y": 39,
-        "w": 792,
+        "x": 134,
+        "y": 239,
+        "w": 1092,
         "h": 162
     },
     {
         "id": "93d84929a7e8f215",
         "type": "http in",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "1004b1568061f0ed",
         "name": "Dynamic ESS (/dess)",
         "url": "/dess",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 700,
-        "y": 80,
+        "x": 260,
+        "y": 280,
         "wires": [
             [
                 "71e94c59bd88518d"
@@ -156,37 +342,17 @@
         ]
     },
     {
-        "id": "f60accecc1f46a08",
-        "type": "template",
-        "z": "3cedf502010030d2",
-        "g": "1004b1568061f0ed",
-        "name": "html page",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n    <title>Dynamic ESS</title>\n        <link rel=\"stylesheet\" href=\"/dess/style.css\">\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>\n    <script src=\"/dess/index.js\"></script>\n  \n  <h2>Dynamic ESS - {{ flow.dess.site }} ({{ flow.dess.options.country }})</h2>\n\n<div class=\"canvas-container\">\n  <div class=\"canvas-pair\">\n    <div id=\"ca\" style=\"height: 30vh; width: 45%;display:inline-block;\">\n      <canvas id=\"estimations\"></canvas>\n    </div>\n\n    <div id=\"cb\" style=\"height: 30vh; width: 45%;margin-left:5%;display:inline-block;\">\n      <canvas id=\"schedule\"></canvas>\n    </div>\n  </div>\n  <div class=\"canvas-pair\">\n    <div id=\"cc\" style=\"height: 30vh; width: 45%;display:inline-block;\">\n      <canvas id=\"dayaheadprices\"></canvas>\n    </div>\n\n    <div id=\"cd\" style=\"height: 30vh; width: 45%;margin-left:5%;display:inline-block;\">\n      <canvas id=\"costs\"></canvas>\n    </div>\n  </div>\n</div>\n\n<div id=\"ce\" style=\"height: 30vh;\">\n  <canvas id=\"energy\"></canvas>\n</div>\n\n<script>\n    const estimationschart = new Chart(\n    document.getElementById('estimations'),\n      {\n        type: 'bar',\n      data: {\n        labels: [{{estimations.payload.labels}}],\n        datasets: [\n            {{#estimations.payload.datasets}}\n            {\n                label: '{{label}}',\n                type: '{{type}}',\n                data: [{{data}}],\n                borderColor: '{{borderColor}}',\n                {{#backgroundColor}}\n                backgroundColor: '{{backgroundColor}}',\n                {{/backgroundColor}}\n                fill: {{fill}},\n                stepped: '{{stepped}}',\n                pointRadius: {{pointRadius}},\n                borderWidth: {{borderWidth}}\n            },\n            {{/estimations.payload.datasets}}\n        ]\n      },\n        options: {\n          maintainAspectRatio: false,\n          title: {\n            display: true,\n            text: ''\n          },\n          legend: {\n            position: 'top',\n            display: true\n          },\n          interaction: {\n            intersect: false,\n            mode: 'index',\n          },      \n          scales: {\n              y: {\n                  beginAtZero: true,\n                  title: {\n                      display: true,\n                      text: \"Energy in kWh\"\n                  }\n              }\n          },\n          plugins: {\n              arbitraryLine: {\n                  pastBackgroundColor: '#EEEEEE',\n                  nowBackgroundColor: '#DDDDDD'\n              },\n              title: {\n                  display: true,\n                  text: \"Overview graph\"\n              },\n              subtitle: {\n                  display: true,\n                  text: \"\"\n              },\n              tooltip: {\n                  callbacks: {\n                      label: function(ctx) {\n                let label = ctx.dataset.label || \"\";\n                if (label === 'Battery') {\n                    label += ': ';\n                    label += ctx.parsed.y.toFixed(2)\n                    label += ' ('\n                    label += ((ctx.parsed.y / {{ flow.dess.options.B_max}} ) * 100).toFixed(1)\n                    label += '%)'\n                }\n                else {\n                    label += ': ' + ctx.parsed.y.toFixed(2)\n                }\n                return label;\n                      }\n                  }\n              }\n          }\n        },\n        plugins: [arbitraryLine]\n      }\n    );\n\n  const schedulechart = new Chart(\n    document.getElementById('schedule'),\n    {\n      type: 'bar',\n      data: {\n        labels: [{{schedule.payload.labels}}],\n        datasets: [\n            {{#schedule.payload.datasets}}\n            {\n                label: '{{label}}',\n                data: [{{data}}],\n                borderColor: '{{borderColor}}',\n                backgroundColor: '{{backgroundColor}}',\n                fill: {{fill}},\n            },\n            {{/schedule.payload.datasets}}\n        ]\n      },\n      options: {\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },      \n        scales: {\n            y: {\n                beginAtZero: true,\n                title: {\n                    display: true,\n                    text: \"Energy in kWh\"\n                }\n            }\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD'\n            },\n            title: {\n                display: true,\n                text: \"Schedule graph\"\n            },\n            subtitle: {\n                display: true,\n                text: \"Positive values represent the energy pushed to the item (opposite for negatives).\"\n            }\n        }\n      },\n      plugins: [arbitraryLine]\n    }\n  );\n\n  const dapchart = new Chart(\n    document.getElementById('dayaheadprices'),\n    {\n      type: 'bar',\n      data: {\n        labels: [{{dayaheadprices.payload.labels}}],\n        datasets: [\n            {{#dayaheadprices.payload.datasets}}\n            {\n                label: '{{label}}',\n                type: '{{type}}',\n                data: [{{data}}],\n                borderColor: '{{borderColor}}',\n                backgroundColor: '{{backgroundColor}}',\n                fill: {{fill}},\n                stepped: '{{stepped}}',\n                pointRadius: {{pointRadius}},\n                borderWidth: {{borderWidth}}\n            },\n            {{/dayaheadprices.payload.datasets}}\n        ]\n      },\n      options: {\n        responsive: true,\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },\n        scales: {\n            y: {\n                beginAtZero: true,\n                title: {\n                    display: true,\n                    text: \"Price in €/kWh\"\n                }\n            }\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD'\n            },\n            title: {\n                display: true,\n                text: \"Price graph\"\n            },\n            subtitle: {\n                display: true,\n                text: \"Buy & Sell prices take the provider fee, energy tax and VAT into account.\"\n            }\n        }\n      },\n      plugins: [arbitraryLine]\n    }\n  );\n\n  const ucchart = new Chart(\n    document.getElementById('costs'),\n    {\n      type: 'bar',\n      data: {\n        labels: [{{costs.payload.labels}}],\n        datasets: [\n            {{#costs.payload.datasets}}\n            {\n                label: '{{label}}',\n                data: [{{data}}],\n                borderColor: '{{borderColor}}',\n                backgroundColor: '{{backgroundColor}}',\n                fill: {{fill}},\n            },\n            {{/costs.payload.datasets}}\n        ]\n      },\n      options: {\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },      \n        scales: {\n            y: {\n                beginAtZero: true,\n                title: {\n                    display: true,\n                    text: \"Cost in €\"\n                }\n            }\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD'\n            },\n            title: {\n                display: true,\n                text: \"Costs graph\"\n            }\n        }\n      },\n      plugins: [arbitraryLine]\n    }\n  );\n\n  const enchart = new Chart(\n    document.getElementById('energy'),\n    {\n      type: 'bar',\n      data: {\n        labels: [{{energy.payload.labels}}],\n        datasets: [\n            {{#energy.payload.datasets}}\n            {\n                label: '{{label}}',\n                type: '{{type}}',\n                data: [{{data}}],\n                borderColor: '{{borderColor}}',\n                backgroundColor: '{{backgroundColor}}',\n                fill: {{fill}},\n                stepped: '{{stepped}}',\n                {{#pointStyle}}\n                pointStyle: {{pointStyle}},\n                {{/pointStyle}}\n                {{#borderWidth}}\n                borderWidth: {{borderWidth}},\n                {{/borderWidth}}\n                {{#stack}}\n                stack: {{stack}},\n                {{/stack}}\n            },\n            {{/energy.payload.datasets}}\n        ]\n      },\n      options: {\n        elements: {\n            point:{\n                radius: 0\n            }\n        },\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true,\n          labels: {\n              filter: function(item, chart) {\n                return !item.text.includes(\"DISCARD\");\n              }\n          }\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD'\n            },\n            title: {\n                display: true,\n                text: \"Energy Graph\"\n            }\n        }\n    },\n      plugins: [arbitraryLine]\n    }\n  );\n\n</script>\n<hr />\n\n<h3>Dynamic ESS schedules</h3>\n\n<p>\nThe table shows all inserted Dynamic ESS Schedules.\n</p>\n\n<table>\n  <thead>\n    <tr>\n      <th>Schedule</th>\n      <th>Start</th>\n      <th>Targeted Soc</th>\n      <th>Allow grid feed-in</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>#0</td>\n      <td>{{table.0.start}}</td>\n      <td>{{table.0.soc}} %</td>\n      <td>{{table.0.feed_in}}</td>\n    </tr>\n    <tr>\n      <td>#1</td>\n      <td>{{table.1.start}}</td>\n      <td>{{table.1.soc}} %</td>\n      <td>{{table.1.feed_in}}</td>\n    </tr>\n    <tr>\n      <td>#2</td>\n      <td>{{table.2.start}}</td>\n      <td>{{table.2.soc}} %</td>\n      <td>{{table.2.feed_in}}</td>\n    </tr>\n    <tr>\n      <td>#3</td>\n      <td>{{table.3.start}}</td>\n      <td>{{table.3.soc}} %</td>\n      <td>{{table.3.feed_in}}</td>\n    </tr>\n  </tbody>\n</table>\n\n\n  <hr />\n  Last update: {{ lastValidUpdate }}\n\n  </body>\n</html>",
-        "output": "str",
-        "x": 1120,
-        "y": 80,
-        "wires": [
-            [
-                "7c4a51c3a3bb9f4f"
-            ]
-        ]
-    },
-    {
         "id": "3fecddb497bc5365",
         "type": "http in",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "1004b1568061f0ed",
         "name": "Stylesheet DESS",
         "url": "/dess/style.css",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 680,
-        "y": 160,
+        "x": 240,
+        "y": 360,
         "wires": [
             [
                 "928878cbd3fac1e6"
@@ -196,17 +362,17 @@
     {
         "id": "928878cbd3fac1e6",
         "type": "template",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "1004b1568061f0ed",
         "name": "stylesheet",
         "field": "payload",
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "body {\n  background-color: #fff;\n  padding-left: 5%;\n  padding-right: 5%;\n}\nh1 {\n  color: white;\n}\np {\n  color: black;\n}\n\n",
+        "template": "body {\n  background-color: #fff;\n  padding-left: 5%;\n  padding-right: 5%;\n}\nh1 {\n  color: white;\n}\np {\n  color: black;\n}\n\n.dess-table {\n    border-collapse: collapse;\n    margin: 25px 0;\n    font-size: 0.9em;\n    font-family: sans-serif;\n    min-width: 400px;\n    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);\n}\n\n.dess-table thead tr {\n    background-color: #009879;\n    color: #ffffff;\n    text-align: left;\n}\n\n.dess-table th,\n.dess-table td {\n    padding: 12px 15px;\n}",
         "output": "str",
-        "x": 940,
-        "y": 160,
+        "x": 640,
+        "y": 360,
         "wires": [
             [
                 "f695815874773519"
@@ -216,7 +382,7 @@
     {
         "id": "f695815874773519",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "1004b1568061f0ed",
         "name": "Set Headers",
         "rules": [
@@ -240,8 +406,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1110,
-        "y": 160,
+        "x": 950,
+        "y": 360,
         "wires": [
             [
                 "7c4a51c3a3bb9f4f"
@@ -251,45 +417,25 @@
     {
         "id": "557e436c8a1b3fe5",
         "type": "http in",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "1004b1568061f0ed",
         "name": "Javascript DESS",
         "url": "/dess/index.js",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 680,
-        "y": 120,
+        "x": 240,
+        "y": 320,
         "wires": [
             [
-                "adfc9cf290646821"
-            ]
-        ]
-    },
-    {
-        "id": "adfc9cf290646821",
-        "type": "template",
-        "z": "3cedf502010030d2",
-        "g": "1004b1568061f0ed",
-        "name": "javascript",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "\n     const arbitraryLine = {\n        id: 'arbitraryLine',\n        beforeDraw(chart, args, options){\n            const { \n                ctx, \n                chartArea: { top, right, bottom, left, width, height, margins}, \n                scales: {x, y}\n            } = chart;\n            ctx.save()\n            const d = new Date();\n            ctx.strokeStyle = options.nowBackgroundColor\n            ctx.fillStyle = options.nowBackgroundColor\n            let widthNow = (width / 24) * (d.getHours()+1)\n            ctx.fillRect(left, top, widthNow, height)\n            ctx.strokeStyle = options.pastBackgroundColor\n            ctx.fillStyle = options.pastBackgroundColor\n            let widthPast = (width / 24) * (d.getHours())\n            ctx.fillRect(left, top, widthPast, height)\n            ctx.restore()\n            \n        }\n    }\n\n",
-        "output": "str",
-        "x": 940,
-        "y": 120,
-        "wires": [
-            [
-                "adba20b403a6eb54"
+                "2297338ce02e1686"
             ]
         ]
     },
     {
         "id": "adba20b403a6eb54",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "1004b1568061f0ed",
         "name": "Set Headers",
         "rules": [
@@ -313,8 +459,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1110,
-        "y": 120,
+        "x": 950,
+        "y": 320,
         "wires": [
             [
                 "7c4a51c3a3bb9f4f"
@@ -324,40 +470,80 @@
     {
         "id": "7c4a51c3a3bb9f4f",
         "type": "http response",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "1004b1568061f0ed",
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 1290,
-        "y": 120,
+        "x": 1150,
+        "y": 320,
         "wires": []
     },
     {
         "id": "71e94c59bd88518d",
         "type": "function",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "1004b1568061f0ed",
         "name": "prepare dess variables",
-        "func": "let dess = flow.get('dess')     \n\nmsg.lastValidUpdate = new Date(flow.get('lastValidUpdate')).toLocaleString()\nlet date = new Date()\nmsg.hour = date.getHours()\nmsg.gsmm = dess.output.gsmm[msg.hour]\nmsg.feed_in = dess.output.feed_in[msg.hour]\nmsg.idle_b = dess.output.idle_b[msg.hour]\n\nmsg.estimations = {\n    payload: {\n        \"datasets\": [\n            {\n                label: 'Consumption',\n                type: 'line',\n                data: Object.values(dess.output.C).map(x => x.toFixed(3)),\n                borderColor: \"#FA716F\",\n                fill: false,\n                stepped: 'middle',\n                pointRadius: 1,\n                borderWidth: 1\n            },\n            {\n                label: 'Battery',\n                type: 'line',\n                data: Object.values(dess.output.B).map(x => x.toFixed(3)),\n                borderColor: \"#4790D0\",\n                fill: false,\n                stepped: 'middle',\n                pointRadius: 1,\n                borderWidth: 1\n            },\n            {\n                label: 'PV yield',\n                type: 'line',\n                data: Object.values(dess.output.PV).map(x => x.toFixed(3)),\n                borderColor: \"#F7AB3E\",\n                backgroundColor: \"#f8aa3dAA\",\n                fill: true,\n                stepped: 'middle',\n                pointRadius: 1,\n                borderWidth: 1\n            }\n        ],\n        \"labels\": Object.keys(dess.schedule),\n        \"B_max\": dess.options.B_max\n    }\n}\n\nmsg.schedule = {\n    payload: {\n        \"datasets\": [\n            {\n                label: \"Grid Usage\",\n                data: Object.values(dess.output.g).map(x => x.toFixed(3)),\n                borderColor: \"#FA716F\",\n                backgroundColor: \"#FA716F\",\n                fill: true\n            },\n            {\n                label: \"Battery usage\",\n                data: Object.values(dess.output.b).map(x => x.toFixed(3)),\n                borderColor: \"#4790D0\",\n                backgroundColor: \"#4790D0\",\n                fill: true\n            }],\n        \"labels\": Object.keys(dess.schedule)\n    }\n}\n\nmsg.dayaheadprices = {\n    payload: {\n        \"datasets\": [\n            {\n                label: \"Buy Price\",\n                type: 'line',\n                data: Object.values(dess.output.p_b).map(x => x.toFixed(3)),\n                borderColor: \"#FA716F\",\n                backgroundColor: \"#FA716F\",\n                fill: false,\n                stepped: 'middle',\n                pointRadius: 1,\n                borderWidth: 1\n            }, {\n                label: \"Sell Price\",\n                type: 'line',\n                data: Object.values(dess.output.p_s).map(x => x.toFixed(3)),\n                borderColor: \"#8BC964\",\n                backgroundColor: \"#8BC964\",\n                fill: false,\n                stepped: 'middle',\n                pointRadius: 1,\n                borderWidth: 1\n            },],\n        \"labels\": Object.keys(dess.schedule)\n    }\n}\n\nmsg.costs = {\n    payload: {\n        \"datasets\": [\n            {\n                label: \"Grid costs\",\n                data: Object.values(dess.output.g_cost).map(x => x.toFixed(3)),\n                borderColor: \"#FA716F\",\n                backgroundColor: \"#FA716F\",\n                fill: true\n            },\n            {\n                label: \"Battery costs\",\n                data: Object.values(dess.output.b_cost).map(x => x.toFixed(3)),\n                borderColor: \"#4790D0\",\n                backgroundColor: \"#4790D0\",\n                fill: true\n            }],\n        \"labels\": Object.keys(dess.schedule)\n    }\n}\n\nlet b = Object.values(dess.output.b).map(x => x.toFixed(3));\nlet g = Object.values(dess.output.g).map(x => x.toFixed(3));\nlet C = Object.values(dess.output.C).map(x => x.toFixed(3));\nlet PV = Object.values(dess.output.PV).map(x => x.toFixed(3));\nlet n = C.map((c, i) => PV[i] - c);\n\nlet to_b = b.map(x => { if (x < 0) { return -x } else { return 0 } });\nlet from_b = b.map(x => { if (x > 0) { return x } else { return 0 } });\nlet to_g = g.map(x => { if (x < 0) { return -x } else { return 0 } });\nlet from_g = g.map(x => { if (x > 0) { return x } else { return 0 } });\n\nlet met_need = C.map((c, i) => Math.min(c, PV[i]));\n\nlet from_g_to_b = []\nlet from_b_to_g = []\n\nfor (let i = 0; i <= 23; i++) {\n    if (Math.sign(b[i]) * Math.sign(g[i]) >= 0) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(0)\n    } else if (Math.sign(b[i]) == 1 && Math.sign(n[i]) >= 0) {\n        from_b_to_g.push(b[i])\n        from_g_to_b.push(0)\n    } else if (Math.sign(b[i]) == 1 && Math.sign(n[i]) == -1) {\n        from_b_to_g.push(-g[i])\n        from_g_to_b.push(0)\n    } else if (Math.sign(g[i]) == 1 && Math.sign(n[i]) >= 0) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(g[i])\n    } else if (Math.sign(g[i]) == 1 && Math.sign(n[i]) == -1) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(-b[i])\n    }\n}\n\nfrom_g = from_g.map((x, i) => (x - from_g_to_b[i]).toFixed(3))\nfrom_b = from_b.map((x, i) => (x - from_b_to_g[i]).toFixed(3))\nto_b = to_b.map((x, i) => (x - from_g_to_b[i]).toFixed(3))\nto_g = to_g.map((x, i) => (x - from_b_to_g[i]).toFixed(3))\n\nmsg.energy = {\n    payload: {\n        \"datasets\": [\n            {\n                label: \"Consumption\",\n                type: 'line',\n                data: C,\n                borderColor: \"#1066B1\",\n                backgroundColor: \"#1066B1\",\n                fill: false,\n                stepped: 'middle',\n                borderWidth: 1\n            },\n            {\n                label: \"PV Yield\",\n                type: 'line',\n                data: PV,\n                borderColor: \"#F7AB3E\",\n                backgroundColor: \"#F7AB3E\",\n                fill: false,\n                stepped: 'middle',\n                borderWidth: 1\n            },\n            {\n                label: \"\",\n                type: 'bar',\n                data: met_need,\n                legend: false,\n                borderColor: \"#FFFFFF00\",\n                backgroundColor: \"#FFFFFF00\",\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"From Grid\",\n                type: 'bar',\n                data: from_g,\n                borderColor: \"#FA716F\",\n                backgroundColor: \"#FA716F\",\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"To Grid\",\n                type: 'bar',\n                data: to_g,\n                borderColor: \"#8BC964\",\n                backgroundColor: \"#8BC964\",\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"From Battery\",\n                type: 'bar',\n                data: from_b,\n                borderColor: \"#4790D0\",\n                backgroundColor: \"#4790D0\",\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"To Battery\",\n                type: 'bar',\n                data: to_b,\n                borderColor: \"#9683EC\",\n                backgroundColor: \"#9683EC\",\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"From Battery to Grid\",\n                type: 'bar',\n                data: from_b_to_g,\n                borderColor: \"#4790D0\",\n                backgroundColor: \"#8BC964\",\n                borderWidth: 4,\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"From Grid to Battery\",\n                type: 'bar',\n                data: from_g_to_b,\n                borderColor: \"#FA716F\",\n                borderWidth: 4,\n                backgroundColor: \"#9683EC\",\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },],\n        \"labels\": Object.keys(dess.schedule)\n    }\n}\n\nmsg.table = []\nfor (let schedule = 0; schedule <= 3; schedule++) {\n    const currentDateTime = new Date()\n    currentDateTime.setMinutes(schedule * 60, 0, 0)\n    const currentHour = currentDateTime.getHours()\n    \n    msg.table.push({\n        soc: Number((dess.output.SOC[currentHour]).toFixed(1)),\n        feed_in: dess.output.feed_in[currentHour],\n        duration: 3600,\n        start: currentDateTime.toLocaleString()\n    })\n}\n\nreturn msg;",
+        "func": "let dess = flow.get('dess')     \n\nmsg.lastValidUpdate = new Date(flow.get('lastValidUpdate')).toLocaleString()\nlet date = new Date()\nmsg.hour = date.getHours()\nmsg.gsmm = dess.output.gsmm[msg.hour]\nmsg.feed_in = dess.output.feed_in[msg.hour]\nmsg.idle_b = dess.output.idle_b[msg.hour]\n\nmsg.dess_mode = flow.get('dess_mode')\nmsg.dess_mode_text = ['Off', 'Auto', 'Buy', 'Sell'][msg.dess_mode]\nif (Object.keys(dess.schedule).length == 24) {\n    msg.dess_hours = 24\n} else {\n    msg.dess_hours = 48\n}\n\nmsg.estimations = {\n    payload: {\n        \"datasets\": [\n            {\n                label: 'Consumption',\n                type: 'line',\n                data: Object.values(dess.output.C).slice(0, msg.dess_hours).map(x => x.toFixed(3)),\n                borderColor: \"#FA716F\",\n                fill: false,\n                stepped: 'left',\n                pointRadius: 1,\n                borderWidth: 1\n            },\n            {\n                label: 'Battery',\n                type: 'line',\n                data: Object.values(dess.output.B).slice(0, msg.dess_hours).map(x => x.toFixed(3)),\n                borderColor: \"#4790D0\",\n                fill: false,\n                stepped: 'left',\n                pointRadius: 1,\n                borderWidth: 1\n            },\n            {\n                label: 'PV yield',\n                type: 'line',\n                data: Object.values(dess.output.PV).slice(0, msg.dess_hours).map(x => x.toFixed(3)),\n                borderColor: \"#F7AB3E\",\n                backgroundColor: \"#f8aa3dAA\",\n                fill: true,\n                stepped: 'left',\n                pointRadius: 1,\n                borderWidth: 1\n            }\n        ],\n        \"labels\": Object.keys(dess.schedule).slice(0, msg.dess_hours),\n        \"B_max\": dess.options.b_max\n    }\n}\n\nmsg.schedule = {\n    payload: {\n        \"datasets\": [\n            {\n                label: \"Grid Usage\",\n                data: Object.values(dess.output.g).slice(0, msg.dess_hours).map(x => x.toFixed(3)),\n                borderColor: \"#FA716F\",\n                backgroundColor: \"#FA716F\",\n                fill: true\n            },\n            {\n                label: \"Battery usage\",\n                data: Object.values(dess.output.b).slice(0, msg.dess_hours).map(x => x.toFixed(3)),\n                borderColor: \"#4790D0\",\n                backgroundColor: \"#4790D0\",\n                fill: true\n            }],\n        \"labels\": Object.keys(dess.schedule).slice(0, msg.dess_hours)\n    }\n}\n\nmsg.dayaheadprices = {\n    payload: {\n        \"datasets\": [\n            {\n                label: \"Buy Price\",\n                type: 'line',\n                data: Object.values(dess.output.p_b).slice(0, msg.dess_hours).map(x => x.toFixed(3)),\n                borderColor: \"#FA716F\",\n                backgroundColor: \"#FA716F\",\n                fill: false,\n                stepped: 'left',\n                pointRadius: 1,\n                borderWidth: 1\n            }, {\n                label: \"Sell Price\",\n                type: 'line',\n                data: Object.values(dess.output.p_s).slice(0, msg.dess_hours).map(x => x.toFixed(3)),\n                borderColor: \"#8BC964\",\n                backgroundColor: \"#8BC964\",\n                fill: false,\n                stepped: 'left',\n                pointRadius: 1,\n                borderWidth: 1\n            },],\n        \"labels\": Object.keys(dess.schedule).slice(0, msg.dess_hours)\n    }\n}\n\nmsg.costs = {\n    payload: {\n        \"datasets\": [\n            {\n                label: \"Grid costs\",\n                data: Object.values(dess.output.g_cost).slice(0, msg.dess_hours).map(x => x.toFixed(3)),\n                borderColor: \"#FA716F\",\n                backgroundColor: \"#FA716F\",\n                fill: true\n            },\n            {\n                label: \"Battery costs\",\n                data: Object.values(dess.output.b_cost).slice(0, msg.dess_hours).map(x => x.toFixed(3)),\n                borderColor: \"#4790D0\",\n                backgroundColor: \"#4790D0\",\n                fill: true\n            }],\n        \"labels\": Object.keys(dess.schedule).slice(0, msg.dess_hours)\n    }\n}\n\nlet b = Object.values(dess.output.b).slice(0, msg.dess_hours).map(x => x.toFixed(3));\nlet g = Object.values(dess.output.g).slice(0, msg.dess_hours).map(x => x.toFixed(3));\nlet C = Object.values(dess.output.C).slice(0, msg.dess_hours).map(x => x.toFixed(3));\nlet PV = Object.values(dess.output.PV).slice(0, msg.dess_hours).map(x => x.toFixed(3));\nlet n = C.map((c, i) => PV[i] - c);\n\nlet to_b = b.map(x => { if (x < 0) { return -x } else { return 0 } });\nlet from_b = b.map(x => { if (x > 0) { return x } else { return 0 } });\nlet to_g = g.map(x => { if (x < 0) { return -x } else { return 0 } });\nlet from_g = g.map(x => { if (x > 0) { return x } else { return 0 } });\n\nlet met_need = C.map((c, i) => Math.min(c, PV[i]));\n\nlet from_g_to_b = []\nlet from_b_to_g = []\n\nfor (let i = 0; i <= (msg.dess_hours - 1); i++) {\n    if (Math.sign(b[i]) * Math.sign(g[i]) >= 0) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(0)\n    } else if (Math.sign(b[i]) == 1 && Math.sign(n[i]) >= 0) {\n        from_b_to_g.push(b[i])\n        from_g_to_b.push(0)\n    } else if (Math.sign(b[i]) == 1 && Math.sign(n[i]) == -1) {\n        from_b_to_g.push(-g[i])\n        from_g_to_b.push(0)\n    } else if (Math.sign(g[i]) == 1 && Math.sign(n[i]) >= 0) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(g[i])\n    } else if (Math.sign(g[i]) == 1 && Math.sign(n[i]) == -1) {\n        from_b_to_g.push(0)\n        from_g_to_b.push(-b[i])\n    }\n}\n\nfrom_g = from_g.map((x, i) => (x - from_g_to_b[i]).toFixed(3))\nfrom_b = from_b.map((x, i) => (x - from_b_to_g[i]).toFixed(3))\nto_b = to_b.map((x, i) => (x - from_g_to_b[i]).toFixed(3))\nto_g = to_g.map((x, i) => (x - from_b_to_g[i]).toFixed(3))\n\nmsg.energy = {\n    payload: {\n        \"datasets\": [\n            {\n                label: \"Consumption\",\n                type: 'line',\n                data: C,\n                borderColor: \"#1066B1\",\n                backgroundColor: \"#1066B1\",\n                fill: false,\n                stepped: 'middle',\n                borderWidth: 1\n            },\n            {\n                label: \"PV Yield\",\n                type: 'line',\n                data: PV,\n                borderColor: \"#F7AB3E\",\n                backgroundColor: \"#F7AB3E\",\n                fill: false,\n                stepped: 'middle',\n                borderWidth: 1\n            },\n            {\n                label: \"\",\n                type: 'bar',\n                data: met_need,\n                legend: false,\n                borderColor: \"#FFFFFF00\",\n                backgroundColor: \"#FFFFFF00\",\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"From Grid\",\n                type: 'bar',\n                data: from_g,\n                borderColor: \"#FA716F\",\n                backgroundColor: \"#FA716F\",\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"To Grid\",\n                type: 'bar',\n                data: to_g,\n                borderColor: \"#8BC964\",\n                backgroundColor: \"#8BC964\",\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"From Battery\",\n                type: 'bar',\n                data: from_b,\n                borderColor: \"#4790D0\",\n                backgroundColor: \"#4790D0\",\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"To Battery\",\n                type: 'bar',\n                data: to_b,\n                borderColor: \"#9683EC\",\n                backgroundColor: \"#9683EC\",\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"From Battery to Grid\",\n                type: 'bar',\n                data: from_b_to_g,\n                borderColor: \"#4790D0\",\n                backgroundColor: \"#8BC964\",\n                borderWidth: 4,\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },\n            {\n                label: \"From Grid to Battery\",\n                type: 'bar',\n                data: from_g_to_b,\n                borderColor: \"#FA716F\",\n                borderWidth: 4,\n                backgroundColor: \"#9683EC\",\n                barPercentage: 0.95,\n                fill: true,\n                stack: 1,\n            },],\n        \"labels\": Object.keys(dess.schedule).slice(0, msg.dess_hours)\n    }\n}\n\nmsg.table = []\nfor (let schedule = 0; schedule <= 3; schedule++) {\n    const currentDateTime = new Date()\n    currentDateTime.setMinutes(schedule * 60, 0, 0)\n    const currentHour = currentDateTime.getHours()\n    \n    msg.table.push({\n        soc: Number((dess.output.SOC[currentHour]).toFixed(1)),\n        feed_in: dess.output.feed_in[currentHour],\n        duration: 3600,\n        start: currentDateTime.toLocaleString()\n    })\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 940,
-        "y": 80,
+        "x": 640,
+        "y": 280,
         "wires": [
             [
-                "f60accecc1f46a08"
+                "f9e95524651ecaa6"
+            ]
+        ]
+    },
+    {
+        "id": "f9e95524651ecaa6",
+        "type": "template",
+        "z": "f877df8cbb5d9508",
+        "g": "1004b1568061f0ed",
+        "name": "html page",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"refresh\" content=\"60\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n    <title>Dynamic ESS</title>\n        <link rel=\"stylesheet\" href=\"/dess/style.css\">\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>\n    <script src=\"/dess/index.js\"></script>\n  \n  <h2>Dynamic ESS - {{ flow.dess.options.vrm_id }} ({{ flow.dess.options.country }}) - {{ dess_mode_text }}</h2>\n\n<div class=\"canvas-container\">\n  <div class=\"canvas-pair\">\n    <div id=\"ca\" style=\"height: 30vh; width: 45%;display:inline-block;\">\n      <canvas id=\"estimations\"></canvas>\n    </div>\n\n    <div id=\"cb\" style=\"height: 30vh; width: 45%;margin-left:5%;display:inline-block;\">\n      <canvas id=\"schedule\"></canvas>\n    </div>\n  </div>\n  <div class=\"canvas-pair\">\n    <div id=\"cc\" style=\"height: 30vh; width: 45%;display:inline-block;\">\n      <canvas id=\"dayaheadprices\"></canvas>\n    </div>\n\n    <div id=\"cd\" style=\"height: 30vh; width: 45%;margin-left:5%;display:inline-block;\">\n      <canvas id=\"costs\"></canvas>\n    </div>\n  </div>\n</div>\n\n<div id=\"ce\" style=\"height: 30vh;\">\n  <canvas id=\"energy\"></canvas>\n</div>\n\n<script>\n    const estimationschart = new Chart(\n    document.getElementById('estimations'),\n      {\n        type: 'bar',\n      data: {\n        labels: [{{estimations.payload.labels}}],\n        datasets: [\n            {{#estimations.payload.datasets}}\n            {\n                label: '{{label}}',\n                type: '{{type}}',\n                data: [{{data}}],\n                borderColor: '{{borderColor}}',\n                {{#backgroundColor}}\n                backgroundColor: '{{backgroundColor}}',\n                {{/backgroundColor}}\n                fill: {{fill}},\n                stepped: '{{stepped}}',\n                pointRadius: {{pointRadius}},\n                borderWidth: {{borderWidth}}\n            },\n            {{/estimations.payload.datasets}}\n        ]\n      },\n        options: {\n          maintainAspectRatio: false,\n          title: {\n            display: true,\n            text: ''\n          },\n          legend: {\n            position: 'top',\n            display: true\n          },\n          interaction: {\n            intersect: false,\n            mode: 'index',\n          },      \n          scales: {\n              y: {\n                  beginAtZero: true,\n                  title: {\n                      display: true,\n                      text: \"Energy in kWh\"\n                  }\n              }\n          },\n          plugins: {\n              arbitraryLine: {\n                  pastBackgroundColor: '#eee',\n                  nowBackgroundColor: '#ddd',\n                  offset: 1,\n                  hours: {{ dess_hours }}\n              },\n              title: {\n                  display: true,\n                  text: \"Overview graph\"\n              },\n              subtitle: {\n                  display: true,\n                  text: \"\"\n              },\n              tooltip: {\n                  callbacks: {\n                      label: function(ctx) {\n                let label = ctx.dataset.label || \"\";\n                if (label === 'Battery') {\n                    label += ': ';\n                    label += ctx.parsed.y.toFixed(2)\n                    label += ' ('\n                    label += ((ctx.parsed.y / {{ flow.dess.options.b_max}} ) * 100).toFixed(1)\n                    label += '%)'\n                }\n                else {\n                    label += ': ' + ctx.parsed.y.toFixed(2)\n                }\n                return label;\n                      }\n                  }\n              }\n          }\n        },\n        plugins: [arbitraryLine]\n      }\n    );\n\n  const schedulechart = new Chart(\n    document.getElementById('schedule'),\n    {\n      type: 'bar',\n      data: {\n        labels: [{{schedule.payload.labels}}],\n        datasets: [\n            {{#schedule.payload.datasets}}\n            {\n                label: '{{label}}',\n                data: [{{data}}],\n                borderColor: '{{borderColor}}',\n                backgroundColor: '{{backgroundColor}}',\n                fill: {{fill}},\n            },\n            {{/schedule.payload.datasets}}\n        ]\n      },\n      options: {\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },      \n        scales: {\n            y: {\n                beginAtZero: true,\n                title: {\n                    display: true,\n                    text: \"Energy in kWh\"\n                }\n            }\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD',\n                hours: {{ dess_hours }}\n            },\n            title: {\n                display: true,\n                text: \"Schedule graph\"\n            },\n            subtitle: {\n                display: true,\n                text: \"Positive values represent the energy used from the item (opposite for negatives).\"\n            }\n        }\n      },\n      plugins: [arbitraryLine]\n    }\n  );\n\n  const dapchart = new Chart(\n    document.getElementById('dayaheadprices'),\n    {\n      type: 'bar',\n      data: {\n        labels: [{{dayaheadprices.payload.labels}}],\n        datasets: [\n            {{#dayaheadprices.payload.datasets}}\n            {\n                label: '{{label}}',\n                type: '{{type}}',\n                data: [{{data}}],\n                borderColor: '{{borderColor}}',\n                backgroundColor: '{{backgroundColor}}',\n                fill: {{fill}},\n                stepped: '{{stepped}}',\n                pointRadius: {{pointRadius}},\n                borderWidth: {{borderWidth}}\n            },\n            {{/dayaheadprices.payload.datasets}}\n        ]\n      },\n      options: {\n        responsive: true,\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },\n        scales: {\n            y: {\n                beginAtZero: true,\n                title: {\n                    display: true,\n                    text: \"Price in €/kWh\"\n                }\n            }\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD',\n                offset: 1,\n                hours: {{ dess_hours }}\n            },\n            title: {\n                display: true,\n                text: \"Price graph\"\n            },\n            subtitle: {\n                display: true,\n                text: \"Buy & Sell prices take the provider fee, energy tax and VAT into account.\"\n            }\n        }\n      },\n      plugins: [arbitraryLine]\n    }\n  );\n\n  const ucchart = new Chart(\n    document.getElementById('costs'),\n    {\n      type: 'bar',\n      data: {\n        labels: [{{costs.payload.labels}}],\n        datasets: [\n            {{#costs.payload.datasets}}\n            {\n                label: '{{label}}',\n                data: [{{data}}],\n                borderColor: '{{borderColor}}',\n                backgroundColor: '{{backgroundColor}}',\n                fill: {{fill}},\n            },\n            {{/costs.payload.datasets}}\n        ]\n      },\n      options: {\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },      \n        scales: {\n            y: {\n                beginAtZero: true,\n                title: {\n                    display: true,\n                    text: \"Cost in €\"\n                }\n            }\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD',\n                hours: {{ dess_hours }}\n            },\n            title: {\n                display: true,\n                text: \"Costs graph\"\n            }\n        }\n      },\n      plugins: [arbitraryLine]\n    }\n  );\n\n  const enchart = new Chart(\n    document.getElementById('energy'),\n    {\n      type: 'bar',\n      data: {\n        labels: [{{energy.payload.labels}}],\n        datasets: [\n            {{#energy.payload.datasets}}\n            {\n                label: '{{label}}',\n                type: '{{type}}',\n                data: [{{data}}],\n                borderColor: '{{borderColor}}',\n                backgroundColor: '{{backgroundColor}}',\n                fill: {{fill}},\n                stepped: '{{stepped}}',\n                {{#pointStyle}}\n                pointStyle: {{pointStyle}},\n                {{/pointStyle}}\n                {{#borderWidth}}\n                borderWidth: {{borderWidth}},\n                {{/borderWidth}}\n                {{#stack}}\n                stack: {{stack}},\n                {{/stack}}\n            },\n            {{/energy.payload.datasets}}\n        ]\n      },\n      options: {\n        elements: {\n            point:{\n                radius: 0\n            }\n        },\n        maintainAspectRatio: false,\n        title: {\n          display: true,\n          text: ''\n        },\n        legend: {\n          position: 'top',\n          display: true,\n          labels: {\n              filter: function(item, chart) {\n                return !item.text.includes(\"DISCARD\");\n              }\n          }\n        },\n        interaction: {\n          intersect: false,\n          mode: 'index',\n        },\n        plugins: {\n            arbitraryLine: {\n                pastBackgroundColor: '#EEEEEE',\n                nowBackgroundColor: '#DDDDDD',\n                hours: {{ dess_hours }}\n            },\n            title: {\n                display: true,\n                text: \"Energy Graph\"\n            }\n        }\n    },\n      plugins: [arbitraryLine]\n    }\n  );\n\n</script>\n<hr />\n\n<h3>Dynamic ESS schedules</h3>\n\n<p>\nThe table shows all inserted Dynamic ESS Schedules.\n</p>\n\n<table class=\"dess-table\">\n  <thead>\n    <tr>\n      <th>Schedule</th>\n      <th>Start</th>\n      <th>Targeted Soc</th>\n      <th>Allow grid feed-in</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>#0</td>\n      <td>{{table.0.start}}</td>\n      <td>{{table.0.soc}} %</td>\n      <td>{{table.0.feed_in}}</td>\n    </tr>\n    <tr>\n      <td>#1</td>\n      <td>{{table.1.start}}</td>\n      <td>{{table.1.soc}} %</td>\n      <td>{{table.1.feed_in}}</td>\n    </tr>\n    <tr>\n      <td>#2</td>\n      <td>{{table.2.start}}</td>\n      <td>{{table.2.soc}} %</td>\n      <td>{{table.2.feed_in}}</td>\n    </tr>\n    <tr>\n      <td>#3</td>\n      <td>{{table.3.start}}</td>\n      <td>{{table.3.soc}} %</td>\n      <td>{{table.3.feed_in}}</td>\n    </tr>\n  </tbody>\n</table>\n\n  <hr />\n  Last update: {{ lastValidUpdate }}\n\n  </body>\n</html>",
+        "output": "str",
+        "x": 960,
+        "y": 280,
+        "wires": [
+            [
+                "7c4a51c3a3bb9f4f"
+            ]
+        ]
+    },
+    {
+        "id": "2297338ce02e1686",
+        "type": "template",
+        "z": "f877df8cbb5d9508",
+        "g": "1004b1568061f0ed",
+        "name": "javascript",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "\n     const arbitraryLine = {\n        id: 'arbitraryLine',\n        beforeDraw(chart, args, options){\n            const { \n                ctx, \n                chartArea: { top, right, bottom, left, width, height, margins}, \n                scales: {x, y}\n            } = chart;\n            ctx.save()\n            const d = new Date();\n            let hours = options.hours || 24\n            ctx.strokeStyle = options.nowBackgroundColor\n            ctx.fillStyle = options.nowBackgroundColor\n            let widthNow = (width / hours) * (d.getHours()+1)\n            let offset = ( options.offset || 0) * ( width / (hours * 2) ) - (( options.offset || 0 ) * .5 * (width / (hours * 4)))\n            ctx.fillRect(left + offset, top, widthNow, height)\n            ctx.strokeStyle = options.pastBackgroundColor\n            ctx.fillStyle = options.pastBackgroundColor\n            let widthPast = (width / hours) * (d.getHours())\n            ctx.fillRect(left, top, widthPast + offset, height)\n            ctx.restore()\n            \n        }\n    }\n\n",
+        "output": "str",
+        "x": 640,
+        "y": 320,
+        "wires": [
+            [
+                "adba20b403a6eb54"
             ]
         ]
     },
     {
         "id": "31666843f143a0e7",
         "type": "group",
-        "z": "3cedf502010030d2",
-        "name": "Schedule 0",
+        "z": "f877df8cbb5d9508",
+        "name": "Schedule 0 - current hour",
         "style": {
             "label": true
         },
@@ -372,15 +558,15 @@
             "2138a40c0d853a65",
             "d04f4250560345df"
         ],
-        "x": 194,
-        "y": 219,
-        "w": 1172,
+        "x": 134,
+        "y": 419,
+        "w": 532,
         "h": 202
     },
     {
         "id": "1b211cb97cbecac4",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "31666843f143a0e7",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/0/Soc",
@@ -393,16 +579,16 @@
             "name": "/Settings/DynamicEss/Schedule/0/Soc",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 0: soc",
         "onlyChanges": false,
-        "x": 1100,
-        "y": 260,
+        "x": 560,
+        "y": 460,
         "wires": []
     },
     {
         "id": "f90ab6a6d70fa6ae",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "31666843f143a0e7",
         "name": "soc",
         "rules": [
@@ -419,8 +605,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 390,
-        "y": 260,
+        "x": 330,
+        "y": 460,
         "wires": [
             [
                 "1b211cb97cbecac4"
@@ -430,14 +616,14 @@
     {
         "id": "d75fe820bd4079fd",
         "type": "link in",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "31666843f143a0e7",
-        "name": "link in 1",
+        "name": "schedule 0 - current hour",
         "links": [
             "0a258a4a88409834"
         ],
-        "x": 235,
-        "y": 320,
+        "x": 175,
+        "y": 520,
         "wires": [
             [
                 "f90ab6a6d70fa6ae",
@@ -450,29 +636,29 @@
     {
         "id": "fe69ad8593ad7975",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "31666843f143a0e7",
         "service": "com.victronenergy.settings",
-        "path": "/Settings/DynamicEss/Schedule/1/AllowGridFeedIn",
+        "path": "/Settings/DynamicEss/Schedule/0/AllowGridFeedIn",
         "serviceObj": {
             "service": "com.victronenergy.settings",
             "name": "com.victronenergy.settings"
         },
         "pathObj": {
-            "path": "/Settings/DynamicEss/Schedule/1/AllowGridFeedIn",
-            "name": "/Settings/DynamicEss/Schedule/1/AllowGridFeedIn",
+            "path": "/Settings/DynamicEss/Schedule/0/AllowGridFeedIn",
+            "name": "/Settings/DynamicEss/Schedule/0/AllowGridFeedIn",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 0: feed_in",
         "onlyChanges": false,
-        "x": 1060,
-        "y": 300,
+        "x": 540,
+        "y": 500,
         "wires": []
     },
     {
         "id": "1387f9034e0c4a45",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "31666843f143a0e7",
         "name": "feed_in",
         "rules": [
@@ -489,8 +675,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
-        "y": 300,
+        "x": 340,
+        "y": 500,
         "wires": [
             [
                 "fe69ad8593ad7975"
@@ -500,7 +686,7 @@
     {
         "id": "1ff03bc44699398c",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "31666843f143a0e7",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/0/Start",
@@ -513,16 +699,16 @@
             "name": "/Settings/DynamicEss/Schedule/0/Start",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 0: start",
         "onlyChanges": false,
-        "x": 1100,
-        "y": 340,
+        "x": 550,
+        "y": 540,
         "wires": []
     },
     {
         "id": "34d1354226dd5f95",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "31666843f143a0e7",
         "name": "start",
         "rules": [
@@ -539,8 +725,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 390,
-        "y": 340,
+        "x": 330,
+        "y": 540,
         "wires": [
             [
                 "1ff03bc44699398c"
@@ -550,7 +736,7 @@
     {
         "id": "2138a40c0d853a65",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "31666843f143a0e7",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/0/Duration",
@@ -563,16 +749,16 @@
             "name": "/Settings/DynamicEss/Schedule/0/Duration",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 0: duration",
         "onlyChanges": false,
-        "x": 1080,
-        "y": 380,
+        "x": 540,
+        "y": 580,
         "wires": []
     },
     {
         "id": "d04f4250560345df",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "31666843f143a0e7",
         "name": "duration",
         "rules": [
@@ -589,8 +775,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
-        "y": 380,
+        "x": 340,
+        "y": 580,
         "wires": [
             [
                 "2138a40c0d853a65"
@@ -600,8 +786,8 @@
     {
         "id": "9f4fc8a5250a2ee8",
         "type": "group",
-        "z": "3cedf502010030d2",
-        "name": "Schedule 1",
+        "z": "f877df8cbb5d9508",
+        "name": "Schedule 1- current hour +1",
         "style": {
             "label": true
         },
@@ -616,15 +802,15 @@
             "778a4c875bedfe12",
             "3a60e9c80c019da7"
         ],
-        "x": 194,
-        "y": 439,
-        "w": 1172,
+        "x": 694,
+        "y": 419,
+        "w": 532,
         "h": 202
     },
     {
         "id": "9b627e08518339b4",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "9f4fc8a5250a2ee8",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/1/Soc",
@@ -637,16 +823,16 @@
             "name": "/Settings/DynamicEss/Schedule/1/Soc",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 1: soc",
         "onlyChanges": false,
-        "x": 1100,
-        "y": 480,
+        "x": 1120,
+        "y": 460,
         "wires": []
     },
     {
         "id": "6df1bed6cf55d8ca",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "9f4fc8a5250a2ee8",
         "name": "soc",
         "rules": [
@@ -663,8 +849,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 390,
-        "y": 480,
+        "x": 890,
+        "y": 460,
         "wires": [
             [
                 "9b627e08518339b4"
@@ -674,14 +860,14 @@
     {
         "id": "7e361835e40e9612",
         "type": "link in",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "9f4fc8a5250a2ee8",
-        "name": "link in 2",
+        "name": "schedule 1 - current hour +1",
         "links": [
             "04be7571633ea6bd"
         ],
-        "x": 235,
-        "y": 540,
+        "x": 735,
+        "y": 520,
         "wires": [
             [
                 "6df1bed6cf55d8ca",
@@ -694,7 +880,7 @@
     {
         "id": "a61bdb4a43e964b9",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "9f4fc8a5250a2ee8",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/1/AllowGridFeedIn",
@@ -707,16 +893,16 @@
             "name": "/Settings/DynamicEss/Schedule/1/AllowGridFeedIn",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 1: feed_in",
         "onlyChanges": false,
-        "x": 1060,
-        "y": 520,
+        "x": 1100,
+        "y": 500,
         "wires": []
     },
     {
         "id": "d6d96eafa69e3987",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "9f4fc8a5250a2ee8",
         "name": "feed_in",
         "rules": [
@@ -733,8 +919,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
-        "y": 520,
+        "x": 900,
+        "y": 500,
         "wires": [
             [
                 "a61bdb4a43e964b9"
@@ -744,7 +930,7 @@
     {
         "id": "1c6d52e74469820e",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "9f4fc8a5250a2ee8",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/1/Start",
@@ -757,16 +943,16 @@
             "name": "/Settings/DynamicEss/Schedule/1/Start",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 1: start",
         "onlyChanges": false,
-        "x": 1100,
-        "y": 560,
+        "x": 1110,
+        "y": 540,
         "wires": []
     },
     {
         "id": "444c3eeb6bbad97a",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "9f4fc8a5250a2ee8",
         "name": "start",
         "rules": [
@@ -783,8 +969,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 390,
-        "y": 560,
+        "x": 890,
+        "y": 540,
         "wires": [
             [
                 "1c6d52e74469820e"
@@ -794,7 +980,7 @@
     {
         "id": "778a4c875bedfe12",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "9f4fc8a5250a2ee8",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/1/Duration",
@@ -807,16 +993,16 @@
             "name": "/Settings/DynamicEss/Schedule/1/Duration",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 1: duration",
         "onlyChanges": false,
-        "x": 1080,
-        "y": 600,
+        "x": 1100,
+        "y": 580,
         "wires": []
     },
     {
         "id": "3a60e9c80c019da7",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "9f4fc8a5250a2ee8",
         "name": "duration",
         "rules": [
@@ -833,8 +1019,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
-        "y": 600,
+        "x": 900,
+        "y": 580,
         "wires": [
             [
                 "778a4c875bedfe12"
@@ -844,8 +1030,8 @@
     {
         "id": "eabac8fce9b8c6e4",
         "type": "group",
-        "z": "3cedf502010030d2",
-        "name": "Schedule 2",
+        "z": "f877df8cbb5d9508",
+        "name": "Schedule 2 - current hour +2",
         "style": {
             "label": true
         },
@@ -860,15 +1046,15 @@
             "d0bdea3f255e044e",
             "3b7aaca2ee81b85d"
         ],
-        "x": 194,
-        "y": 659,
-        "w": 1172,
+        "x": 134,
+        "y": 639,
+        "w": 532,
         "h": 202
     },
     {
         "id": "6325f30b87558fe6",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "eabac8fce9b8c6e4",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/2/Soc",
@@ -881,16 +1067,16 @@
             "name": "/Settings/DynamicEss/Schedule/2/Soc",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 2: soc",
         "onlyChanges": false,
-        "x": 1100,
-        "y": 700,
+        "x": 560,
+        "y": 680,
         "wires": []
     },
     {
         "id": "bb7b28143547f785",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "eabac8fce9b8c6e4",
         "name": "soc",
         "rules": [
@@ -907,8 +1093,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 390,
-        "y": 700,
+        "x": 330,
+        "y": 680,
         "wires": [
             [
                 "6325f30b87558fe6"
@@ -918,14 +1104,14 @@
     {
         "id": "85d9b1f2d1083440",
         "type": "link in",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "eabac8fce9b8c6e4",
-        "name": "link in 3",
+        "name": "schedule 2 - current hour +2",
         "links": [
             "d653e0ee49164bd1"
         ],
-        "x": 235,
-        "y": 760,
+        "x": 175,
+        "y": 740,
         "wires": [
             [
                 "bb7b28143547f785",
@@ -938,7 +1124,7 @@
     {
         "id": "2d8c4c32e30be3aa",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "eabac8fce9b8c6e4",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/2/AllowGridFeedIn",
@@ -951,16 +1137,16 @@
             "name": "/Settings/DynamicEss/Schedule/2/AllowGridFeedIn",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 2: feed_in",
         "onlyChanges": false,
-        "x": 1060,
-        "y": 740,
+        "x": 540,
+        "y": 720,
         "wires": []
     },
     {
         "id": "0e23869336be3816",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "eabac8fce9b8c6e4",
         "name": "feed_in",
         "rules": [
@@ -977,8 +1163,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
-        "y": 740,
+        "x": 340,
+        "y": 720,
         "wires": [
             [
                 "2d8c4c32e30be3aa"
@@ -988,7 +1174,7 @@
     {
         "id": "7477908889e00c8d",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "eabac8fce9b8c6e4",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/2/Start",
@@ -1001,16 +1187,16 @@
             "name": "/Settings/DynamicEss/Schedule/2/Start",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 2: start",
         "onlyChanges": false,
-        "x": 1100,
-        "y": 780,
+        "x": 550,
+        "y": 760,
         "wires": []
     },
     {
         "id": "96e138a3dab9c502",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "eabac8fce9b8c6e4",
         "name": "start",
         "rules": [
@@ -1027,8 +1213,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 390,
-        "y": 780,
+        "x": 330,
+        "y": 760,
         "wires": [
             [
                 "7477908889e00c8d"
@@ -1038,7 +1224,7 @@
     {
         "id": "d0bdea3f255e044e",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "eabac8fce9b8c6e4",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/2/Duration",
@@ -1051,16 +1237,16 @@
             "name": "/Settings/DynamicEss/Schedule/2/Duration",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 2: duration",
         "onlyChanges": false,
-        "x": 1080,
-        "y": 820,
+        "x": 540,
+        "y": 800,
         "wires": []
     },
     {
         "id": "3b7aaca2ee81b85d",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "eabac8fce9b8c6e4",
         "name": "duration",
         "rules": [
@@ -1077,8 +1263,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
-        "y": 820,
+        "x": 340,
+        "y": 800,
         "wires": [
             [
                 "d0bdea3f255e044e"
@@ -1088,8 +1274,8 @@
     {
         "id": "f35b948115912674",
         "type": "group",
-        "z": "3cedf502010030d2",
-        "name": "Schedule 3",
+        "z": "f877df8cbb5d9508",
+        "name": "Schedule 3- current hour +3",
         "style": {
             "label": true
         },
@@ -1104,15 +1290,15 @@
             "feb57592303852a7",
             "cfcf8015ad844a30"
         ],
-        "x": 194,
-        "y": 879,
-        "w": 1172,
+        "x": 694,
+        "y": 639,
+        "w": 532,
         "h": 202
     },
     {
         "id": "a392a73071eb1578",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "f35b948115912674",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/3/Soc",
@@ -1125,16 +1311,16 @@
             "name": "/Settings/DynamicEss/Schedule/3/Soc",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 3: soc",
         "onlyChanges": false,
-        "x": 1100,
-        "y": 920,
+        "x": 1120,
+        "y": 680,
         "wires": []
     },
     {
         "id": "831d966acf56f051",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "f35b948115912674",
         "name": "soc",
         "rules": [
@@ -1151,8 +1337,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 390,
-        "y": 920,
+        "x": 890,
+        "y": 680,
         "wires": [
             [
                 "a392a73071eb1578"
@@ -1162,14 +1348,14 @@
     {
         "id": "67ab1cc124f6edbc",
         "type": "link in",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "f35b948115912674",
-        "name": "link in 4",
+        "name": "schedule 3 - current hour +3",
         "links": [
             "b7244f77487893f6"
         ],
-        "x": 235,
-        "y": 980,
+        "x": 735,
+        "y": 740,
         "wires": [
             [
                 "831d966acf56f051",
@@ -1182,7 +1368,7 @@
     {
         "id": "f4ca0ebe16663404",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "f35b948115912674",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/3/AllowGridFeedIn",
@@ -1195,16 +1381,16 @@
             "name": "/Settings/DynamicEss/Schedule/3/AllowGridFeedIn",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 3: feed_in",
         "onlyChanges": false,
-        "x": 1060,
-        "y": 960,
+        "x": 1100,
+        "y": 720,
         "wires": []
     },
     {
         "id": "34f841db18949c98",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "f35b948115912674",
         "name": "feed_in",
         "rules": [
@@ -1221,8 +1407,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
-        "y": 960,
+        "x": 900,
+        "y": 720,
         "wires": [
             [
                 "f4ca0ebe16663404"
@@ -1232,7 +1418,7 @@
     {
         "id": "f9659649dcbb426a",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "f35b948115912674",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/3/Start",
@@ -1245,16 +1431,16 @@
             "name": "/Settings/DynamicEss/Schedule/3/Start",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 3: start",
         "onlyChanges": false,
-        "x": 1100,
-        "y": 1000,
+        "x": 1110,
+        "y": 760,
         "wires": []
     },
     {
         "id": "3698ac3c3b336c9d",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "f35b948115912674",
         "name": "start",
         "rules": [
@@ -1271,8 +1457,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 390,
-        "y": 1000,
+        "x": 890,
+        "y": 760,
         "wires": [
             [
                 "f9659649dcbb426a"
@@ -1282,7 +1468,7 @@
     {
         "id": "feb57592303852a7",
         "type": "victron-output-custom",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "f35b948115912674",
         "service": "com.victronenergy.settings",
         "path": "/Settings/DynamicEss/Schedule/3/Duration",
@@ -1295,16 +1481,16 @@
             "name": "/Settings/DynamicEss/Schedule/3/Duration",
             "type": "number"
         },
-        "name": "",
+        "name": "Schedule 3: duration",
         "onlyChanges": false,
-        "x": 1080,
-        "y": 1040,
+        "x": 1100,
+        "y": 800,
         "wires": []
     },
     {
         "id": "cfcf8015ad844a30",
         "type": "change",
-        "z": "3cedf502010030d2",
+        "z": "f877df8cbb5d9508",
         "g": "f35b948115912674",
         "name": "duration",
         "rules": [
@@ -1321,8 +1507,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
-        "y": 1040,
+        "x": 900,
+        "y": 800,
         "wires": [
             [
                 "feb57592303852a7"
