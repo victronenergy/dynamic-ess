@@ -133,6 +133,14 @@ In order to use the _dynamic ess_ node, you will need an VRM API access token.  
 Go to the [access token](https://vrm.victronenergy.com/access-tokens) part of VRM and add a new token. Name the new token _Node-RED dynamic ESS_ or something that your mind will link
 to dynamic ESS. Once generated, store the access token in your password vault as you won't be able to retrieve it again. You will also need to fill out this token in the _dynamic ess_ node.
 
+# Troubleshooting
+
+## The node fails with the message `cannot create feasible schedule`
+
+Make sure you have the timezone of your GX device set to match the timezone of your country. If that
+does not match, it cannot create a feasible schedule (and thus reports that). 
+So go to the (remote) console to _Settings_ -> _Date & Time_ -> _Time zone_.
+
 # About
 
 The goal of Dynamic ESS can be formulated in the following way:  
