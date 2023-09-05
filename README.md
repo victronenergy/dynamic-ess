@@ -139,7 +139,10 @@ to dynamic ESS. Once generated, store the access token in your password vault as
 
 Make sure you have the timezone of your GX device set to match the timezone of your country. If that
 does not match, it cannot create a feasible schedule (and thus reports that). 
-So go to the (remote) console to _Settings_ -> _Date & Time_ -> _Time zone_.
+So go to the (remote) console to _Settings_ -> _Date & Time_ -> _Time zone_ and set the correct
+time zone. Note that a restart of Node-RED will be needed as well after changing the time zone.
+This can be done either by rebooting the system or disabling and enabling Node-RED via the 
+menu.
 
 # About
 
