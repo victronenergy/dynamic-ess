@@ -2,7 +2,7 @@
 
 A Node-RED flow that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero. For use in systems that have hourly day ahead prices, which is the case in a big part of Europe.
 
-Do check the [about](#about) and  [disclaimer](#disclaimer) below.
+Note that this is a proof-of-concept. Do check the [about](#about) and  [disclaimer](#disclaimer) below for more information.
 
 # Prerequisites
 
