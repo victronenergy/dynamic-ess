@@ -2,7 +2,11 @@
 
 A Node-RED flow that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero. For use in systems that have hourly day ahead prices, which is the case in a big part of Europe.
 
+<<<<<<< HEAD
 Note that this is a proof-of-concept. Do check the [about](#about) and  [disclaimer](#disclaimer) below for more information
+=======
+Note that this is a proof-of-concept. Do check the [about](#about) and  [disclaimer](#disclaimer) below for more information.
+>>>>>>> origin/main
 
 # Prerequisites
 
@@ -133,13 +137,22 @@ to dynamic ESS. Once generated, store the access token in your password vault as
 
 # Troubleshooting
 
+## The node fails with the message `cannot create feasible schedule`
+
+Make sure you have the timezone of your GX device set to match the timezone of your country. If that
+does not match, it cannot create a feasible schedule (and thus reports that). 
+So go to the (remote) console to _Settings_ -> _Date & Time_ -> _Time zone_ and set the correct
+time zone. Note that a restart of Node-RED will be needed as well after changing the time zone.
+This can be done either by rebooting the system or disabling and enabling Node-RED via the 
+menu.
+
 ## The battery discharges less and less each day
 
 You probably have the battery set to _Optimized (with batterylife)_. As long as the battery does not
 reach 100% state of charge (which it probably does not reach while running Dynamic ESS), it will
 increase the Active Min SOC each day by 5% until it reaches 100%. This gives Dynamic ESS less space
 to play. At the moment Dynamic ESS has no way of coping with this. The current work-a-round is to either
-accept this behavior or set the mode to _Optimized (without BatteryLife)_ and 
+accept this behavior or set the mode to _Optimized (without BatteryLife)_ and
 periodically disable Dynamic ESS and charge your battery yourself.
 
 # About
