@@ -2,11 +2,9 @@
 
 A Node-RED flow that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero. For use in systems that have hourly day ahead prices, which is the case in a big part of Europe.
 
-<<<<<<< HEAD
 Note that this is a proof-of-concept. Do check the [about](#about) and  [disclaimer](#disclaimer) below for more information
-=======
-Note that this is a proof-of-concept. Do check the [about](#about) and  [disclaimer](#disclaimer) below for more information.
->>>>>>> origin/main
+
+If you are upgrading, make sure to read the [RELEASE-NOTES.md](./RELEASE-NOTES.md) file as well.
 
 # Prerequisites
 
@@ -18,6 +16,7 @@ In order to successfuly use this node, installations must:
 - For best results:
   - Have 28 days of operation time
   - Have location set for at least 28 days
+- Run at least version 3.10 of Venus OS (latest or candidate)
 - Not be running the VRM implementation of Dynamic ESS, as this will bite each other. The service `com.victronenergy.settings` and path `/Settings/DynamicEss/Mode` is used for this. Mode `1` (auto) is used by VRM. Mode `4` (Node-RED) can be used for Node-RED implementataions.
 
 # QuickStart
@@ -112,13 +111,15 @@ The following services and paths are being written to:
 
 # Graphs
 
-On each input, the flow generated fresh graphs, which are displayed on the Node-RED dashboard. Light gray background on the charts display the recorded values, while the transparent background shows the estimated/planned values. The darker gray part designates the current hour.
+On each input, the flow generates fresh graphs, which are displayed on the [https://venus.local:1881/dess](https://venus.local:1881/dess) page. Light gray background on the charts display the recorded values, while the transparent background shows the estimated/planned values. The darker gray part designates the current hour.
 
 ![Overview graph](./doc/img/overview-graph.png)  
 ![Schedule graph](./doc/img/schedule-graph.png)  
 ![Price graph](./doc/img/price-graph.png)  
 ![Costs graph](./doc/img/costs-graph.png)  
 ![Energy graph](./doc/img/energy-graph.png)
+
+As soon as the new tarrifs are available, the mode will change from 24 hours into 48 hours.
 
 # Usage
 
@@ -154,6 +155,12 @@ increase the Active Min SOC each day by 5% until it reaches 100%. This gives Dyn
 to play. At the moment Dynamic ESS has no way of coping with this. The current work-a-round is to either
 accept this behavior or set the mode to _Optimized (without BatteryLife)_ and
 periodically disable Dynamic ESS and charge your battery yourself.
+
+## The console shows Dynamic ESS mode "_Unknown_"
+
+As the VRM version of Dynamic ESS and the Node-RED variant should not be biting each other, both use
+different modes. Mode `1` is reserved for VRM, showing _Auto_,  mode `4` is
+reserved for _Node-RED_, showing "_Unknown_" on the console. This is expected behavior.
 
 # About
 
