@@ -2,11 +2,7 @@
 
 A Node-RED flow that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero. For use in systems that have hourly day ahead prices, which is the case in a big part of Europe.
 
-<<<<<<< HEAD
 Note that this is a proof-of-concept. Do check the [about](#about) and  [disclaimer](#disclaimer) below for more information
-=======
-Note that this is a proof-of-concept. Do check the [about](#about) and  [disclaimer](#disclaimer) below for more information.
->>>>>>> origin/main
 
 # Prerequisites
 
@@ -112,13 +108,15 @@ The following services and paths are being written to:
 
 # Graphs
 
-On each input, the flow generated fresh graphs, which are displayed on the Node-RED dashboard. Light gray background on the charts display the recorded values, while the transparent background shows the estimated/planned values. The darker gray part designates the current hour.
+On each input, the flow generates fresh graphs, which are displayed on the [https://venus.local:1881/dess](https://venus.local:1881/dess) page. Light gray background on the charts display the recorded values, while the transparent background shows the estimated/planned values. The darker gray part designates the current hour.
 
 ![Overview graph](./doc/img/overview-graph.png)  
 ![Schedule graph](./doc/img/schedule-graph.png)  
 ![Price graph](./doc/img/price-graph.png)  
 ![Costs graph](./doc/img/costs-graph.png)  
 ![Energy graph](./doc/img/energy-graph.png)
+
+As soon as the new tarrifs are available, the mode will change from 24 hours into 48 hours.
 
 # Usage
 
