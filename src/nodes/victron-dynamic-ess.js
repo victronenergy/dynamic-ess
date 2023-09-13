@@ -170,15 +170,6 @@ module.exports = function (RED) {
         const flowContext = node.context().flow
         flowContext.set('lastValidUpdate', 0)
 
-        // Trick to only call this function once
-        if (deployed) {
-          return
-        }
-
-        setInterval(outputHourlySchedule, 1000)
-        // Retrieve the latest schedule 5 times an hour
-        setInterval(fetchVRMSchedule, 12 * 60 * 1000)
-
         flowContext.set('dess_config', {
           vrm_id: config.vrm_id,
           country: config.country,
@@ -193,6 +184,16 @@ module.exports = function (RED) {
           feed_in_possible: config.feed_in_possible,
           feed_in_control_on: config.feed_in_control_on
         })
+
+        // Trick to only call this function once
+        if (deployed) {
+          return
+        }
+
+        setInterval(outputHourlySchedule, 1000)
+        // Retrieve the latest schedule 5 times an hour
+        setInterval(fetchVRMSchedule, 12 * 60 * 1000)
+
         deployed = true
 
         fetchVRMSchedule()
