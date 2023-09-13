@@ -162,6 +162,24 @@ As the VRM version of Dynamic ESS and the Node-RED variant should not be biting 
 different modes. Mode `1` is reserved for VRM, showing _Auto_,  mode `4` is
 reserved for _Node-RED_, showing "_Unknown_" on the console. This is expected behavior.
 
+## The battery (dis)charges too slow to keep up with the target SOC
+
+The Venus OS needs to know the battery capacity in order to make the correct calculation, which
+defaults to 2 kWh (if not set). The following flow adds setting the battery capacity from Node-RED.
+You can import this via ctrl-i / command-i / the import menu and pasting it into the red area.  
+
+```
+[{"id":"11c0695b7819894f","type":"group","z":"9a54b4bbc1a25e38","name":"Store battery capacity","style":{"label":true},"nodes":["e9a9bebc9c4732d0","b48a8f507e14330a","b68ffdbbf4152cf3","8d723ea6a3f644bc"],"x":54,"y":899,"w":1092,"h":82},{"id":"e9a9bebc9c4732d0","type":"change","z":"9a54b4bbc1a25e38","g":"11c0695b7819894f","name":"battery capacity","rules":[{"t":"set","p":"payload","pt":"msg","to":"dess.options.b_max","tot":"flow"}],"action":"","property":"","from":"","to":"","reg":false,"x":260,"y":940,"wires":[["b68ffdbbf4152cf3"]]},{"id":"b48a8f507e14330a","type":"victron-output-custom","z":"9a54b4bbc1a25e38","g":"11c0695b7819894f","service":"com.victronenergy.settings","path":"/Settings/DynamicEss/BatteryCapacity","serviceObj":{"service":"com.victronenergy.settings","name":"com.victronenergy.settings"},"pathObj":{"path":"/Settings/DynamicEss/BatteryCapacity","name":"/Settings/DynamicEss/BatteryCapacity","type":"number"},"name":"","onlyChanges":false,"x":880,"y":940,"wires":[]},{"id":"b68ffdbbf4152cf3","type":"change","z":"9a54b4bbc1a25e38","g":"11c0695b7819894f","name":"to number","rules":[{"t":"set","p":"payload","pt":"msg","to":"$number(payload)","tot":"jsonata"}],"action":"","property":"","from":"","to":"","reg":false,"x":450,"y":940,"wires":[["b48a8f507e14330a"]]},{"id":"8d723ea6a3f644bc","type":"link in","z":"9a54b4bbc1a25e38","g":"11c0695b7819894f","name":"link in 1","links":["0a258a4a88409834","fa866313f9c8bebf"],"x":95,"y":940,"wires":[["e9a9bebc9c4732d0"]]}]
+```
+
+When correct, it looks like this:  
+![Store battery capacity](./doc/img/store-battery-capacity.png)
+
+Put it on the canvas and redeploy the flow. You can also check the set
+battery capacity by reading from service `com.victronenergy.settings`
+and path `Settings/DynamicEss/BatteryCapacity` (e.g. by using the 
+custom input node).
+
 # About
 
 The goal of Dynamic ESS can be formulated in the following way:  
