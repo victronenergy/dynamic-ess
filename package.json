@@ -1,6 +1,6 @@
 {
   "name": "victron-dynamic-ess",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Fetch the ideal ESS setpoint from VRM",
   "main": "index.js",
   "scripts": {
