@@ -206,9 +206,25 @@ module.exports = function (RED) {
       if (msg.url) {
         url = msg.url
       }
-      if (msg.vrm_id) {
-        context.set('vrm_id', msg.vrm_id)
+
+      const flowContext = node.context().flow
+      let dess_config = flowContext.get('dess_config') || {}
+      let changed = false
+
+      const propertiesToCopy = ['vrm_id', 'country', 'b_max', 'tb_max', 'fb_max', 'tg_max', 'fg_max', 'b_cost',
+       'buy_price_formula', 'sell_price_formula', 'feed_in_possible', 'feed_in_control_on'
+      ];
+      for (const property of propertiesToCopy) {
+        if (typeof msg[property] !== 'undefined') {
+          dess_config[property] = msg[property]
+          changed = true
+        }
       }
+
+      if (changed) {
+        flowContext.set('dess_config', dess_config)
+      }
+
       outputDESSSschedule()
     })
 
