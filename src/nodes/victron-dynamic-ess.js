@@ -31,22 +31,21 @@ module.exports = function (RED) {
 
       const output = []
       if (dess.output) {
+        const currentDateTime = new Date()
+        currentDateTime.setMinutes(0, 0, 0)
+        const unixTimestamp = Math.floor(currentDateTime.getTime() / 1000)
+        let currentHour = currentDateTime.getHours()
         for (let schedule = 0; schedule <= 3; schedule++) {
-          const currentDateTime = new Date()
-          const currentDay = currentDateTime.getDay()
-          currentDateTime.setMinutes(schedule*60, 0, 0)
-          const scheduleDay = currentDateTime.getDay()
-          let currentHour = currentDateTime.getHours()
-          if ( currentDay != scheduleDay ) {
-            currentHour += 24
+          let schedulePick = currentHour + schedule
+          if (schedulePick > Object.keys(dess.output.SOC).length) {
+            schedulePick -= 24
           }
-          const unixTimestamp = Math.floor(currentDateTime.getTime() / 1000)
-             output.push({
+          output.push({
             topic: `Schedule ${schedule}`,
-            soc : Number((dess.output.SOC[currentHour])),
-            feed_in: dess.output.feed_in[currentHour] ? 1 : 0,
+            soc : Number((dess.output.SOC[schedulePick])),
+            feed_in: dess.output.feed_in[schedulePick] ? 1 : 0,
             duration: 3600,
-            start: unixTimestamp
+            start: unixTimestamp + (schedule*3600)
           })
         }
       }
