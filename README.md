@@ -24,7 +24,7 @@ In order to successfuly use this node, installations must:
 - Install the following nodes via the palette manager:
   - `victron-dynamic-ess`
 - Set your sites location in VRM.
-- Import the _fetch-dynamic-ess_ example.
+- Import the _fetch-dynamic-ess_ flow..
 - Configure the _Victron Dynamic ESS_ node.
 - Deploy the flow and check [the dashboard](https://venus.local:1881/dess).
 
@@ -46,9 +46,9 @@ Node-RED also has documentation on [adding nodes](https://nodered.org/docs/user-
 
 Make sure that you set your sites position correctly in VRM, as that is used for determining the predicted solar forecast. This can be set under _Settings -> Set location_ in VRM for your site.
 
-## Importing the _fetch-dynamic-ess_ example
+## Importing the _fetch-dynamic-ess_ flow
 
-Import the [_fetch-dynamic-ess_ example](https://github.com/victronenergy/dynamic-ess/blob/main/examples/fetch-dynamic-ess.json) (ctrl-i). Once imported, double-click the _Dynamic ESS VRM_ node and fill out all required fields.
+Import the [_fetch-dynamic-ess_ flow](https://github.com/victronenergy/dynamic-ess/blob/main/examples/fetch-dynamic-ess.json) (ctrl-i). Once imported, double-click the _Dynamic ESS VRM_ node and fill out all required fields.
 
 ![Screen recording: import fetch-dynamic-ess](https://raw.githubusercontent.com/victronenergy/dynamic-ess/main/doc/img/import-fetch-dynamic-ess.gif)
 
@@ -56,7 +56,7 @@ The imported flow looks like this:
 
 ![Dynamic ESS](https://github.com/victronenergy/dynamic-ess/raw/main/doc/img/dynamic-ess-flow.png)
 
-Note that there also another example that you can import: [_fetch-dynamic-ess-with-average-price-switching.json_](https://github.com/victronenergy/dynamic-ess/blob/main/examples/fetch-dynamic-ess-with-average-price-switching.json). This example shows how to switch on/off a relay based on the average (dynamic) price.
+Note that there also exists another flow that you can import: [_fetch-dynamic-ess-with-average-price-switching.json_](https://github.com/victronenergy/dynamic-ess/blob/main/examples/fetch-dynamic-ess-with-average-price-switching.json). This flow shows how to switch on/off a relay based on the average (dynamic) price.
 
 If you want to link to the site from a dashboard node, you can simply add a template node that links
 to the site:
@@ -107,7 +107,7 @@ Once everything is filled out, you can deploy the flow and check https://venus.l
 When correctly deployed, these nodes do write (and read) from the dbus (using [node-red-contrib-victron](https://github.com/victronenergy/node-red-contrib-victron) nodes).
 The following services and paths are being written to:  
 - `com.victronenergy.settings /Settings/DynamicESS/Mode` - The mode of Dynamic ESS will be set to 'auto'
-- `com.victronenergy.settings /Settings/DynamicESS/Schedule/*/*` - Depending on the used example 1 or more schedules are written to, containing the desired Soc, AllowGridFeedin, Start and Duration.
+- `com.victronenergy.settings /Settings/DynamicESS/Schedule/*/*` - Depending on the used flow 1 or more schedules are written to, containing the desired Soc, AllowGridFeedin, Start and Duration.
 
 # Graphs
 
