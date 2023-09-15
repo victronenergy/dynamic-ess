@@ -180,6 +180,19 @@ battery capacity by reading from service `com.victronenergy.settings`
 and path `Settings/DynamicEss/BatteryCapacity` (e.g. by using the 
 custom input node).
 
+## My battery stays fuller and fuller each day
+
+The system works with the minimum SOC. In case you have set your system
+to _Optimized (with BatteryLife)_, the system will still try to get a
+full charge and increase the active SOC limit each day by 5% until it
+reaches 100%.
+
+If Active SOC limit is larger than min SOC, then that is seen as the minimum SOC the
+battery can be in, hence the model tries to schedule with that limitation.
+
+If you don't want this, set your ESS mode to _Optimized (without BatteryLife)_
+and make sure to charge your battery manually periodically.
+
 # About
 
 The goal of Dynamic ESS can be formulated in the following way:  
