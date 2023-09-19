@@ -255,18 +255,6 @@ to set your location correctly in VRM.
 `msg.payload` is used to trigger a (re)calculation of the optimal setpoint. As the VRM backend only updates every 5 minutes, there is no reason to
 trigger this node more frequent.
 
-It is also possible to overrule configuration settings via setting one of the following `msg` properties.
-
-: vrm_id (number) :  The vrm id to fetch the data for.
-: country (string) : The country code that is used for determining the hourly tarrif of the energy. See the dropdown in the select for the two-letter value to use.
-: b_max (float) : This is the capacity the battery can hold in kWh.
-: tb_max (float) : This is the speed in kW that the battery can be charged at in an hour (to battery).
-: fb_max (float) : This is the speed in kW that the battery can be drained at in an hour (from battery).
-: tg_max (float) : The amount the grid can receive (to grid).
-: fg_max (float) : The amount the grid can provide (from grid).
-: b_cost (float) : Battery costs (per kWh for discharging or charging).
-: url (string) : _For debugging only_. This can be set to overrule the default VRM API url.
-
 ### Note
 
 - This is a proof of concept project. In the future this implementation in Node-RED will become obsolete as the functionality will move into VRM/Venus OS native.

@@ -5,12 +5,12 @@ module.exports = function (RED) {
   const curlirize = require('axios-curlirize')
   const path = require('path')
   const packageJson = require(path.join(__dirname, '../../', 'package.json'))
-  let deployed = false
 
   function VictronDynamicEss (config) {
     RED.nodes.createNode(this, config)
 
     const node = this
+    this.config = config
 
     let url = 'https://vrm-dynamic-ess-api.victronenergy.com'
 
@@ -34,7 +34,7 @@ module.exports = function (RED) {
         const currentDateTime = new Date()
         currentDateTime.setMinutes(0, 0, 0)
         const unixTimestamp = Math.floor(currentDateTime.getTime() / 1000)
-        let currentHour = currentDateTime.getHours()
+        const currentHour = currentDateTime.getHours()
         for (let schedule = 0; schedule <= 3; schedule++) {
           let schedulePick = currentHour + schedule
           if (schedulePick > Object.keys(dess.output.SOC).length) {
@@ -42,16 +42,15 @@ module.exports = function (RED) {
           }
           output.push({
             topic: `Schedule ${schedule}`,
-            soc : Number((dess.output.SOC[schedulePick])),
+            soc: Number((dess.output.SOC[schedulePick])),
             feed_in: dess.output.feed_in[schedulePick] ? 1 : 0,
             duration: 3600,
-            start: unixTimestamp + (schedule*3600)
+            start: unixTimestamp + (schedule * 3600)
           })
         }
       }
 
       node.send(output)
-      deployed = false
     }
 
     function outputHourlySchedule () {
@@ -93,32 +92,23 @@ module.exports = function (RED) {
 
       const flowContext = node.context().flow
 
-      const nextUpdate = 290 - ((Date.now() - flowContext.get('lastValidUpdate')) / 1000).toFixed(0) || 0
-      if (nextUpdate > 0) {
-        node.status({ fill: 'yellow', shape: 'dot', text: `Trying to update too quickly, wait ${nextUpdate} seconds` })
-        return
-      }
-
       const msg = {}
       msg.topic = 'VRM dynamic ess'
       msg.payload = null
 
-      const context = node.context()
-      const dess_config = flowContext.get('dess_config') || {}
-
       const options = {
-        vrm_id: (dess_config.vrm_id || config.vrm_id || '').toString(),
-        b_max: (dess_config.b_max || config.b_max || 1).toString(),
-        tb_max: (dess_config.tb_max || config.tb_max || 1).toString(),
-        fb_max: (dess_config.fb_max || config.fb_max || 1).toString(),
-        tg_max: (dess_config.tg_max || config.tg_max || 0).toString(),
-        fg_max: (dess_config.fg_max || config.fg_max || 1).toString(),
-        b_cost: (dess_config.b_cost || config.b_cost || 0).toString(),
-        buy_price_formula: (dess_config. buy_price_formula || config.buy_price_formula || 'p').toString(),
-        sell_price_formula: (dess_config.sell_price_formula || config.sell_price_formula || 'p').toString(),
-        feed_in_possible: (dess_config.feed_in_possible || config.feed_in_possible || true).toString(),
-        feed_in_control_on: (dess_config.feed_in_control || config.feed_in_control_on || true).toString(),
-        country: (dess_config.country || config.country || 'nl').toUpperCase()
+        vrm_id: (config.vrm_id).toString(),
+        b_max: (config.b_max).toString(),
+        tb_max: (config.tb_max).toString(),
+        fb_max: (config.fb_max).toString(),
+        tg_max: (config.tg_max).toString(),
+        fg_max: (config.fg_max).toString(),
+        b_cost: (config.b_cost).toString(),
+        buy_price_formula: (config.buy_price_formula).toString(),
+        sell_price_formula: (config.sell_price_formula).toString(),
+        feed_in_possible: (config.feed_in_possible).toString(),
+        feed_in_control_on: (config.feed_in_control_on).toString(),
+        country: (config.country).toUpperCase()
       }
       const headers = {
         'X-Authorization': 'Token ' + config.vrmtoken,
@@ -162,66 +152,16 @@ module.exports = function (RED) {
       })
     }
 
-    // Also retrieve the VRM schedule on deploy
-    RED.events.on("runtime-event", function(event) {
-      if (event.id === "runtime-deploy") {
-        // Remove the lastValidUpdate field, so we can fetch
-        const flowContext = node.context().flow
-        flowContext.set('lastValidUpdate', 0)
+    setInterval(outputHourlySchedule, 1000)
+    // Retrieve the latest schedule 5 times an hour
+    setInterval(fetchVRMSchedule, 12 * 60 * 1000)
 
-        flowContext.set('dess_config', {
-          vrm_id: config.vrm_id,
-          country: config.country,
-          b_max: config.b_max,
-          tb_max: config.tb_max,
-          fb_max: config.fb_max,
-          tg_max: config.tg_max,
-          fg_max: config.fg_max,
-          b_cost: config.b_cost,
-          buy_price_formula: config.buy_price_formula,
-          sell_price_formula: config.sell_price_formula,
-          feed_in_possible: config.feed_in_possible,
-          feed_in_control_on: config.feed_in_control_on
-        })
-
-        // Trick to only call this function once
-        if (deployed) {
-          return
-        }
-
-        setInterval(outputHourlySchedule, 1000)
-        // Retrieve the latest schedule 5 times an hour
-        setInterval(fetchVRMSchedule, 12 * 60 * 1000)
-
-        deployed = true
-
-        fetchVRMSchedule()
-      }
-    })
+    // And once on deploy / restart
+    fetchVRMSchedule()
 
     node.on('input', function (msg) {
-      const context = node.context()
-
       if (msg.url) {
         url = msg.url
-      }
-
-      const flowContext = node.context().flow
-      let dess_config = flowContext.get('dess_config') || {}
-      let changed = false
-
-      const propertiesToCopy = ['vrm_id', 'country', 'b_max', 'tb_max', 'fb_max', 'tg_max', 'fg_max', 'b_cost',
-       'buy_price_formula', 'sell_price_formula', 'feed_in_possible', 'feed_in_control_on'
-      ];
-      for (const property of propertiesToCopy) {
-        if (typeof msg[property] !== 'undefined') {
-          dess_config[property] = msg[property]
-          changed = true
-        }
-      }
-
-      if (changed) {
-        flowContext.set('dess_config', dess_config)
       }
 
       outputDESSSschedule()
