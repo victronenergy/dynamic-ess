@@ -152,9 +152,9 @@ module.exports = function (RED) {
       })
     }
 
-    setInterval(outputHourlySchedule, 1000)
+    const outputHourlyScheduleId = setInterval(outputHourlySchedule, 1000)
     // Retrieve the latest schedule 5 times an hour
-    setInterval(fetchVRMSchedule, 12 * 60 * 1000)
+    const fetchVRMScheduleId = setInterval(fetchVRMSchedule, 12 * 60 * 1000)
 
     // And once on deploy / restart
     fetchVRMSchedule()
@@ -168,8 +168,8 @@ module.exports = function (RED) {
     })
 
     node.on('close', function () {
-      clearInterval(outputHourlySchedule)
-      clearInterval(fetchVRMSchedule)
+      clearInterval(outputHourlyScheduleId)
+      clearInterval(fetchVRMScheduleId)
     })
 
     if (config.verbose === true) {
