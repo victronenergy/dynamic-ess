@@ -172,7 +172,7 @@ body:
     attributes:
       label: Version
       description: the version of dynamic ess
-      placeholder: ex. 0.1.3
+      placeholder: ex. 0.1.5
     validations:
       required: false
   - type: textarea
