@@ -159,7 +159,7 @@ body:
   - type: dropdown
     id: feed_in_control_on
     attributes:
-      label: feed-in possible
+      label: feed-in control
       description: Allow control over the feed-in variable (turn it off automatically
         when the prices are negative)?
       options:
