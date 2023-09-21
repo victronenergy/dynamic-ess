@@ -43,7 +43,7 @@ module.exports = function (RED) {
           output.push({
             topic: `Schedule ${schedule}`,
             soc: Number((dess.output.SOC[schedulePick])),
-            feed_in: dess.output.feed_in[schedulePick] ? 1 : 0,
+            feed_in: config.feed_in_possible ? 1 : 0,
             duration: 3600,
             start: unixTimestamp + (schedule * 3600)
           })
