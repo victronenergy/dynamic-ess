@@ -4,7 +4,7 @@ At the moment Dynamic ESS is also roled out on (beta) VRM, which is more user-fr
 
 This document describes how to switch between the two versions, as you can only have one of the versions running at the same time.
 
-Also make sure to check out the community post on this: https://community.victronenergy.com/articles/232720/dynamic-ess-on-beta-vrm.html
+Also make sure to check out the community post on this: https://community.victronenergy.com/articles/232720/dynamic-ess-on-beta-vrm.html and the [manual](https://www.victronenergy.com/live/drafts:dynamic_ess) for more information.
 
 ## Check which version is running
 
@@ -24,7 +24,7 @@ The following flow will show the mode.
 [{"id":"2418189bd7f33e84","type":"victron-input-custom","z":"b9bfd7d55fb5c6e4","service":"com.victronenergy.settings","path":"/Settings/DynamicEss/Mode","serviceObj":{"service":"com.victronenergy.settings","name":"com.victronenergy.settings"},"pathObj":{"path":"/Settings/DynamicEss/Mode","name":"/Settings/DynamicEss/Mode","type":"number"},"name":"","onlyChanges":false,"x":330,"y":540,"wires":[["79031088efbb3a73"]]},{"id":"79031088efbb3a73","type":"debug","z":"b9bfd7d55fb5c6e4","name":"Dynamic ESS mode","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","statusVal":"","statusType":"auto","x":730,"y":540,"wires":[]}]
 ```
 
-From VRM you cannot set the mode to Node-RED. See 
+From VRM you cannot set the mode to Node-RED.  
 
 ## Disabe the Node-RED version
 
