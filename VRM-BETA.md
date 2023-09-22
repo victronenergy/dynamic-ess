@@ -11,6 +11,8 @@ Also make sure to check out the community post on this: https://community.victro
 The running version of Dyanmice ESS is stored in `com.victronenergy.settings`, path `/Settings/DynamicEss/Mode`.
 
 There are 5 different modes possible:  
+| Mode | Function |
+|---|---|
 | 0 | Off |
 | 1 | Auto / VRM |
 | 2 | Buy |
