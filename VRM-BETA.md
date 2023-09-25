@@ -38,5 +38,5 @@ In order to enable the (beta) VRM version of Dynamic ESS, please follow the inst
 ## Issues
 
 We'd like to seperate the issuse considering the VRM version of Dynamic ESS with the ones running the Node-RED version. The 
-Node-RED ones can be filed [here](https://github.com/victronenergy/dynamic-ess/issues), the VRM ones can be filed in
+Node-RED ones can be filed [here](https://github.com/victronenergy/dynamic-ess/issues), the VRM ones can be filed [here](https://github.com/victronenergy/dynamic-ess/issues) as well, tagging them with the _VRM_ tag. They can also be reported in
 community, in [this post](https://community.victronenergy.com/articles/232720/dynamic-ess-on-beta-vrm.html) or more general in the [modification space](https://community.victronenergy.com/spaces/31/index.html).
