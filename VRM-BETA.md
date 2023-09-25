@@ -28,6 +28,10 @@ From VRM you cannot set the mode to Node-RED.
 
 ## Disabe the Node-RED version
 
+<img src="https://raw.githubusercontent.com/victronenergy/dynamic-ess/master/doc/img/node-red-dess-tab.png" width="320px" alt="Dynamic ESS tab" />
+
+<img src="https://raw.githubusercontent.com/victronenergy/dynamic-ess/master/doc/img/node-red-dess-disable.png" width="320px" alt="Dynamic ESS disable" />
+
 Easiest way to do this is by double-clicking the flow tab, pressing the "Enabled" box on the lower left corner to show "Disabled",
 clicking _Done_ and deploying the flow again.
 
