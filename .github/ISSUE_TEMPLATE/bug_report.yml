@@ -1,6 +1,6 @@
 ---
-name: Bug Report
-description: File a bug report
+name: Bug Report - Node-RED implementation
+description: File a bug report specific for the Node-RED implementation
 title: "[Bug]: "
 labels:
   - bug
