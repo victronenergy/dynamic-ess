@@ -5,9 +5,6 @@ title: "[VRM - Bug]: "
 labels:
   - bug
   - VRM
-assignees:
-  - PoolsideKelbi
-  - dirkjanfaber
 body:
   - type: markdown
     attributes:
