@@ -1,0 +1,193 @@
+---
+name: Bug Report VRM
+description: File a bug report specific for the VRM implementation
+title: "[VRM - Bug]: "
+labels:
+  - bug
+  - VRM
+assignees:
+  - PoolsideKelbi
+  - dirkjanfaber
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Thanks for taking the time to fill out this bug report! 
+        We understand that it might be a lot of fields to fill out. For us it is better to have all info and not need it than to need info and not have it.
+        So not all fields are required, but it does help to resolve your issue quicker.
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: input
+    id: id
+    attributes:
+      label: VRM portal ID
+      description: The vrm or site id the problem plays. If you don't want to give
+        that, please do fill out the parameter inputs.
+      placeholder: ex. c0619ab27f32
+    validations:
+      required: false
+  - type: dropdown
+    id: country
+    attributes:
+      label: Country / region
+      description: What country/region have you set?
+      options:
+        - Austria (at)
+        - Belgium (be)
+        - Bulgaria (bg)
+        - Croatia (hr)
+        - Czech Republic (cz)
+        - Denmark (dk)
+        - Estonia (ee)
+        - Finland (fi)
+        - France (fr)
+        - Germany (de)
+        - Greece (gr)
+        - Hungary (hu)
+        - Italy - Calabria (it-calabria)
+        - Italy - Centre-North (it-centre-north)
+        - Italy - Centre-South (it-centre-south)
+        - Italy - North (it-north)
+        - Italy - SACOAC (it-sacoac)
+        - Italy - SACODC (it-sacodc)
+        - Italy - Sardinia (it-sardinia)
+        - Italy - Sicily (it-sicily)
+        - Italy - South (it-south)
+        - Latvia (lv)
+        - Lithuania (lt)
+        - Luxembourg (lu)
+        - Montenegro (me)
+        - Netherlands (nl)
+        - North Macedonia (mk)
+        - Norway (no-1)
+        - Norway (no-2)
+        - Norway (no-2nsl)
+        - Norway (no-3)
+        - Norway (no-4)
+        - Norway (no-5)
+        - Poland (pl)
+        - Portugal (pt)
+        - Romania (ro)
+        - Serbia (rs)
+        - Slovakia (sk)
+        - Slovenia (si)
+        - Spain (es)
+        - Sweden - SE1 (se-1)
+        - Sweden - SE2 (se-2)
+        - Sweden - SE3 (se-3)
+        - Sweden - SE4 (se-4)
+        - Switzerland (ch)
+        - Ukraine - IPS (ua-ips)
+    validations:
+      required: false
+  - type: input
+    id: B_max
+    attributes:
+      label: B max
+      description: Usable battery capacity (kWh)
+      placeholder: ex. 15
+    validations:
+      required: false
+  - type: input
+    id: TB_max
+    attributes:
+      label: TB max
+      description: Amount the battery charges in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: FB_max
+    attributes:
+      label: FB max
+      description: Amount the battery discharges in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: TG_max
+    attributes:
+      label: TG max
+      description: Amount the grid can receive (to grid) in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: FG_max
+    attributes:
+      label: FG max
+      description: Amount the grid can provide (from grid) in one hour (kW)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: b_costs
+    attributes:
+      label: Battery costs
+      description: Battery costs (&euro;/kWh)
+      placeholder: ex. 2.7
+    validations:
+      required: false
+  - type: input
+    id: buy_price_formula
+    attributes:
+      label: Buy price
+      description: The buy price formula
+      placeholder: ex. (p+0.02+0.13)*1.21
+    validations:
+      required: false
+  - type: input
+    id: sell_price_formula
+    attributes:
+      label: Sell price
+      description: The sell price formula
+      placeholder: ex. (p-0.02+0.13)*1.21
+    validations:
+      required: false
+  - type: dropdown
+    id: feed_in_possible
+    attributes:
+      label: feed-in possible
+      description: Can you sell back to the grid?
+      options:
+        - 'yes'
+        - 'no'
+    validations:
+      required: false
+  - type: dropdown
+    id: feed_in_control_on
+    attributes:
+      label: feed-in control
+      description: Allow control over the feed-in variable (turn it off automatically
+        when the prices are negative)?
+      options:
+        - 'yes'
+        - 'no'
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+      value: A bug happened!
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem.
+      value: |
+        ![DESCRIPTION](LINK.png)
+      render: bash
+    validations:
+      required: false
+
