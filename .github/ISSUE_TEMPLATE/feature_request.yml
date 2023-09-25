@@ -5,8 +5,10 @@ labels: ["feature"]
 body:
   - type: markdown
     attributes:
-      value: |
-        **Thanks :heart: for taking the time to fill out this feature request report!**
+      value: >
+        **Thanks :heart: for taking the time to fill out this feature request report!** 
+        Do note that we won't respond quickly to feature requests. We are saving them and
+        giving them a priority once we have the system running stable for a while.
   - type: input
     id: contact
     attributes:
