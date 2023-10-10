@@ -178,6 +178,15 @@ body:
     validations:
       required: true
   - type: textarea
+    id: when-happened
+    attributes:
+      label: When did it happen?
+      description: What day and time do we need to check?
+      placeholder: Date and time
+      value: DD/MM/YYYY HH:MM
+    validations:
+      required: true
+  - type: textarea
     id: screenshot
     attributes:
       label: Screenshots
