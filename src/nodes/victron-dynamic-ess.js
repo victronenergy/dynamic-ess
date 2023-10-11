@@ -40,6 +40,9 @@ module.exports = function (RED) {
           if (schedulePick > Object.keys(dess.output.SOC).length) {
             schedulePick -= 24
           }
+          if (currentHour === 0 && Object.keys(dess.output.SOC).length > 23) {
+            schedulePick += 24
+          }
           output.push({
             topic: `Schedule ${schedule}`,
             soc: Number((dess.output.SOC[schedulePick])),
