@@ -1,5 +1,8 @@
 blank_issues_enabled: true
 contact_links:
+  - name: Victron Community - (beta) VRM implementation - part 2
+    url: https://community.victronenergy.com/articles/236792/dynamic-ess-on-beta-vrm-part-2.html
+    about: Second community post about the beta VRM implementation
   - name: Victron Community - (beta) VRM implemenatation 
     url: https://community.victronenergy.com/articles/232720/dynamic-ess-on-beta-vrm.html
     about: Community post about the beta VRM implementation
