@@ -40,7 +40,7 @@ module.exports = function (RED) {
           if (schedulePick > Object.keys(dess.output.SOC).length) {
             schedulePick -= 24
           }
-          if (currentHour === 0 && Object.keys(dess.output.SOC).length > 23) {
+          if (currentHour === 0 && Object.keys(dess.output.SOC).length > 24) {
             schedulePick += 24
           }
           output.push({
