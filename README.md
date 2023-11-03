@@ -193,6 +193,15 @@ battery can be in, hence the model tries to schedule with that limitation.
 If you don't want this, set your ESS mode to _Optimized (without BatteryLife)_
 and make sure to charge your battery manually periodically.
 
+## Restrictions
+
+Since candidate release 3.20~17 there is a `com.victronenergy.settings` / `Settings/DynamicESS/Restrictions` field for setting certain restrictions to the system. Currently there are the following options:
+
+- `0` = No restrictions
+- `1` = No exporting from battery to grid
+- `2` = No importing from grid to battery
+
+
 ## System efficiency
 
 The efficiency of the ESS system is considered (by default) to be 90%,
