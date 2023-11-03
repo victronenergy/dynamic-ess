@@ -193,6 +193,20 @@ battery can be in, hence the model tries to schedule with that limitation.
 If you don't want this, set your ESS mode to _Optimized (without BatteryLife)_
 and make sure to charge your battery manually periodically.
 
+## System efficiency
+
+The efficiency of the ESS system is considered (by default) to be 90%,
+meaning that if your solar yield is 10kWh and you put that in your battery,
+you are able to only pull 9kWh back out of it (for either consumption or
+selling to the grid). Note that this is not only the efficency of the battery,
+but also includes inverter losses.
+
+It can be adjusted via the `com.victronenergy.settings` / `Settings/DynamicEss/SystemEfficiency` dbus path. If you want to adjust it to e.g. 85%, you can
+use the following flow:
+```
+[{"id":"8d63274285babe24","type":"victron-output-custom","z":"a2d2c9f4739759d4","service":"com.victronenergy.settings","path":"/Settings/DynamicEss/SystemEfficiency","serviceObj":{"service":"com.victronenergy.settings","name":"com.victronenergy.settings"},"pathObj":{"path":"/Settings/DynamicEss/SystemEfficiency","name":"/Settings/DynamicEss/SystemEfficiency","type":"number"},"name":"","onlyChanges":false,"x":490,"y":220,"wires":[]},{"id":"0a6927f3647c0285","type":"inject","z":"a2d2c9f4739759d4","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"85","payloadType":"num","x":110,"y":220,"wires":[["8d63274285babe24"]]}]
+```
+
 # About
 
 The goal of Dynamic ESS can be formulated in the following way:  
