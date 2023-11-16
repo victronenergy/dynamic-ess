@@ -17,7 +17,7 @@ In order to successfuly use this node, installations must:
   - Have 28 days of operation time
   - Have location set for at least 28 days
 - Run at least version 3.10 of Venus OS (latest or candidate)
-- Not be running the VRM implementation of Dynamic ESS, as this will bite each other. The service `com.victronenergy.settings` and path `/Settings/DynamicEss/Mode` is used for this. Mode `1` (auto) is used by VRM. Mode `4` (Node-RED) can be used for Node-RED implementataions.
+- Not be running the VRM implementation of Dynamic ESS, as this will bite each other. The service `com.victronenergy.settings` and path `/Settings/DynamicEss/Mode` is used for this. Mode `1` (auto) is used by VRM. Mode `4` (Node-RED) can be used for Node-RED implementations.
 
 # QuickStart
 
