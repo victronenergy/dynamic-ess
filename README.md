@@ -206,6 +206,8 @@ The following flow can be used for that:
 [{"id":"4ce5aae7de47bc94","type":"victron-output-custom","z":"a2d2c9f4739759d4","service":"com.victronenergy.settings","path":"/Settings/DynamicEss/Restrictions","serviceObj":{"service":"com.victronenergy.settings","name":"com.victronenergy.settings"},"pathObj":{"path":"/Settings/DynamicEss/Restrictions","name":"/Settings/DynamicEss/Restrictions","type":"number"},"name":"","onlyChanges":false,"x":810,"y":460,"wires":[]},{"id":"b823ba313cf1f7e6","type":"inject","z":"a2d2c9f4739759d4","name":"0 - No restrictions","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"0","payloadType":"num","x":300,"y":460,"wires":[["4ce5aae7de47bc94"]]},{"id":"b9a38621ba13bb0b","type":"inject","z":"a2d2c9f4739759d4","name":"1 - No exporting from battery to grid","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"1","payloadType":"num","x":360,"y":500,"wires":[["4ce5aae7de47bc94"]]},{"id":"3895c5f36826be0f","type":"inject","z":"a2d2c9f4739759d4","name":"2 - No importing from grid to battery","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"2","payloadType":"num","x":360,"y":540,"wires":[["4ce5aae7de47bc94"]]}]
 ```
 
+Since candidate release 3.20~30 also per-timeslot restrictions got added. The latest importable flows support this. Note that the global restrictions have leading priority. So if that one is set to _No exporting from battery to grid_, the per-timeslot restriction cannot overrule that.
+
 ## System efficiency
 
 The efficiency of the ESS system is considered (by default) to be 90%,
