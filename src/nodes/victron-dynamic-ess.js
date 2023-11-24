@@ -48,7 +48,8 @@ module.exports = function (RED) {
             soc: Number((dess.output.SOC[schedulePick])),
             feed_in: config.feed_in_possible ? 1 : 0,
             duration: 3600,
-            start: unixTimestamp + (schedule * 3600)
+            start: unixTimestamp + (schedule * 3600),
+            restrictions: Number((dess.output.restrictions[schedulePick] || 0))
           })
         }
       }
