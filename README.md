@@ -78,11 +78,12 @@ fields need to be filled out:
 - fb\_max  - Maximum Battery discharge power (in kW)
 - tg\_max - Maximum Grid Export power (in kW)
 - fg\_max - Maximum Grid Import power (in kW).
-- Battery costs - Cost of charging or discharging battery (in €/kWh).
+- Battery cycle costs - Cost of charging *and* discharging battery (in €/kWh).
 - Feed in possible - Can you sell back to the grid?
 - Feed-in control - Allow control over the feed-in variable (turn it off automatically when the prices are negative)?
 
-Battery costs indicate how expensive it is to use it for charging and discharging, expressed in €/kWh. A typical calculation for this is:  
+Battery cycle costs indicate how expensive it is to do a cycle of charging and discharging the battery, ex
+pressed in €/kWh. A typical calculation for this is:  
 > costs for buying the battery in € / (charging cycles * battery capacity in kWh)
 
 One battery charge cycle equals full battery charged to 100% and fully used to 0%. If you only use half of the battery power, then recharge it and repeat it the following day — it will also count as one charge cycle instead of two. The number of charging cycles is a number that differs per brand.  The battery costs is usually somewhere between € 0.02 and € 0.06 /kWh.  
