@@ -13,7 +13,7 @@
             tb_max: { value: 1.2, validate: RED.validators.number() },
             fg_max: { value: 1.0, validate: RED.validators.number() },
             tg_max: { value: 1.0, validate: RED.validators.number() },
-            b_cost: { value: 0.0, validate: RED.validators.number() },
+            b_cycle_cost: { value: 0.0, validate: RED.validators.number() },
             buy_price_formula: { value: "p", validate: RED.validators.regex(/^[p0-9+-/*\.()]*$/) },
             sell_price_formula: { value: "p", validate: RED.validators.regex(/^[p0-9+-/*\.()]*$/) },
             feed_in_possible: { value: true },
@@ -145,8 +145,8 @@
         <input type="text" id="node-input-fg_max" placeholder="Amount the grid can provide (from grid) in one hour (kW)">
     </div>
     <div class="form-row">
-        <label for="node-input-b_cost"><i class="fa fa-money"></i> Battery costs</label>
-        <input type="text" id="node-input-b_cost" placeholder="Battery costs">
+        <label for="node-input-b_cycle_cost"><i class="fa fa-money"></i> Battery cycle costs</label>
+        <input type="text" id="node-input-b_cycle_cost" placeholder="Battery cycle costs">
     </div>
     <div class="form-row">
         <label for="node-input-buy_price_formula"><i class="fa fa-pencil"></i> Buy price</label>
@@ -204,7 +204,7 @@ Notice that there is no `msg.payload` field.
 : FB max (float) : Maximum battery discharge power (in kW) (***F**rom **B**attery)
 : TG max (float) : Maximum grid export power (in kW) (**T**o **G**rid)
 : FG max (float) : Maximum grid import power (in kW) (**F**rom **G**rid)
-: Battery costs (float) : Cost of charging or discharging the battery (in €/kWh)
+: Battery cycle costs (float) : Cost of charging *and* discharging the battery (in €/kWh)
 : Buy price (string) : The buy price formula. The variable `p` represents the dynamic price / kWh.
 : Sell price (string) : The sell price formula. The variable `p` represents the dynamic price / kWh.
 : Feed-in possible (boolean) : Can you sell back to the grid?
@@ -213,7 +213,7 @@ Notice that there is no `msg.payload` field.
 
 See [here](https://github.com/victronenergy/dynamic-ess#create-an-access-token) for more information on creating an VRM access token.
 
-Battery costs indicate how expensive it is to use it for charging and discharging, expressed in €/kWh. A typical calculation for this is:  
+Battery cycle costs indicate how expensive it is to do a cycle of charging and discharging the battery, expressed in €/kWh. A typical calculation for this is:  
 > costs for buying the battery in € / (charging cycles * battery capacity in kWh)
 
 One battery charge cycle equals full battery charged to 100% and fully used to 0%. If you only use half of the battery power, then recharge it and repeat it the following day — it will also count as one charge cycle instead of two. The number of charging cycles is a number that differs per brand.  The battery costs is usually somewhere between € 0.02 and € 0.06 /kWh.  

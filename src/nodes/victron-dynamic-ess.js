@@ -107,7 +107,7 @@ module.exports = function (RED) {
         fb_max: (config.fb_max).toString(),
         tg_max: (config.tg_max).toString(),
         fg_max: (config.fg_max).toString(),
-        b_cost: (config.b_cost).toString(),
+        b_cycle_cost: (config.b_cycle_cost).toString(),
         buy_price_formula: (config.buy_price_formula).toString(),
         sell_price_formula: (config.sell_price_formula).toString(),
         feed_in_possible: (config.feed_in_possible).toString(),
