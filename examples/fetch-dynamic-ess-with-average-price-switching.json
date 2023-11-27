@@ -800,7 +800,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "duration",
+                "to": "restrictions",
                 "tot": "msg"
             }
         ],
