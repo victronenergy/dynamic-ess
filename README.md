@@ -209,6 +209,8 @@ The following flow can be used for that:
 
 Since candidate release 3.20~30 also per-timeslot restrictions got added. The latest importable flows support this. Note that the global restrictions have leading priority. So if that one is set to _No exporting from battery to grid_, the per-timeslot restriction cannot overrule that.
 
+The algorithm automatically fills out not to import from grid to battery when the prices are too high. Wich is defined as: `buy price > maximum sell price - battery cycle cost`. In those cases the `2` restriction will be activated. Resulting in no longer punishing the grid when the forecasts don't match the actual values.
+
 ## System efficiency
 
 The efficiency of the ESS system is considered (by default) to be 90%,

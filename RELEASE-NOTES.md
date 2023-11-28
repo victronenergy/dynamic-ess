@@ -17,6 +17,9 @@ Configuration no longer uses the site ID, but switched to the more
 common VRM portal ID (you can find that under the _Device list -> Gateway_
 and then _VRM portal ID_).
 
+From version 0.0.9 the use of battery costs changed to battery cycle
+costs to be inline with the VRM implementation.
+
 The rest of the configuration is still the same. See the
 [README.md](./README.md) file for more information on that.
 
