@@ -7,9 +7,10 @@ This document describes how to switch between the two versions, as you can only 
 
 Also make sure to check out the [manual](https://www.victronenergy.com/live/drafts:dynamic_ess) for more information.
 
-There are two community threads on the subject too (of which only the last one is active):
+There are three community threads on the subject too (of which only the last one is active):
 - https://community.victronenergy.com/articles/232720/dynamic-ess-on-beta-vrm.html  
 - https://community.victronenergy.com/articles/236792/dynamic-ess-on-beta-vrm-part-2.html
+- https://community.victronenergy.com/articles/245772/dynamic-ess-on-beta-vrm-part-3.html
 
 ## Check which version is running
 
@@ -50,7 +51,7 @@ While you can only have one of the systems active at the same time, there are mo
 The Node-RED version still needs to periodically fetch the information, but it can no longer fill out the schedules. But the fetched information can still be used to steer the rest of your equipment
 and show the graphs. You have to make sure to use the same configuration on both systems.
 
-There are two flows that can be imported to get you started:
+There are two flows that need be imported to get you started:
 - [nodered-ui-with-vrm-dess](./examples/nodered-ui-with-vrm-dess.json) and
 - [nodered-ui-with-vrm-dess-with-average-price-switching](./examples/nodered-ui-with-vrm-dess-with-average-price-switching.json)
 
