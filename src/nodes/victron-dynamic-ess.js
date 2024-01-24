@@ -29,6 +29,12 @@ module.exports = function (RED) {
         return
       }
 
+      const dessMode = context.get('dess_mode')
+      if (dessMode !== 4) {
+        node.status({ fill: 'red', shape: 'dot', text: `Dynamic ESS not in Node-RED mode (${dessMode})` })
+        return
+      }
+
       const output = []
       if (dess.output) {
         const currentDateTime = new Date()
