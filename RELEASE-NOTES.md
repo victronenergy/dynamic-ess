@@ -87,12 +87,13 @@ take a look at the "html page" template node.
 
 The Dynamic ESS implementation on Venus OS works
 with schedules that carry a start, duration, target SOC and
-feed\_in flag.
+feed\_in, restrictions and strategy  flag.
 
 The system tries to get the battery SOC to the target SOC
 with in _duration_ seconds, starting at the unix timestamp
 _start_. If _feed\_in_ is set, the system is allowed to
-feed in to the grid.
+feed in to the grid. Based on the _restrictions_ and the
+_strategy_ it does on the most efficent way.
 
 The duration on the flow will always be `3600` seconds (1 hour).
 The rest of the information is fetched from the vrm API.

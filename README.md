@@ -108,7 +108,7 @@ Once everything is filled out, you can deploy the flow and check https://venus.l
 When correctly deployed, these nodes do write (and read) from the dbus (using [node-red-contrib-victron](https://github.com/victronenergy/node-red-contrib-victron) nodes).
 The following services and paths are being written to:  
 - `com.victronenergy.settings /Settings/DynamicESS/Mode` - The mode of Dynamic ESS will be set to 'auto'
-- `com.victronenergy.settings /Settings/DynamicESS/Schedule/*/*` - Depending on the used flow 1 or more schedules are written to, containing the desired Soc, AllowGridFeedin, Start and Duration.
+- `com.victronenergy.settings /Settings/DynamicESS/Schedule/*/*` - Depending on the used flow 1 or more schedules are written to, containing the desired Soc, AllowGridFeedin, Start, Duration, Restrictions and Strategy.
 
 # Graphs
 
@@ -196,7 +196,7 @@ and make sure to charge your battery manually periodically.
 
 ## Restrictions
 
-Since candidate release 3.20~17 there is a `com.victronenergy.settings` / `Settings/DynamicESS/Restrictions` field for setting certain restrictions to the system. Currently there are the following options:
+Since beta release 3.20~17 there is a `com.victronenergy.settings` / `Settings/DynamicESS/Restrictions` field for setting certain restrictions to the system. Currently there are the following options:
 
 - `0` = No restrictions
 - `1` = No exporting from battery to grid
@@ -210,6 +210,14 @@ The following flow can be used for that:
 Since candidate release 3.20~30 also per-timeslot restrictions got added. The latest importable flows support this. Note that the global restrictions have leading priority. So if that one is set to _No exporting from battery to grid_, the per-timeslot restriction cannot overrule that.
 
 The algorithm automatically fills out not to import from grid to battery when the prices are too high. Wich is defined as: `buy price > maximum sell price - battery cycle cost`. In those cases the `2` restriction will be activated. Resulting in no longer punishing the grid when the forecasts don't match the actual values.
+
+## Strategy
+
+From 3.30~7 there are currently 2 different strategies in use:
+- `0` - Follow the target SOC
+- `1` - Minimize grid usage / maximize battery usage
+
+The system determines which of the strategies is best to follow during a specific hour, mainly, but not limited to, looking at price. Usage of these restrictions has been added to the importable flows.
 
 ## System efficiency
 
