@@ -55,7 +55,8 @@ module.exports = function (RED) {
             feed_in: config.feed_in_possible ? 1 : 0,
             duration: 3600,
             start: unixTimestamp + (schedule * 3600),
-            restrictions: Number((dess.output.restrictions[schedulePick] || 0))
+            restrictions: Number((dess.output.restrictions[schedulePick] || 0)),
+            strategy: dess.output.coping_strategy[schedulePick]
           })
         }
       }
