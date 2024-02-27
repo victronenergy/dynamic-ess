@@ -194,6 +194,16 @@ battery can be in, hence the model tries to schedule with that limitation.
 If you don't want this, set your ESS mode to _Optimized (without BatteryLife)_
 and make sure to charge your battery manually periodically.
 
+## Error message when importing: Imported unrecognised types: ui\_template, ui\_group and ui\_tab
+
+If you get this error, you will need to install the `node-red-dashboard` nodes first. This can be done
+via the palette manager. Alternative is to delete the template-node from the flow.
+
+What this template node does is to create a link to the `/dess` url from the `/ui` page
+on your device. This allows you to access the Node-RED DESS implementation via VRM.
+
+# Other
+
 ## Restrictions
 
 Since beta release 3.20~17 there is a `com.victronenergy.settings` / `Settings/DynamicESS/Restrictions` field for setting certain restrictions to the system. Currently there are the following options:
