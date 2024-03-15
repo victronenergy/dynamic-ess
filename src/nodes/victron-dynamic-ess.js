@@ -119,7 +119,9 @@ module.exports = function (RED) {
         sell_price_formula: (config.sell_price_formula).toString(),
         feed_in_possible: (config.feed_in_possible).toString(),
         feed_in_control_on: (config.feed_in_control_on).toString(),
-        country: (config.country).toUpperCase()
+        country: (config.country).toUpperCase(),
+        b_goal_hour: (config.b_goal_hour).toString(),
+        b_goal_SOC: (config.b_goal_SOC).toString()
       }
       const headers = {
         'X-Authorization': 'Token ' + config.vrmtoken,

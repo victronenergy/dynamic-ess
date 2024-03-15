@@ -16,6 +16,8 @@
             b_cycle_cost: { value: 0.0, validate: RED.validators.number() },
             buy_price_formula: { value: "p", validate: RED.validators.regex(/^[p0-9+-/*\.()]*$/) },
             sell_price_formula: { value: "p", validate: RED.validators.regex(/^[p0-9+-/*\.()]*$/) },
+            b_goal_hour: { value: 0, validate: RED.validators.number() },
+            b_goal_SOC: { value: 0, validate: RED.validators.number() },
             feed_in_possible: { value: true },
             feed_in_control_on: { value: true },
             verbose: { value: false }
@@ -157,6 +159,16 @@
         <label for="node-input-sell_price_formula"><i class="fa fa-pencil"></i> Sell price</label>
         <input type="text" id="node-input-sell_price_formula" placeholder="The sell price formula">
     </div>
+    <div class="form-row">
+        <label for="node-input-b_goal_SOC"><i class="fa fa-battery-half"></i> b_goal SOC (%)</label>
+        <input type="text" id="node-input-b_goal_SOC" placeholder="Target SOC to reach at b_goal hour.">
+        <p> Must be above min SOC. Set to <code>0</code> to disable this feature.</p>
+    </div>
+    <div class="form-row">
+        <label for="node-input-b_goal_hour"><i class="fa fa-clock-o"></i> b_goal hour</label>
+        <input type="text" id="node-input-b_goal_hour" placeholder="Hour to reach b_goal SOC">
+        <p> Default: <code>0</code> = midnight</p>
+    </div>
     <div class="form-row" style="margin-bottom:0px;">
         <input type="checkbox" checked id="node-input-feed_in_possible" style="display:inline-block; margin-left:8px; width:auto; vertical-align:top;">
         <label style="width: 70%" for="node-input-feed_in_possible"><i class="fa fa-power"></i> Feed in possible: Can you sell back to the grid?</label>
@@ -208,6 +220,8 @@ Notice that there is no `msg.payload` field.
 : Battery cycle costs (float) : Cost of charging *and* discharging the battery (in €/kWh)
 : Buy price (string) : The buy price formula. The variable `p` represents the dynamic price / kWh.
 : Sell price (string) : The sell price formula. The variable `p` represents the dynamic price / kWh.
+: b_goal_hour (number): The hour number to reach b_goal_SOC (15 is 15:00, 0 is midnight)
+: b_goal_SOC (nubmer): The target SOC for the system to reach at b_goal_hour. Must be above min SOC. Setting it to `0` disables this goal feature.
 : Feed-in possible (boolean) : Can you sell back to the grid?
 : Feed-in control (boolean) : Allow control over the feed-in variable (turn it off automatically when the prices are negative)?
 : Verbose (boolean) : Show the `curl` command in the debug tab?
