@@ -270,6 +270,10 @@ to set your location correctly in VRM.
 `msg.payload` is used to trigger a (re)calculation of the optimal setpoint. As the VRM backend only updates every 5 minutes, there is no reason to
 trigger this node more frequent.
 
+If you need to dynamically alter your formula's, you can do that by injecting `msg.buy_price_formula` and `msg.sell_price_formula` into the 
+Dynamic ESS node. While this can be used when you have different fees during certain hours of the day, do note that it is a bit crude, as the system will
+calculate all the hours with this new formula. For fixed pricing, the implementation in VRM is definitely the better option.
+
 ### Note
 
 - This is a proof of concept project. In the future this implementation in Node-RED will become obsolete as the functionality will move into VRM/Venus OS native.

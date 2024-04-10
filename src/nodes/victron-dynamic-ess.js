@@ -13,6 +13,8 @@ module.exports = function (RED) {
     this.config = config
 
     let url = 'https://vrm-dynamic-ess-api.victronenergy.com'
+    let BuyPriceFormula = config.buy_price_formula
+    let SellPriceFormula = config.sell_price_formula
 
     function outputDESSSschedule () {
       /* This function actually sends out the active schedule. This can be either
@@ -115,8 +117,8 @@ module.exports = function (RED) {
         tg_max: (config.tg_max).toString(),
         fg_max: (config.fg_max).toString(),
         b_cycle_cost: (config.b_cycle_cost).toString(),
-        buy_price_formula: (config.buy_price_formula).toString(),
-        sell_price_formula: (config.sell_price_formula).toString(),
+        buy_price_formula: (BuyPriceFormula).toString(),
+        sell_price_formula: (SellPriceFormula).toString(),
         feed_in_possible: (config.feed_in_possible).toString(),
         feed_in_control_on: (config.feed_in_control_on).toString(),
         country: (config.country).toUpperCase(),
@@ -175,6 +177,17 @@ module.exports = function (RED) {
     node.on('input', function (msg) {
       if (msg.url) {
         url = msg.url
+        fetchVRMSchedule()
+      }
+
+      if (msg.buy_price_formula) {
+        BuyPriceFormula = msg.buy_price_formula
+        fetchVRMSchedule()
+      }
+
+      if (msg.sell_price_formula) {
+        SellPriceFormula = msg.sell_price_formula
+        fetchVRMSchedule()
       }
 
       outputDESSSschedule()

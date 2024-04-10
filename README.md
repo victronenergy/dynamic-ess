@@ -243,6 +243,12 @@ use the following flow:
 [{"id":"8d63274285babe24","type":"victron-output-custom","z":"a2d2c9f4739759d4","service":"com.victronenergy.settings","path":"/Settings/DynamicEss/SystemEfficiency","serviceObj":{"service":"com.victronenergy.settings","name":"com.victronenergy.settings"},"pathObj":{"path":"/Settings/DynamicEss/SystemEfficiency","name":"/Settings/DynamicEss/SystemEfficiency","type":"number"},"name":"","onlyChanges":false,"x":490,"y":220,"wires":[]},{"id":"0a6927f3647c0285","type":"inject","z":"a2d2c9f4739759d4","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"85","payloadType":"num","x":110,"y":220,"wires":[["8d63274285babe24"]]}]
 ```
 
+## Dynamically change formula's
+
+If you need to dynamically alter your formula's, you can do that by injecting `msg.buy_price_formula` and `msg.sell_price_formula` into the Dynamic ESS node. While this can be used when you have different fees during certain hours of the day, do note that it is a bit crude, as the system will calculate all the hours with this new formula. For fixed pricing, the implementation in VRM is definitely the better option.
+
+Import the [_dynamically-alter-buy-formula_ flow](https://github.com/victronenergy/dynamic-ess/blob/main/examples/dynamically-alter-buy-formula.json) for an example on how to use this functionality.
+
 # About
 
 The goal of Dynamic ESS can be formulated in the following way:  
