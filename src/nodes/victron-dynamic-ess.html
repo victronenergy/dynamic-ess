@@ -287,6 +287,8 @@ If you need to dynamically alter your formula's, you can do that by injecting `m
 Dynamic ESS node. While this can be used when you have different fees during certain hours of the day, do note that it is a bit crude, as the system will
 calculate all the hours with this new formula. For fixed pricing, the implementation in VRM is definitely the better option.
 
+Injecting `msg.fg_max` and `msg.tg_max` is also supported. This might be handy if you want to keep the noise of the Multiplus a bit down during certain hours of the day.
+
 ### Note
 
 - This is a proof of concept project. In the future this implementation in Node-RED will become obsolete as the functionality will move into VRM/Venus OS native.

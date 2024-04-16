@@ -99,6 +99,13 @@ The sell price formula looks often identical and in common cases looks something
 
 With different providers, the formula will likely be different. So this does require some research on how your pricing is build up.
 
+If the _green mode_ checkbox has been set, the system will:
+- _Only excess solar is fed back to grid_ - Solar production is only sold to the grid when there is excess after consumption and battery charging;
+- _Avoid feeding in from battery_ - Energy in the battery is reserved for consumption;
+- _Use Smart-charging when needed_ - Charge the battery when prices are low.
+
+So this might not result in saving the most of money, but will allow you to maximize using your own solar.
+
 The default filled out values are typical values. If you think you are factors of, you might want to consult on the [community](https://community.victronenergy.com/index.html) and ask for advice on what to fill out.
 
 Once everything is filled out, you can deploy the flow and check https://venus.local:1881/dess/ to see how the system will take its actions for the day.
@@ -248,6 +255,10 @@ use the following flow:
 If you need to dynamically alter your formula's, you can do that by injecting `msg.buy_price_formula` and `msg.sell_price_formula` into the Dynamic ESS node. While this can be used when you have different fees during certain hours of the day, do note that it is a bit crude, as the system will calculate all the hours with this new formula. For fixed pricing, the implementation in VRM is definitely the better option.
 
 Import the [_dynamically-alter-buy-formula_ flow](https://github.com/victronenergy/dynamic-ess/blob/main/examples/dynamically-alter-buy-formula.json) for an example on how to use this functionality.
+
+## Dynamically changing fg_max and tg_max
+
+Injecting `msg.fg_max` and `msg.tg_max` is also supported. This might be handy if you want to keep the noise of the Multiplus a bit down during certain hours of the day.
 
 # About
 
