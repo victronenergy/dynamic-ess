@@ -121,7 +121,7 @@ module.exports = function (RED) {
         b_cycle_cost: (config.b_cycle_cost).toString(),
         buy_price_formula: (BuyPriceFormula).toString(),
         sell_price_formula: (SellPriceFormula).toString(),
-        green_mode_on: (config.green_mode_on || true).toString(),
+        green_mode_on: (config.green_mode_on).toString(),
         feed_in_possible: (config.feed_in_possible).toString(),
         feed_in_control_on: (config.feed_in_control_on).toString(),
         country: (config.country).toUpperCase(),
