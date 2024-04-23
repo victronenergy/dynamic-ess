@@ -17,6 +17,7 @@ module.exports = function (RED) {
     let SellPriceFormula = config.sell_price_formula
     let TGMax = config.tg_max
     let FGMax = config.fg_max
+    let GreenModeOn = config.green_mode_on
 
     function outputDESSSschedule () {
       /* This function actually sends out the active schedule. This can be either
@@ -121,7 +122,7 @@ module.exports = function (RED) {
         b_cycle_cost: (config.b_cycle_cost).toString(),
         buy_price_formula: (BuyPriceFormula).toString(),
         sell_price_formula: (SellPriceFormula).toString(),
-        green_mode_on: (config.green_mode_on).toString(),
+        green_mode_on: (GreenModeOn).toString(),
         feed_in_possible: (config.feed_in_possible).toString(),
         feed_in_control_on: (config.feed_in_control_on).toString(),
         country: (config.country).toUpperCase(),
@@ -190,6 +191,11 @@ module.exports = function (RED) {
 
       if (msg.sell_price_formula) {
         SellPriceFormula = msg.sell_price_formula
+        fetchVRMSchedule()
+      }
+
+      if (typeof msg.green_mode_on !== 'undefined') {
+        GreenModeOn = msg.green_mode_on
         fetchVRMSchedule()
       }
 

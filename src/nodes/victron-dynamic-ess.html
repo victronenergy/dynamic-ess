@@ -289,6 +289,8 @@ calculate all the hours with this new formula. For fixed pricing, the implementa
 
 Injecting `msg.fg_max` and `msg.tg_max` is also supported. This might be handy if you want to keep the noise of the Multiplus a bit down during certain hours of the day.
 
+By injecting either boolean value _true_ or _false_ as `msg.green_mode_on` into the node, the system will switch from one mode to the other.
+
 ### Note
 
 - This is a proof of concept project. In the future this implementation in Node-RED will become obsolete as the functionality will move into VRM/Venus OS native.
