@@ -48,18 +48,28 @@ module.exports = function (RED) {
         const currentHour = currentDateTime.getHours()
         for (let schedule = 0; schedule <= 3; schedule++) {
           let schedulePick = currentHour + schedule
-          if (schedulePick > Object.keys(dess.output.SOC).length) {
-            schedulePick -= 24
-          }
-          if (currentHour === 0 && Object.keys(dess.output.SOC).length > 24) {
-            schedulePick += 24
+          if (dess.is_half_hour_schedule) {
+            schedulePick = (currentHour * 2) + schedule
+            if (schedulePick > Object.keys(dess.output.SOC).length) {
+              schedulePick -= 48
+            }
+            if (currentHour === 0 && Object.keys(dess.output.SOC).length > 48) {
+              schedulePick += 48
+            }
+          } else {
+            if (schedulePick > Object.keys(dess.output.SOC).length) {
+              schedulePick -= 24
+            }
+            if (currentHour === 0 && Object.keys(dess.output.SOC).length > 24) {
+              schedulePick += 24
+            }
           }
           output.push({
             topic: `Schedule ${schedule}`,
             soc: Number((dess.output.SOC[schedulePick])),
             feed_in: config.feed_in_possible ? 1 : 0,
-            duration: 3600,
-            start: unixTimestamp + (schedule * 3600),
+            duration: dess.is_half_hour_schedule ? 1800 : 3600,
+            start: unixTimestamp + (schedulePick * 1800),
             restrictions: Number((dess.output.restrictions[schedulePick] || 0)),
             strategy: dess.output.coping_strategy[schedulePick]
           })
@@ -133,6 +143,11 @@ module.exports = function (RED) {
         'X-Authorization': 'Token ' + config.vrmtoken,
         accept: 'application/json',
         'User-Agent': 'dynamic-ess/' + packageJson.version
+      }
+
+      if (config.country.toLowerCase() === 'uk-octopus') {
+        options.contract_buy = (config.contract_buy).toString()
+        options.contract_sell = (config.contract_sell).toString()
       }
 
       if (config.verbose === true) {

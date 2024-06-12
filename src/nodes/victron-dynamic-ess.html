@@ -1,4 +1,41 @@
 <script type="text/javascript">
+    function checkSelectedCountry() {
+        $('#input-uk-octopus').hide()
+        const selected = $('select#node-input-country').val()
+        if (selected?.startsWith('uk')) {
+            $('#input-uk-octopus').show()
+            checkShowOctopusOptions()
+        }
+    }
+
+    function checkShowOctopusOptions() {
+        const selectElement = $('select#node-input-contract_buy')
+        const selectedOption = selectElement.find(':selected')
+        const tariff = $('select#node-input-oct_tariff').data('stored')
+        const region = $('select#node-input-oct_region').data('stored')
+        const dataTariff = selectedOption.data('tariff')
+        const dataRegion = selectedOption.data('region')
+        const selectOctTariff = $('select#node-input-oct_tariff')
+        selectOctTariff.empty()
+        if (dataTariff === "single") {
+            selectOctTariff.append('<option value="E-1R">Single rate</option>')
+        }
+        if (dataTariff === "dual") {
+            selectOctTariff.append('<option value="E-1R">Single rate</option>')
+            selectOctTariff.append('<option value="E-2R">Dual rate</option>')
+        }
+        const selectOctRegion = $('select#node-input-oct_region')
+        selectOctRegion.empty()
+        dataRegion?.split(',').map(region => {
+            selectOctRegion.append($('<option>', {
+          value: region,
+          text: "Region "+region
+        }))
+        })
+        $('select#node-input-oct_tariff').val(tariff)
+        $('select#node-input-oct_region').val(region)
+    }
+
     RED.nodes.registerType('victron-dynamic-ess', {
         category: 'Victron Energy',
         paletteLabel: 'VRM dynamic ESS',
@@ -7,7 +44,9 @@
             name: { value: "" },
             vrm_id: { value: "", validate: RED.validators.regex(/^[a-z0-9]{12}$/) },
             vrmtoken: { value: "", validate: RED.validators.regex(/^[a-z0-9]{64}$/) },
-            country: { value: "", validate: RED.validators.regex(/^[a-z]{2}[-()a-z0-9]*$/) },
+            country: { value: "", validate: RED.validators.regex(/^[a-z]{2}[-()A-Za-z0-9]*$/) },
+            contract_buy: { value: "" },
+            contract_sell: { value: "" },
             b_max: { value: 10, validate: RED.validators.number() },
             fb_max: { value: 1.1, validate: RED.validators.number() },
             tb_max: { value: 1.2, validate: RED.validators.number() },
@@ -41,6 +80,34 @@
                     document.getElementById("node-input-sell_price_formula").disabled = true
                 }
             })
+ 
+            if (this.country?.startsWith('uk') && this.contract_buy !== null && this.contract_sell !== null) {
+                let i = this.contract_buy.split('-')
+                let j = this.contract_sell.split('-')
+                const tariff = i[0] + '-' + i[1]
+                const region = i.pop(); j.pop()
+                const contract_buy = i.slice(2).join('-')
+                const contract_sell = j.slice(2).join('-')
+                $('select#node-input-country').val('uk')
+                $('select#node-input-oct_tariff').data('stored', tariff)
+                $('select#node-input-oct_region').data('stored', region)
+                $('select#node-input-contract_buy').val(contract_buy)
+                $('select#node-input-contract_sell').val(contract_sell)
+            }
+        },
+        oneditsave: function oneditsave() {
+            if ( $('select#node-input-country').val()?.startsWith('uk') ) {
+                const tariff = $('select#node-input-oct_tariff').val()
+                const region = $('select#node-input-oct_region').val()
+                const contract_buy = $('select#node-input-contract_buy').val()
+                const contract_sell = $('select#node-input-contract_sell').val()
+                this.country = `uk-octopus`
+                this.contract_buy = `${tariff}-${contract_buy}-${region}`
+                this.contract_sell = `${tariff}-${contract_sell}-${region}`
+                $('select#node-input-country').val(this.country)
+                $('select#node-input-contract_buy').val(this.contract_buy)
+                $('select#node-input-contract_sell').val(this.contract_sell)
+            }
         },
         onadd: function() {
             let hasClient = false
@@ -78,7 +145,7 @@
     </div>
     <div class="form-row">
         <label for="node-input-country"><i class="fa fa-location-arrow"></i> Country / Energy region</label>
-        <select id="node-input-country" required>
+        <select id="node-input-country" required onchange="checkSelectedCountry()">>
             <option value="at">Austria (at)</option>
             <option value="be">Belgium (be)</option>
             <option value="bg">Bulgaria (bg)</option>
@@ -126,7 +193,116 @@
             <option value="se-4">Sweden - SE4 (se-4)</option>
             <option value="ch">Switzerland (ch)</option>
             <option value="ua-ips">Ukraine - IPS (ua-ips)</option>
+            <option value="uk">United Kingdom (uk)</option>
         </select>
+    </div>
+    <div id="input-uk-octopus">
+        <div class="form-row">
+            <label for="node-input-contract_buy"><i class="fa fa-location-arrow"></i> Octopus: Buy contract</label>
+            <select id="node-input-contract_buy" required onchange="checkShowOctopusOptions()">
+                <option value="AGILE-24-04-03" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">AGILE-24-04-03</option>
+                <option value="AGILE-BB-24-04-03" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">AGILE-BB-24-04-03</option>
+                <option value="AGILE-OUTGOING-19-05-13" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">AGILE-OUTGOING-19-05-13</option>
+                <option value="AGILE-OUTGOING-BB-23-02-28" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">AGILE-OUTGOING-BB-23-02-28</option>
+                <option value="COOP-FIX-12M-24-06-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">COOP-FIX-12M-24-06-01</option>
+                <option value="COOP-PP-VAR-20-04-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">COOP-PP-VAR-20-04-01</option>
+                <option value="COOP-SEG-EO-FIX-12M-24-04-05" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">COOP-SEG-EO-FIX-12M-24-04-05</option>
+                <option value="COOP-SEG-FIX-12M-20-11-11" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">COOP-SEG-FIX-12M-20-11-11</option>
+                <option value="COOP-VAR-23-04-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">COOP-VAR-23-04-01</option>
+                <option value="COSY-22-12-08" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">COSY-22-12-08</option>
+                <option value="COSY-BB-23-02-07" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">COSY-BB-23-02-07</option>
+                <option value="CP-12M-24-06-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">CP-12M-24-06-01</option>
+                <option value="FLUX-EXPORT-23-02-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">FLUX-EXPORT-23-02-14</option>
+                <option value="FLUX-EXPORT-BB-23-02-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">FLUX-EXPORT-BB-23-02-14</option>
+                <option value="FLUX-IMPORT-23-02-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">FLUX-IMPORT-23-02-14</option>
+                <option value="FLUX-IMPORT-BB-23-02-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">FLUX-IMPORT-BB-23-02-14</option>
+                <option value="GO-GREEN-VAR-22-10-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">GO-GREEN-VAR-22-10-14</option>
+                <option value="GO-VAR-22-10-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">GO-VAR-22-10-14</option>
+                <option value="GO-VAR-BB-23-02-07" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">GO-VAR-BB-23-02-07</option>
+                <option value="INTELLI-BB-VAR-23-03-01" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-BB-VAR-23-03-01</option>
+                <option value="INTELLI-FLUX-EXPORT-23-07-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-FLUX-EXPORT-23-07-14</option>
+                <option value="INTELLI-FLUX-EXPORT-BB-23-07-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-FLUX-EXPORT-BB-23-07-14</option>
+                <option value="INTELLI-FLUX-IMPORT-23-07-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-FLUX-IMPORT-23-07-14</option>
+                <option value="INTELLI-FLUX-IMPORT-BB-23-07-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-FLUX-IMPORT-BB-23-07-14</option>
+                <option value="INTELLI-VAR-22-10-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-VAR-22-10-14</option>
+                <option value="LP-SEG-EO-FIX-12M-24-04-05" data-tariff="single" data-region="A,C,H,J">LP-SEG-EO-FIX-12M-24-04-05</option>
+                <option value="LP-SEG-FIX-12M-20-11-11" data-tariff="single" data-region="A,C,H,J">LP-SEG-FIX-12M-20-11-11</option>
+                <option value="LP-VAR-23-04-01" data-tariff="dual" data-region="A,C,H,J,A,C,H,J">LP-VAR-23-04-01</option>
+                <option value="OE-FIX-12M-24-06-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">OE-FIX-12M-24-06-01</option>
+                <option value="OE-FIX-12M-BB-24-06-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">OE-FIX-12M-BB-24-06-01</option>
+                <option value="OUTGOING-FIX-12M-19-05-13" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-FIX-12M-19-05-13</option>
+                <option value="OUTGOING-FIX-12M-BB-23-02-09" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-FIX-12M-BB-23-02-09</option>
+                <option value="OUTGOING-LITE-FIX-12M-23-09-12" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-LITE-FIX-12M-23-09-12</option>
+                <option value="OUTGOING-LITE-FIX-12M-BB-23-09-12" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-LITE-FIX-12M-BB-23-09-12</option>
+                <option value="OUTGOING-SEG-EO-FIX-12M-24-04-05" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-SEG-EO-FIX-12M-24-04-05</option>
+                <option value="OUTGOING-SEG-EO-FIX-12M-BB-24-04-05" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-SEG-EO-FIX-12M-BB-24-04-05</option>
+                <option value="OUTGOING-SEG-FIX-12M-20-07-07" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-SEG-FIX-12M-20-07-07</option>
+                <option value="OUTGOING-SEG-FIX-12M-BB-23-02-09" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-SEG-FIX-12M-BB-23-02-09</option>
+                <option value="POWER-PACK-24-02-15" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">POWER-PACK-24-02-15</option>
+                <option value="PREPAY-VAR-18-09-21" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">PREPAY-VAR-18-09-21</option>
+                <option value="PREPAY-VAR-BB-23-04-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">PREPAY-VAR-BB-23-04-01</option>
+                <option value="VAR-22-11-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">VAR-22-11-01</option>
+                <option value="VAR-BB-23-04-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">VAR-BB-23-04-01</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="node-input-contract_sell"><i class="fa fa-location-arrow"></i> Octopus: Sell contract</label>
+            <select id="node-input-contract_sell" required>
+                <option value="AGILE-24-04-03" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">AGILE-24-04-03</option>
+                <option value="AGILE-BB-24-04-03" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">AGILE-BB-24-04-03</option>
+                <option value="AGILE-OUTGOING-19-05-13" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">AGILE-OUTGOING-19-05-13</option>
+                <option value="AGILE-OUTGOING-BB-23-02-28" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">AGILE-OUTGOING-BB-23-02-28</option>
+                <option value="COOP-FIX-12M-24-06-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">COOP-FIX-12M-24-06-01</option>
+                <option value="COOP-PP-VAR-20-04-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">COOP-PP-VAR-20-04-01</option>
+                <option value="COOP-SEG-EO-FIX-12M-24-04-05" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">COOP-SEG-EO-FIX-12M-24-04-05</option>
+                <option value="COOP-SEG-FIX-12M-20-11-11" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">COOP-SEG-FIX-12M-20-11-11</option>
+                <option value="COOP-VAR-23-04-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">COOP-VAR-23-04-01</option>
+                <option value="COSY-22-12-08" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">COSY-22-12-08</option>
+                <option value="COSY-BB-23-02-07" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">COSY-BB-23-02-07</option>
+                <option value="CP-12M-24-06-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">CP-12M-24-06-01</option>
+                <option value="FLUX-EXPORT-23-02-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">FLUX-EXPORT-23-02-14</option>
+                <option value="FLUX-EXPORT-BB-23-02-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">FLUX-EXPORT-BB-23-02-14</option>
+                <option value="FLUX-IMPORT-23-02-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">FLUX-IMPORT-23-02-14</option>
+                <option value="FLUX-IMPORT-BB-23-02-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">FLUX-IMPORT-BB-23-02-14</option>
+                <option value="GO-GREEN-VAR-22-10-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">GO-GREEN-VAR-22-10-14</option>
+                <option value="GO-VAR-22-10-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">GO-VAR-22-10-14</option>
+                <option value="GO-VAR-BB-23-02-07" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">GO-VAR-BB-23-02-07</option>
+                <option value="INTELLI-BB-VAR-23-03-01" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-BB-VAR-23-03-01</option>
+                <option value="INTELLI-FLUX-EXPORT-23-07-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-FLUX-EXPORT-23-07-14</option>
+                <option value="INTELLI-FLUX-EXPORT-BB-23-07-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-FLUX-EXPORT-BB-23-07-14</option>
+                <option value="INTELLI-FLUX-IMPORT-23-07-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-FLUX-IMPORT-23-07-14</option>
+                <option value="INTELLI-FLUX-IMPORT-BB-23-07-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-FLUX-IMPORT-BB-23-07-14</option>
+                <option value="INTELLI-VAR-22-10-14" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">INTELLI-VAR-22-10-14</option>
+                <option value="LP-SEG-EO-FIX-12M-24-04-05" data-tariff="single" data-region="A,C,H,J">LP-SEG-EO-FIX-12M-24-04-05</option>
+                <option value="LP-SEG-FIX-12M-20-11-11" data-tariff="single" data-region="A,C,H,J">LP-SEG-FIX-12M-20-11-11</option>
+                <option value="LP-VAR-23-04-01" data-tariff="dual" data-region="A,C,H,J,A,C,H,J">LP-VAR-23-04-01</option>
+                <option value="OE-FIX-12M-24-06-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">OE-FIX-12M-24-06-01</option>
+                <option value="OE-FIX-12M-BB-24-06-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">OE-FIX-12M-BB-24-06-01</option>
+                <option value="OUTGOING-FIX-12M-19-05-13" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-FIX-12M-19-05-13</option>
+                <option value="OUTGOING-FIX-12M-BB-23-02-09" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-FIX-12M-BB-23-02-09</option>
+                <option value="OUTGOING-LITE-FIX-12M-23-09-12" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-LITE-FIX-12M-23-09-12</option>
+                <option value="OUTGOING-LITE-FIX-12M-BB-23-09-12" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-LITE-FIX-12M-BB-23-09-12</option>
+                <option value="OUTGOING-SEG-EO-FIX-12M-24-04-05" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-SEG-EO-FIX-12M-24-04-05</option>
+                <option value="OUTGOING-SEG-EO-FIX-12M-BB-24-04-05" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-SEG-EO-FIX-12M-BB-24-04-05</option>
+                <option value="OUTGOING-SEG-FIX-12M-20-07-07" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-SEG-FIX-12M-20-07-07</option>
+                <option value="OUTGOING-SEG-FIX-12M-BB-23-02-09" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">OUTGOING-SEG-FIX-12M-BB-23-02-09</option>
+                <option value="POWER-PACK-24-02-15" data-tariff="single" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P">POWER-PACK-24-02-15</option>
+                <option value="PREPAY-VAR-18-09-21" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">PREPAY-VAR-18-09-21</option>
+                <option value="PREPAY-VAR-BB-23-04-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">PREPAY-VAR-BB-23-04-01</option>
+                <option value="VAR-22-11-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">VAR-22-11-01</option>
+                <option value="VAR-BB-23-04-01" data-tariff="dual" data-region="A,B,C,D,E,F,G,H,J,K,L,M,N,P,A,B,C,D,E,F,G,H,J,K,L,M,N,P">VAR-BB-23-04-01</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="node-input-oct_tariff"><i class="fa fa-location-arrow"></i> Octopus: Tariff</label>
+            <select id="node-input-oct_tariff" data-stored="" required>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="node-input-oct_region"><i class="fa fa-location-arrow"></i> Octopus: Region</label>
+            <select id="node-input-oct_region" data-stored="" required>
+            </select>
+        </div>
     </div>
     <div class="form-row">
         <label for="node-input-b_max"><i class="fa fa-battery-full"></i> B max</label>
