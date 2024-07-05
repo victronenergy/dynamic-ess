@@ -23,14 +23,14 @@
             .done(function(data) {
                 populateSelect($('select#node-input-contract_buy'), data);
                 populateSelect($('select#node-input-contract_sell'), data);
+
+                $('#input-uk-octopus').show()
+                checkShowOctopusOptions()
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
                 console.error("Request failed:", textStatus, errorThrown);
                 console.error("Response Text:", jqXHR.responseText);
             })
-
-            $('#input-uk-octopus').show()
-            checkShowOctopusOptions()
         }
     }
 
