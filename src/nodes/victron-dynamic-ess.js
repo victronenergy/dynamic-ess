@@ -69,7 +69,7 @@ module.exports = function (RED) {
             soc: Number((dess.output.SOC[schedulePick])),
             feed_in: config.feed_in_possible ? 1 : 0,
             duration: dess.is_half_hour_schedule ? 1800 : 3600,
-            start: unixTimestamp + (schedulePick * 1800),
+            start: unixTimestamp + (schedule * 1800),
             restrictions: Number((dess.output.restrictions[schedulePick] || 0)),
             strategy: dess.output.coping_strategy[schedulePick]
           })
