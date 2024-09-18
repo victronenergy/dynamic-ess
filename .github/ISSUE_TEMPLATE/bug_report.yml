@@ -80,6 +80,7 @@ body:
         - Sweden - SE4 (se-4)
         - Switzerland (ch)
         - Ukraine - IPS (ua-ips)
+        - United Kingdom (uk)
     validations:
       required: false
   - type: input
