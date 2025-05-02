@@ -1,3 +1,10 @@
+> [!IMPORTANT]  
+>
+> We are contemplating on phasing out the current implementation of this node in favour of using the VRM-API
+> node. See https://community.victronenergy.com/t/phasing-out-the-node-red-dynamic-ess-implementation/30859 
+> for more information.
+
+
 # Dynamic ESS
 
 A Node-RED flow that uses VRM forecasting and algorithm to optimize when to sell, buy and hold the grid to zero. For use in systems that have hourly day ahead prices, which is the case in a big part of Europe.
