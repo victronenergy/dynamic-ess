@@ -29,6 +29,7 @@ In order to successfuly use this node, installations must:
 # QuickStart
 
 - Install the following nodes via the palette manager:
+  - `node-red-dashboard` (see [more details](#error-message-when-importing-imported-unrecognised-types-ui_template-ui_group-and-ui_tab))
   - `victron-dynamic-ess`
 - Set your sites location in VRM.
 - Import the _fetch-dynamic-ess_ flow..
@@ -41,6 +42,7 @@ If you use this and have questions, issues and/or suggestions, please ask them i
 ## Installing required nodes
 
 From the palette manager, install the following nodes:
+- [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard) (see [more details](#error-message-when-importing-imported-unrecognised-types-ui_template-ui_group-and-ui_tab))
 - [victron-dynamic-ess](https://flows.nodered.org/node/victron-dynamic-ess)
 
 Below is a short screen recording showing how to install them.
@@ -78,8 +80,8 @@ to the site:
 Double click the _Dynamic ESS VRM site_ to open the edit panel to configure the node. The following
 fields need to be filled out:
 
+- VRM ID - the VRM Portal ID can be found in the menu _Settings -> General_ line `VRM Portal ID`. It looks like this: `c0619ab27f32`
 - VRM token - The VRM access token. See [below](#create-an-access-token) on how to create one for your site.
-- VRM portal ID - the VRM Portal ID can be found in the menu _Settings -> VRM Logger_ and on VRM under the _Device list -> Gateway_. It looks like this: `c0619ab27f32`
 - B\_max - Battery capacity (in kWh)
 - tb\_max - Maximum Battery charge power (in kW)
 - fb\_max  - Maximum Battery discharge power (in kW)
